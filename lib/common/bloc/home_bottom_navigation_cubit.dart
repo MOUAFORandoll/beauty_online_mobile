@@ -7,40 +7,26 @@ class HomeBottomNavigationState extends CubitSuccessState {
   final PageController pageController;
   final int initialIndex, currentIndex;
 
-  HomeBottomNavigationState(
-    int count,
-    this.initialIndex
-  ) : scrollControllers = List.generate(count, (i) => ScrollController()),
-      pageController = PageController(initialPage: initialIndex),
-      currentIndex = initialIndex;
+  HomeBottomNavigationState(int count, this.initialIndex)
+      : scrollControllers = List.generate(count, (i) => ScrollController()),
+        pageController = PageController(initialPage: initialIndex),
+        currentIndex = initialIndex;
 
-  const HomeBottomNavigationState._(
-    this.scrollControllers,
-    this.pageController,
-    this.initialIndex,
-    this.currentIndex
-  );
+  const HomeBottomNavigationState._(this.scrollControllers, this.pageController,
+      this.initialIndex, this.currentIndex);
 
   HomeBottomNavigationState withPage(int? index, bool animate) {
     if (animate) pageController.jumpToPage(index ?? initialIndex);
 
     return HomeBottomNavigationState._(
-      scrollControllers,
-      pageController,
-      initialIndex,
-      index ?? currentIndex
-    );
+        scrollControllers, pageController, initialIndex, index ?? currentIndex);
   }
 
   bool get isInInitialPosition => initialIndex == currentIndex;
 
   @override
-  List<Object?> get props => [
-    scrollControllers,
-    pageController,
-    initialIndex,
-    currentIndex
-  ];
+  List<Object?> get props =>
+      [scrollControllers, pageController, initialIndex, currentIndex];
 
   void dispose() {
     for (final controller in scrollControllers) {
@@ -51,16 +37,14 @@ class HomeBottomNavigationState extends CubitSuccessState {
 }
 
 class HomeBottomNavigationCubit extends Cubit<HomeBottomNavigationState> {
-  HomeBottomNavigationCubit() : super(HomeBottomNavigationState(4, 1));
+  HomeBottomNavigationCubit() : super(HomeBottomNavigationState(4, 0));
 
   void goToPage({int? index, bool animate = true}) {
     if (index != null && index == state.currentIndex) {
       // on clique sur un onglet déjà sélectionné
-      state.scrollControllers[index].animateTo(
-        0,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.fastOutSlowIn
-      );
+      state.scrollControllers[index].animateTo(0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn);
     } else {
       emit(state.withPage(index, animate));
     }

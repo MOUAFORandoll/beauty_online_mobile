@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:potatoes_secured_preferences/potatoes_secured_preferences.dart';
-import 'package:beauty/common/bloc/user_cubit.dart'; 
+import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/models/user.dart';
 
 class PreferencesService extends SecuredPreferencesService {
@@ -13,7 +14,12 @@ class PreferencesService extends SecuredPreferencesService {
   static const String _keyDeviceToken = 'device-token';
   static const String _keyAuthToken = 'auth_token';
   static const String _keyThemeMode = 'theme_mode';
-  PreferencesService(super.preferences, super.secureStorage);
+  PreferencesService(
+    super.preferences,
+    super.secureStorage,
+    this.packageInfo,
+  );
+  final PackageInfo packageInfo;
 
   User? get user {
     final value = preferences.getString(_keyUser);
@@ -61,6 +67,7 @@ class PreferencesService extends SecuredPreferencesService {
     if (authToken == null) {
       throw InvalidAuthenticationHeadersException();
     }
-    return {"authorisation":'Bearer ' + authToken};
+    return {'uid': user!.id};
+    // return {"authorization": 'Bearer ' + authToken};
   }
 }

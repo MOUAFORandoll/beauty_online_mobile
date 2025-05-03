@@ -39,7 +39,7 @@ class UserCubit extends ObjectCubit<User, UserState> {
       emit(const UserNotLoggedState());
     } else {
       if (refresh) _refreshData();
-      if (user.phone == null) {
+      if (user.phone == null || user.userName == null) {
         emit(const CompleteUserProfileState());
       } else {
         emit(UserLoggedState(user));

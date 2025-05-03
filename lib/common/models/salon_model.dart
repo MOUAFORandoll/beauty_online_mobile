@@ -18,7 +18,28 @@ class SalonModel {
       SalonModel(
         title: 'Woodlands Hills Salon',
         subtitle: 'Haircut, Spa, Massage',
-        image: 'https://via.placeholder.com/300x200',
+        image: 'https://picsum.photos/200/300',
+        rating: 4.1,
+        distance: 5.0,
+      ),
+      SalonModel(
+        title: 'Woodlands Hills Salon',
+        subtitle: 'Haircut, Spa, Massage',
+        image: 'https://picsum.photos/200/300',
+        rating: 4.1,
+        distance: 5.0,
+      ),
+      SalonModel(
+        title: 'Woodlands Hills Salon',
+        subtitle: 'Haircut, Spa, Massage',
+        image: 'https://picsum.photos/200/300',
+        rating: 4.1,
+        distance: 5.0,
+      ),
+      SalonModel(
+        title: 'Woodlands Hills Salon',
+        subtitle: 'Haircut, Spa, Massage',
+        image: 'https://picsum.photos/200/300',
         rating: 4.1,
         distance: 5.0,
       ),
@@ -31,7 +52,7 @@ class SalonModel {
       SalonModel(
         title: 'Mounrich Spa Services',
         subtitle: 'Spa Salon',
-        image: 'https://via.placeholder.com/300x200',
+        image: 'https://picsum.photos/200/300',
         rating: 4.1,
         distance: 5.0,
       ),

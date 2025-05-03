@@ -258,10 +258,12 @@ abstract class AppTheme {
       chipTheme: ChipThemeData(
           labelStyle: textTheme.labelMedium,
           selectedColor: primaryYellow,
+          backgroundColor: primaryYellow,
+          disabledColor: primaryYellow,
           shape: RoundedRectangleBorder(
-              side: BorderSide(color: colorScheme.onSurface),
+              side: BorderSide(color: disabledText),
               borderRadius: BorderRadius.circular(100.0)),
-          side: BorderSide(color: colorScheme.onSurface)),
+          side: BorderSide(color: disabledText)),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: primaryYellow,
         elevation: 4,

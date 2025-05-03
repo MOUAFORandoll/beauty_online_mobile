@@ -32,7 +32,7 @@ abstract class Assets {
   static const String iconsTick = '${_iconsDir}Tick.svg';
   static const String iconsTime = '${_iconsDir}Time.svg';
   static const String iconsTrending = '${_iconsDir}Trending.svg';
-  static const String iconsbeauty = '${_iconsDir}beauty!.svg';
+  static const String iconsbeauty = '${_iconsDir}Trending.svg';
   static const String iconsBlock = '${_iconsDir}Block.svg';
   static const String iconsFollow = '${_iconsDir}Follow.svg';
   static const String iconsLogout = '${_iconsDir}Logout.svg';

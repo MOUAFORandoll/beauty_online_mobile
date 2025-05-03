@@ -6,17 +6,18 @@ class ServiceModel {
 
   static List<ServiceModel> mockList() {
     return [
-       ServiceModel(
-          title: 'Haircut for men', image: 'https://via.placeholder.com/64'),
       ServiceModel(
-          title: 'Shave for men', image: 'https://via.placeholder.com/64'),
+          title: 'Haircut for men', image: 'https://picsum.photos/200/300'),
       ServiceModel(
-          title: 'Facial for women', image: 'https://via.placeholder.com/64'),
+          title: 'Shave for men', image: 'https://picsum.photos/200/300'),
       ServiceModel(
-          title: 'Bleach for women', image: 'https://via.placeholder.com/64'),
+          title: 'Facial for women', image: 'https://picsum.photos/200/300'),
       ServiceModel(
-          title: 'Waxing for women', image: 'https://via.placeholder.com/64'),
-   
+          title: 'Bleach for women', image: 'https://picsum.photos/200/300'),
+      ServiceModel(
+          title: 'Waxing for women', image: 'https://picsum.photos/200/300'),
+      ServiceModel(
+          title: 'Waxing for women', image: 'https://picsum.photos/200/300'),
     ];
   }
 }

@@ -5,18 +5,17 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 class CustomIntlPhoneField extends StatelessWidget {
-  const CustomIntlPhoneField({
-    super.key,
-    this.controller,
-    this.initialValue,
-    required this.initialCountryCode,
-    required this.countries,
-    required this.hintText,
-    this.onChanged,
-    this.onSaved,
-    this.validator,
-   required this.invalidNumberMessage
-  });
+  const CustomIntlPhoneField(
+      {super.key,
+      this.controller,
+      this.initialValue,
+      required this.initialCountryCode,
+      required this.countries,
+      required this.hintText,
+      this.onChanged,
+      this.onSaved,
+      this.validator,
+      required this.invalidNumberMessage});
   final TextEditingController? controller;
   final PhoneNumber? initialValue;
   final String initialCountryCode;
@@ -34,25 +33,25 @@ class CustomIntlPhoneField extends StatelessWidget {
       controller: controller,
       invalidNumberMessage: invalidNumberMessage,
       initialValue: initialValue?.number,
-      decoration: InputDecoration(
-        hintText: hintText,
-        counterText: '',
-        contentPadding: const EdgeInsets.all(15),
-        filled: true,
-        fillColor: Colors.white,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white, width: 0.5),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 0.5),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue, width: 0.5),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
-      ),
+      // decoration: InputDecoration(
+      //   hintText: hintText,
+      //   counterText: '',
+      //   contentPadding: const EdgeInsets.all(15),
+      //   filled: true,
+      //   fillColor: Colors.white,
+      //   border: const OutlineInputBorder(
+      //     borderSide: BorderSide(color: Colors.white, width: 0.5),
+      //   ),
+      //   enabledBorder: const OutlineInputBorder(
+      //     borderSide: BorderSide(color: Colors.grey, width: 0.5),
+      //   ),
+      //   focusedBorder: const OutlineInputBorder(
+      //     borderSide: BorderSide(color: Colors.blue, width: 0.5),
+      //   ),
+      //   errorBorder: const OutlineInputBorder(
+      //     borderSide: BorderSide(color: Colors.red, width: 1.0),
+      //   ),
+      // ),
       countries: countries,
       flagsButtonPadding: const EdgeInsets.symmetric(horizontal: 8),
       pickerDialogStyle: PickerDialogStyle(

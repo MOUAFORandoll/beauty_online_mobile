@@ -70,6 +70,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthLoadingState());
 
     final idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    print('idToken================');
+    print(idToken);
+    print('idToken================');
 
     authService
         .authUser(
@@ -108,6 +111,7 @@ class AuthCubit extends Cubit<AuthState> {
       userCubit.preferencesService.saveUser(user).then((_) {
         emit(const CompletedUserSuccessUserState());
         emit(AuthIdleState());
+        userCubit.reset();
       });
     }, onError: (error, trace) {
       emit(AuthErrorState(error, trace));

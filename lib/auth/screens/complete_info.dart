@@ -61,6 +61,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                     children: [
                       Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -78,6 +79,8 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                               validator: (value) => Validators.empty(value),
                             ),
                             const SizedBox(height: 10),
+                            Text('Entrez votre numéro de téléphone'),
+                            const SizedBox(height: 2),
                             CustomIntlPhoneField(
                               controller: phoneController,
                               initialCountryCode: 'CM',
@@ -139,6 +142,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
     if (state is AuthLoadingState) {
       loadingDialogCompleter = showLoadingBarrier(context: context);
     } else if (state is CompletedUserSuccessUserState) {
+      
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const HomeScreen()),
           (r) => false);

@@ -10,6 +10,28 @@ import 'api_error.dart';
 
 class ApiLinks extends potatoes.Links {
   const ApiLinks();
+
+//Box
+  // @override
+  // String get devUrl => "http://192.168.1.129:8080/api";
+
+  // @override
+  // String get stagingUrl => "http://192.168.1.129:8080/api";
+
+  // @override
+  // String get productionUrl => "http://192.168.1.129:8080/api";
+
+//IPhone
+  // @override
+  // String get devUrl => "http://172.20.10.8:8080/api";
+
+  // @override
+  // String get stagingUrl => "http://172.20.10.8:8080/api";
+
+  // @override
+  // String get productionUrl => "http://172.20.10.8:8080/api";
+
+//Power
   @override
   String get devUrl => "http://192.168.254.155:8080/api";
 
@@ -56,6 +78,11 @@ class ApiService extends potatoes.ApiService {
     } on DioException catch (e) {
       if (e.response != null && e.response!.data != null) {
         if ((e.response!.data as Map<String, dynamic>)['error'] != null) {
+          print('====================');
+          print(e.response!);
+          print('====================');
+
+          print(e.response!.data['error']);
           throw ApiError.fromApi(
             (e.response!.data as Map<String, dynamic>)['error'],
           );

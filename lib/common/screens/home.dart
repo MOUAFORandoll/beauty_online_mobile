@@ -1,3 +1,5 @@
+import 'package:beauty/account/screens/settings/settings_screen.dart';
+import 'package:beauty/common/screens/acceuil.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
@@ -20,10 +22,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   late final navigationCubit = context.read<HomeBottomNavigationCubit>();
   late final pages = [
-    {'title': 'Social', 'page': Container()},
+    {'title': 'Social', 'page': AcceuilScreen()},
     {'title': 'Pour toi', 'page': Container()},
     {'title': 'Animes', 'page': Container()},
-    {'title': 'Quiz', 'page': Container()},
+    {'title': 'Setting', 'page': SettingsScreen()},
   ];
   bool activityInitiallyLoaded = false;
 
@@ -41,46 +43,50 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
       },
       child: BlocListener<UserCubit, UserState>(
         listener: onUserEventReceived,
-        child: Scaffold(
-          appBar: AppBar(
-            forceMaterialTransparency: true,
-            title: BlocBuilder<HomeBottomNavigationCubit,
-                HomeBottomNavigationState>(
-              builder: (_, state) =>
-                  Text(pages[state.currentIndex]['title'] as String),
-            ),
-            centerTitle: true,
-            systemOverlayStyle:
-                Theme.of(context).appBarTheme.systemOverlayStyle?.copyWith(
-                      systemNavigationBarColor: Theme.of(context)
-                          .bottomNavigationBarTheme
-                          .backgroundColor,
-                      systemNavigationBarDividerColor: Theme.of(context)
-                          .bottomNavigationBarTheme
-                          .backgroundColor,
+        child:
+            BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
+          builder: (context, state) => Scaffold(
+            appBar: state.currentIndex == 0
+                ? null
+                : AppBar(
+                    forceMaterialTransparency: true,
+                    title: BlocBuilder<HomeBottomNavigationCubit,
+                        HomeBottomNavigationState>(
+                      builder: (_, state) =>
+                          Text(pages[state.currentIndex]['title'] as String),
                     ),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const AccountScreen()));
-                },
-                child: const Center(child: UserProfilePicture(size: 40.0)),
-              ),
+                    centerTitle: true,
+                    systemOverlayStyle: Theme.of(context)
+                        .appBarTheme
+                        .systemOverlayStyle
+                        ?.copyWith(
+                          systemNavigationBarColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                          systemNavigationBarDividerColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                        ),
+                    // leading: Padding(
+                    //   padding: const EdgeInsets.only(left: 16.0),
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       // Navigator.of(context).push(MaterialPageRoute(
+                    //       //     builder: (context) => const AccountScreen()));
+                    //     },
+                    //     child:
+                    //         const Center(child: UserProfilePicture(size: 40.0)),
+                    //   ),
+                    // ),
+                    // actions: [const SearchWidget()],
+                  ),
+            body: PageView(
+              controller: navigationCubit.state.pageController,
+              onPageChanged: (index) =>
+                  navigationCubit.goToPage(index: index, animate: false),
+              children: pages.map((page) => page['page'] as Widget).toList(),
             ),
-            actions: [const SearchWidget()],
-          ),
-          body: PageView(
-            controller: navigationCubit.state.pageController,
-            onPageChanged: (index) =>
-                navigationCubit.goToPage(index: index, animate: false),
-            children: pages.map((page) => page['page'] as Widget).toList(),
-          ),
-          bottomNavigationBar:
-              BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
-                  builder: (context, state) {
-            return BottomNavigationBar(
+            bottomNavigationBar: BottomNavigationBar(
               onTap: (index) => navigationCubit.goToPage(index: index),
               currentIndex: state.currentIndex,
               useLegacyColorScheme: false,
@@ -118,8 +124,8 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                         .bottomNavigationBarTheme
                         .backgroundColor),
               ],
-            );
-          }),
+            ),
+          ),
         ),
       ),
     );
@@ -131,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
           .push(MaterialPageRoute(builder: (_) => const AppUpgradeScreen()));
     }
   }
- 
+
   Widget _buildIconWithDecoration({required icon, required bool selected}) {
     return selected
         ? Container(

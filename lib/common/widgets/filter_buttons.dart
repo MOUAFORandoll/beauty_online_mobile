@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class FilterButtons extends StatelessWidget {
   const FilterButtons({super.key});
 
@@ -16,10 +17,10 @@ class FilterButtons extends StatelessWidget {
   }
 
   Widget _buildFilterButton(String text, {IconData? icon}) {
-    return OutlinedButton.icon(
-      onPressed: () {},
-      icon: icon != null ? Icon(icon, size: 16) : const SizedBox.shrink(),
+    return Chip(
       label: Text(text),
+      avatar: icon != null ? Icon(icon, size: 16, color: Colors.grey) : null,
+      labelStyle: const TextStyle(color: Colors.black),
     );
   }
 }

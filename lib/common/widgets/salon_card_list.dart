@@ -1,5 +1,5 @@
 import 'package:beauty/common/models/salon_model.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'salon_card.dart';
 
 class SalonCardList extends StatelessWidget {
@@ -9,7 +9,7 @@ class SalonCardList extends StatelessWidget {
   Widget build(BuildContext context) {
     final salons = SalonModel.mockPopular();
     return SizedBox(
-      height: 220,
+      height: 290,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: salons.length,

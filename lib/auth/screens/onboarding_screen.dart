@@ -54,22 +54,38 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
 
                 // Contenu au-dessus
-                SafeArea(
-                  minimum: const EdgeInsets.only(
-                    left: 32.0,
-                    right: 32.0,
-                    bottom: 48.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Spacer(flex: 2),
-                      AnimatedLogo(
-                        onEnd: () => setState(() => animationEnded = true),
-                      ),
-                      const Spacer(flex: 3),
-                      if (animationEnded) ...[
-                        if (Platform.isIOS)
+                Center(
+                  child: SafeArea(
+                    minimum: const EdgeInsets.only(
+                      left: 32.0,
+                      right: 32.0,
+                      bottom: 48.0,
+                    ),
+                    child: Column(
+                      children: [
+                        const Spacer(flex: 2),
+                        AnimatedLogo(
+                          onEnd: () => setState(() => animationEnded = true),
+                        ),
+                        const Spacer(flex: 3),
+                        if (animationEnded) ...[
+                          if (Platform.isIOS)
+                            TweenAnimationBuilder<double>(
+                              tween: Tween(begin: 0, end: 1),
+                              curve: Curves.easeIn,
+                              duration: const Duration(milliseconds: 300),
+                              builder: (context, opacity, child) => Opacity(
+                                opacity: opacity,
+                                child: child,
+                              ),
+                              child: AuthButton.apple(
+                                onPressed: () =>
+                                    acceptTerm(then: authCubit.appleSignIn),
+                                backgroundColor: AppTheme.white,
+                                textColor: AppTheme.primaryBlack,
+                              ),
+                            ),
+                          const SizedBox(height: 16.0),
                           TweenAnimationBuilder<double>(
                             tween: Tween(begin: 0, end: 1),
                             curve: Curves.easeIn,
@@ -78,33 +94,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                               opacity: opacity,
                               child: child,
                             ),
-                            child: AuthButton.apple(
+                            child: AuthButton.google(
                               onPressed: () =>
-                                  acceptTerm(then: authCubit.appleSignIn),
-                              backgroundColor: AppTheme.white,
-                              textColor: AppTheme.primaryBlack,
+                                  acceptTerm(then: authCubit.googleSignIn),
+                              backgroundColor: AppTheme.primaryBlack,
+                              textColor: AppTheme.white,
                             ),
                           ),
-                        const SizedBox(height: 16.0),
-                        TweenAnimationBuilder<double>(
-                          tween: Tween(begin: 0, end: 1),
-                          curve: Curves.easeIn,
-                          duration: const Duration(milliseconds: 300),
-                          builder: (context, opacity, child) => Opacity(
-                            opacity: opacity,
-                            child: child,
-                          ),
-                          child: AuthButton.google(
-                            onPressed: () =>
-                                acceptTerm(then: authCubit.googleSignIn),
-                            backgroundColor: AppTheme.primaryBlack,
-                            textColor: AppTheme.white,
-                          ),
-                        ),
-                      ] else
-                        SizedBox(
-                            height: (40.0 + 16.0) * (Platform.isIOS ? 2 : 1)),
-                    ],
+                        ] else
+                          SizedBox(
+                              height: (40.0 + 16.0) * (Platform.isIOS ? 2 : 1)),
+                      ],
+                    ),
                   ),
                 ),
               ],

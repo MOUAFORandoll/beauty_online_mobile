@@ -1,3 +1,4 @@
+import 'package:beauty/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +12,15 @@ class SectionTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const Text('see all', style: TextStyle(color: Colors.purple)),
+        Text(title, style: Theme.of(context).textTheme.labelLarge),
+        Container(
+          child: Row(
+            children: [
+              Text('see all', style: Theme.of(context).textTheme.labelLarge),
+              Icon(Icons.keyboard_arrow_right, color: AppTheme.primaryYellow)
+            ],
+          ),
+        )
       ],
     );
   }

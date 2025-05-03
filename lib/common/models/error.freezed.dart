@@ -170,8 +170,8 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ErrorImpl extends _Error {
-  _$ErrorImpl(
+class _$ErrorImpl implements _Error {
+  const _$ErrorImpl(
       {required this.code,
       required this.message,
       @JsonKey(name: 'display_messages')
@@ -180,8 +180,7 @@ class _$ErrorImpl extends _Error {
       @JsonKey(name: 'status_code') required this.statusCode,
       required this.url})
       : _displayMessages = displayMessages,
-        _details = details,
-        super._();
+        _details = details;
 
   factory _$ErrorImpl.fromJson(Map<String, dynamic> json) =>
       _$$ErrorImplFromJson(json);
@@ -264,8 +263,8 @@ class _$ErrorImpl extends _Error {
   }
 }
 
-abstract class _Error extends Error {
-  factory _Error(
+abstract class _Error implements Error {
+  const factory _Error(
       {required final String code,
       required final String message,
       @JsonKey(name: 'display_messages')
@@ -273,7 +272,6 @@ abstract class _Error extends Error {
       final Map<String, dynamic>? details,
       @JsonKey(name: 'status_code') required final int statusCode,
       required final String url}) = _$ErrorImpl;
-  _Error._() : super._();
 
   factory _Error.fromJson(Map<String, dynamic> json) = _$ErrorImpl.fromJson;
 
@@ -401,8 +399,8 @@ class __$$IDisplayTextImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IDisplayTextImpl extends _IDisplayText {
-  _$IDisplayTextImpl({required this.lang, required this.value}) : super._();
+class _$IDisplayTextImpl implements _IDisplayText {
+  const _$IDisplayTextImpl({required this.lang, required this.value});
 
   factory _$IDisplayTextImpl.fromJson(Map<String, dynamic> json) =>
       _$$IDisplayTextImplFromJson(json);
@@ -446,11 +444,10 @@ class _$IDisplayTextImpl extends _IDisplayText {
   }
 }
 
-abstract class _IDisplayText extends IDisplayText {
-  factory _IDisplayText(
+abstract class _IDisplayText implements IDisplayText {
+  const factory _IDisplayText(
       {required final String lang,
       required final String value}) = _$IDisplayTextImpl;
-  _IDisplayText._() : super._();
 
   factory _IDisplayText.fromJson(Map<String, dynamic> json) =
       _$IDisplayTextImpl.fromJson;

@@ -1,13 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+ 
 part 'error.freezed.dart';
 part 'error.g.dart';
 
 @freezed
 class Error with _$Error {
-  const Error._();
-
-  factory Error({
+  const factory Error({
     required String code,
     required String message,
     @JsonKey(name: 'display_messages') List<IDisplayText>? displayMessages,
@@ -21,9 +19,7 @@ class Error with _$Error {
 
 @freezed
 class IDisplayText with _$IDisplayText {
-  const IDisplayText._();
-
-  factory IDisplayText({
+  const factory IDisplayText({
     required String lang,
     required String value,
   }) = _IDisplayText;
