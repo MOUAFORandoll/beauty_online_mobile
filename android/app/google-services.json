@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "69380599834",
+    "project_id": "beauty-online-f51ac",
+    "storage_bucket": "beauty-online-f51ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69380599834:android:46f8cd000e35273092a1a3",
+        "android_client_info": {
+          "package_name": "com.beauty.online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69380599834-4uc0qv5eq8dtvi2cljfq3pr4g6ndv9eq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beauty.online",
+            "certificate_hash": "207bfe8da7cab67c27556ccb37c7d515624d4f74"
+          }
+        },
+        {
+          "client_id": "69380599834-ct16gr5ee6uu3j7jjeniajo51vo2h9an.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-_MO4NzZ9Xqjmt-G2EwNx8RI8ei7VVws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69380599834-ct16gr5ee6uu3j7jjeniajo51vo2h9an.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.beauty.online"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
