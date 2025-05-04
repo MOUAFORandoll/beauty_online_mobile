@@ -41,7 +41,7 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
       print('proffff');
       professionalService.findUserProfile().then((professional) {
         print(
-          'proffff===${professional}',
+          'proffvvvff===${professional}',
         );
         if (professional != null)
           emit(ProfessionalLoggedState(professional));
