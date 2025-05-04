@@ -698,5 +698,56 @@ class QuizViewLoaderBuilder extends StatelessWidget {
                         ),
                       ),
                     ]))));
+  }}
+
+
+class ProfessionalBoardLoaderBuilder extends StatelessWidget {
+  final int count;
+
+  const ProfessionalBoardLoaderBuilder({super.key, this.count = 8});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (_, i) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8.0),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).colorScheme.tertiaryContainer,
+                radius: 16,
+              ),
+              const SizedBox(width: 8.0),
+              Flexible(
+                child: Container(
+                  height: 16,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Container(
+            height: 120,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.tertiaryContainer,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          )
+        ],
+      ),
+    separatorBuilder: (_, i) => const SizedBox(height: 16.0),
+      itemCount: count,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+    );
   }
 }

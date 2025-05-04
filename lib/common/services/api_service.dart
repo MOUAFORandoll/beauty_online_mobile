@@ -13,13 +13,13 @@ class ApiLinks extends potatoes.Links {
 
 //Box
   // @override
-  // String get devUrl => "http://192.168.1.129:8080/api";
+  String get devUrl => "http://192.168.1.114:8080/api";
 
-  // @override
-  // String get stagingUrl => "http://192.168.1.129:8080/api";
+  @override
+  String get stagingUrl => "http://192.168.1.114:8080/api";
 
-  // @override
-  // String get productionUrl => "http://192.168.1.129:8080/api";
+  @override
+  String get productionUrl => "http://192.168.1.114:8080/api";
 
 //IPhone
   // @override
@@ -32,14 +32,14 @@ class ApiLinks extends potatoes.Links {
   // String get productionUrl => "http://172.20.10.8:8080/api";
 
 //Power
-  @override
-  String get devUrl => "http://192.168.254.155:8080/api";
+  // @override
+  // String get devUrl => "http://192.168.254.155:8080/api";
 
-  @override
-  String get stagingUrl => "http://192.168.254.155:8080/api";
+  // @override
+  // String get stagingUrl => "http://192.168.254.155:8080/api";
 
-  @override
-  String get productionUrl => "http://192.168.254.155:8080/api";
+  // @override
+  // String get productionUrl => "http://192.168.254.155:8080/api";
 
   static const privacy = 'https://www.beauty.app/privacy-policy';
 }

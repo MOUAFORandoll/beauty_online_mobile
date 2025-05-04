@@ -5,9 +5,12 @@ import 'package:beauty/Professionnal/widgets/catalogue.dart';
 import 'package:beauty/Professionnal/widgets/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
+import 'package:beauty/common/screens/home.dart';
 import 'package:beauty/common/services/cache_manager.dart';
+import 'package:beauty/common/widgets/loader_builder.dart';
 import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
@@ -39,50 +42,180 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
     with SingleTickerProviderStateMixin, CompletableMixin {
   late TabController _tabController;
   @override
+  @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      print(
+          '_tabController.indexIsChanging    ===${_tabController.indexIsChanging}');
+      if (_tabController.indexIsChanging == false) {
+        print('_tabController.index    ===${_tabController.index}');
+        setState(() {}); // Rafraîchit la FAB quand l'index change
+
+        print('_tabController.index    ===${_tabController.index}');
+      }
+    });
   }
 
-  late final userCubit = context.read<UserCubit>();
+  late final professionalCubit = context.read<ProfessionalCubit>();
   late final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfessionalCubit, ProfessionalState>(
-      listener: onEventReceived,
-      builder: (context, state) {
-        return Material(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: DefaultTabController(
-                length: 3,
-                child: Column(children: [
-                  _TabBarGap(controller: _scrollController),
-                  TabBar(
-                    isScrollable: true,
-                    splashBorderRadius: BorderRadius.circular(64.0),
-                    tabs: const [
-                      Tab(text: "Catalogues"),
-                      Tab(text: "Stories"),
-                      Tab(text: "Reservations"),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  Expanded(
-                    child: TabBarView(
-                      children: [
-                        Catalogue(),
-                        Stories(),
-                        // EpisodeTab.get(context: context, anime: anime),
-                        // SimilarAnimeTab.get(context: context, anime: anime),
-                        // QuizAnimeTab.get(context: context, anime: anime),
-                      ],
-                    ),
-                  )
-                ])));
-      },
-    );
+        listener: onEventReceived,
+        builder: (context, state) => state is InitializingProfessionalState
+            ? ProfessionalBoardLoaderBuilder()
+            : state is ProfessionalLoggedState
+                ? existProfessionnel()
+                : state is NoProfessionnalFondState
+                    ? noExistProfessionnel()
+                    : errorFindProfessionnel());
   }
+
+  Widget existProfessionnel() => Scaffold(
+      primary: false,
+      body: Material(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(children: [
+            _TabBarGap(controller: _scrollController),
+            TabBar(
+              isScrollable: false,
+              controller: _tabController,
+              tabAlignment: TabAlignment.fill,
+              splashBorderRadius: BorderRadius.circular(64.0),
+              tabs: const [
+                Tab(text: "Catalogues"),
+                Tab(text: "Stories"),
+                Tab(text: "Reservations"),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Catalogue(),
+                  Stories(),
+                  Stories(),
+                ],
+              ),
+            )
+          ])),
+      floatingActionButton: _tabController.index == 2
+          ? null
+          : FloatingActionButton(
+              heroTag: 'nouveau',
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  ),
+              child: toSvgIcon(icon: Assets.iconsMore)));
+
+  Widget noExistProfessionnel() => Scaffold(
+        primary: false,
+        body: SafeArea(
+          child: Material(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Illustration SVG (à adapter)
+                    SizedBox(
+                      height: 180,
+                      child: SvgPicture.asset(
+                        Assets.iconsEmpty, // remplace par ton asset
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      "Aucun profil professionnel",
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "Vous n’avez pas encore créé de profil professionnel.\nC’est essentiel pour proposer vos services.",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey[600],
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+
+                    BeautyButton.primary(
+                      onPressed: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(builder: (_) => const CreateProfessionalProfileScreen()),
+                        // );
+                      },
+                      text: "Créer mon profil",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget errorFindProfessionnel() => SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Illustration SVG
+                SizedBox(
+                  height: 180,
+                  child: SvgPicture.asset(
+                    Assets.iconsError, // remplace par ton illustration
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Text(
+                  "Une erreur est survenue",
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "Impossible de récupérer vos données pour le moment.\nVeuillez vérifier votre connexion et réessayer.",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                TextButton.icon(
+                  onPressed: professionalCubit.getInitialState,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text("Réessayer"),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: AppTheme.errorRed,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 
   void onEventReceived(BuildContext context, ProfessionalState state) async {
     await waitForDialog();

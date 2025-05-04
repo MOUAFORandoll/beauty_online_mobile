@@ -66,13 +66,13 @@ class _AccountScreenState extends State<AccountScreen>
                   expandedHeight: 250,
                   pinned: true,
                   actions: [
-                    // IconButton(
-                    //   onPressed: actionsOptions,
-                    //   icon: toSvgIcon(
-                    //     icon: Assets.iconsOptions,
-                    //     color: AppTheme.white,
-                    //   ),
-                    // ),
+                    IconButton(
+                      onPressed: onActionsPressed,
+                      icon: toSvgIcon(
+                        icon: Assets.iconsOptions,
+                        color: AppTheme.white,
+                      ),
+                    ),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
@@ -90,20 +90,40 @@ class _AccountScreenState extends State<AccountScreen>
                             size: 32,
                           ),
                         ),
+                        // Positioned(
+                        //   top: 0,
+                        //   left: 0,
+                        //   right: 0,
+                        //   child: Container(
+                        //     height: MediaQuery.of(context).viewPadding.top +
+                        //         kToolbarHeight,
+                        //     decoration: BoxDecoration(
+                        //       gradient: LinearGradient(
+                        //         begin: Alignment.topCenter,
+                        //         end: Alignment.bottomCenter,
+                        //         colors: [
+                        //           Theme.of(context).colorScheme.inverseSurface,
+                        //           Colors.transparent
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Positioned(
-                          top: 0,
+                          bottom: 0,
                           left: 0,
                           right: 0,
                           child: Container(
-                            height: MediaQuery.of(context).viewPadding.top +
-                                kToolbarHeight,
+                            height:
+                                MediaQuery.of(context).viewPadding.top * 2.5 +
+                                    kToolbarHeight,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
+                                  Colors.transparent,
                                   Theme.of(context).colorScheme.inverseSurface,
-                                  Colors.transparent
                                 ],
                               ),
                             ),
@@ -111,6 +131,8 @@ class _AccountScreenState extends State<AccountScreen>
                         ),
                         Positioned(
                             bottom: 8, left: 0, right: 0, child: BtnAccount()),
+                        // Positioned(
+                        //     top: 8, left: 0, right: 8, child: toSvgIcon(Asser)),
                       ],
                     ),
                   ),
@@ -123,23 +145,32 @@ class _AccountScreenState extends State<AccountScreen>
                   child: BlocBuilder<AccountViewManageCubit, bool>(
                     builder: (ctx, state) => state
                         ? Container()
-                        : Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, left: 16.0, right: 16.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Randy Shop', //   'professionalCubit.professional.namePro',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  const PrimaryInfo(),
-                                ]),
+                        : BlocConsumer<ProfessionalCubit, ProfessionalState>(
+                            listener: onEventReceived,
+                            builder: (context, state) =>
+                                state is ProfessionalLoggedState
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0, left: 16.0, right: 16.0),
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Randy Shop', //   'professionalCubit.professional.namePro',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge,
+                                              ),
+                                              const SizedBox(height: 16),
+                                              const PrimaryInfo(),
+                                            ]),
+                                      )
+                                    : SizedBox.shrink(),
                           ),
                   ),
                 ),

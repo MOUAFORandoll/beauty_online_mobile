@@ -22,40 +22,80 @@ class _PrimaryInfoState extends State<PrimaryInfo>
       Container(
           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           decoration: BoxDecoration(
-            color: AppTheme.green,
+            // color: AppTheme.primaryYellow,
+            border: Border.all(color: AppTheme.disabledText, width: .4),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Text(
-            "xxxxxx",
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                  color: AppTheme.onHighGreen,
-                ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.location_on,
+                color: AppTheme.disabledText,
+                size: 18,
+                // color: Colors.white,
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                "Douala, Cameroun",
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    // color: AppTheme.onHighGreen,
+                    ),
+              ),
+            ],
           )),
       Container(
           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            // color: AppTheme.primaryYellow,
+            border: Border.all(color: AppTheme.disabledText, width: .4),
+
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Text(
-            "xxxxx",
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          )),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(
+              Icons.timelapse_sharp,
+              color: AppTheme.errorRed,
+              size: 18,
+              // color: Colors.white,
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            Text(
+              "10 Reservations",
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            ),
+          ])),
       Container(
           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            // color: AppTheme.primaryYellow,
+            border: Border.all(color: AppTheme.disabledText, width: .4),
+
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Text(
-            "xxxx",
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ))
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(
+              Icons.check_circle,
+              color: AppTheme.green,
+              size: 18,
+              // color: Colors.white,
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            Text(
+              "20 Actes",
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            )
+          ]))
     ]);
   }
 }
- 
