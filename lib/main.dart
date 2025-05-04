@@ -1,5 +1,6 @@
 import 'package:beauty/Professionnal/bloc/professional_cubit.dart';
 import 'package:beauty/Professionnal/services/professional_service.dart';
+import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/auth/screens/complete_info.dart';
 import 'package:beauty/firebase_options.dart';
@@ -108,6 +109,7 @@ class MyApp extends StatelessWidget {
               create: (context) => ProfessionalCubit(
                     context.read(),
                   )),
+          BlocProvider(create: (_) => AccountViewManageCubit()),
           BlocProvider(create: (_) => ThemeModeCubit(preferencesService)),
           BlocProvider(
               create: (context) => AuthCubit(context.read(), context.read())),

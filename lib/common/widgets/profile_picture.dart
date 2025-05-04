@@ -36,22 +36,56 @@ class ProfilePicture extends StatelessWidget {
   }
 }
 
-class UserProfilePicture extends StatelessWidget {
+class ProfileSquarePicture extends StatelessWidget {
+  final String? image;
   final double size;
 
-  const UserProfilePicture({
+  const ProfileSquarePicture({
     super.key,
-    this.size = 40.0,
+    required this.image,
+    this.size = 80,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    final defaultImage =
+        toSvgIcon(icon: Assets.defaultAvatar, defaultFilter: false, size: size);
+    if (image == null) return defaultImage;
+    return Container(
+      height: size,
+      width: size,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiaryContainer,
+          borderRadius: BorderRadius.circular(8)),
+      child: Image(
+        fit: BoxFit.cover,
+        image: context.read<AppCacheManager>().getImage(image!),
+        errorBuilder: (context, url, error) => defaultImage,
+      ),
+    );
+  }
+}
+
+class UserProfilePicture extends StatelessWidget {
+  final double size;
+  final bool isSquare;
+  const UserProfilePicture(
+      {super.key, this.size = 40.0, this.isSquare = false});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       buildWhen: (_, state) => state is UserLoggedState,
-      builder: (_, state) => ProfilePicture(
-        image: context.read<UserCubit>().user.pictureUrl,
-        size: size,
-      ),
+      builder: (_, state) => isSquare
+          ? ProfileSquarePicture(
+              image: context.read<UserCubit>().user.pictureUrl,
+              size: size,
+            )
+          : ProfilePicture(
+              image: context.read<UserCubit>().user.pictureUrl,
+              size: size,
+            ),
     );
   }
 }

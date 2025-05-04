@@ -1,8 +1,20 @@
+import 'dart:math';
+
+import 'package:beauty/Professionnal/bloc/professional_cubit.dart';
+import 'package:beauty/Professionnal/screens/my_professional_board.dart';
+import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
+import 'package:beauty/account/screens/my_account.dart';
+import 'package:beauty/account/widgets/btn_account.dart';
+import 'package:beauty/account/widgets/primary_info.dart';
+import 'package:beauty/common/services/cache_manager.dart';
+import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
+import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:beauty/account/screens/edit_profile.dart';
 import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
@@ -34,226 +46,119 @@ class _AccountScreenState extends State<AccountScreen>
   }
 
   late final userCubit = context.read<UserCubit>();
-
-  Widget counter(
-      {required int count,
-      required String label,
-      required String icon,
-      VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                NumberFormat.compact().format(count),
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(fontSize: 16.0),
-              ),
-              const SizedBox(width: 4.0),
-              toSvgIcon(icon: icon, size: 16.0)
-            ],
-          ),
-          Text(
-            label,
-            style: const TextStyle(color: AppTheme.disabledText),
-          )
-        ],
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  late final professionalCubit = context.read<ProfessionalCubit>();
+  late final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserCubit, UserState>(
-        listener: onEventReceived,
-        builder: (context, state) {
-          late final user = userCubit.user;
-
-          return Scaffold(
-              appBar: AppBar(
-                forceMaterialTransparency: true,
-                title: Text(user.userName!),
-                centerTitle: true,
-                actions: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: onActionsPressed,
-                    icon: toSvgIcon(
-                      icon: Assets.iconsOptions,
-                    ),
-                  )
-                ],
-              ),
-              body: RefreshIndicator(
-                onRefresh: () async => userCubit.reset(true),
-                child: NestedScrollViewPlus(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  headerSliverBuilder: (context, _) => [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 16),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              const EditProfilePictureScreen()));
-                                    },
-                                    child: const UserProfilePicture(size: 80)),
-                                const SizedBox(width: 16.0),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        user.userName!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        user.phone!,
-                                        maxLines: 100,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .surfaceTint),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 24.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              counter(
-                                  onTap: () {},
-                                  icon: Assets.iconsFollow,
-                                  count: 12,
-                                  label: "Realisations"),
-                              counter(
-                                  onTap: () {},
-                                  icon: Assets.iconsFollow,
-                                  count: 21,
-                                  label: "Rendez-vous"),
-                              counter(
-                                  icon: Assets.iconsTrending,
-                                  count: 54,
-                                  onTap: () => _tabController.animateTo(1),
-                                  label: "Nos"),
-                            ],
-                          ),
-                          const SizedBox(height: 32),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: BeautyButton.primary(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EditProfileScreen()));
-                                    },
-                                    text: "Éditer mon profil",
-                                  ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Expanded(
-                                  child: BeautyButton.black(
-                                    onPressed: userCubit.shareUser,
-                                    text: "Partager",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
-                    ),
+    return RefreshIndicator(
+        onRefresh: () async => userCubit.reset(true),
+        child: BlocConsumer<ProfessionalCubit, ProfessionalState>(
+          listener: onEventReceived,
+          builder: (context, state) {
+            return NestedScrollView(
+              controller: _scrollController,
+              headerSliverBuilder: (context, _) => [
+                SliverAppBar(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.tertiaryContainer,
+                  foregroundColor: AppTheme.white,
+                  expandedHeight: 250,
+                  pinned: true,
+                  actions: [
+                    // IconButton(
+                    //   onPressed: actionsOptions,
+                    //   icon: toSvgIcon(
+                    //     icon: Assets.iconsOptions,
+                    //     color: AppTheme.white,
+                    //   ),
+                    // ),
                   ],
-                  body: Column(
-                    children: [
-                      TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        splashBorderRadius: BorderRadius.circular(64.0),
-                        tabs: const [
-                          Tab(text: 'Activité'),
-                          Tab(text: 'Liste'),
-                          Tab(text: 'Social'),
-                          Tab(text: 'Quiz'),
-                        ],
-                      ),
-                      const SizedBox(height: 8.0),
-                      Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          children: [
-                            Container(),
-                            Container(),
-                            Container(),
-                            Container(),
-                          ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image(
+                          fit: BoxFit.cover,
+                          image: context.read<AppCacheManager>().getImage(
+                              'https://cdn.pixabay.com/photo/2025/03/31/21/30/italy-9505446_1280.jpg'),
+                          errorBuilder: (context, error, stackTrace) => Icon(
+                            Icons.error,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onTertiaryContainer,
+                            size: 32,
+                          ),
                         ),
-                      )
-                    ],
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: MediaQuery.of(context).viewPadding.top +
+                                kToolbarHeight,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Theme.of(context).colorScheme.inverseSurface,
+                                  Colors.transparent
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            bottom: 8, left: 0, right: 0, child: BtnAccount()),
+                      ],
+                    ),
+                  ),
+                  systemOverlayStyle: Theme.of(context)
+                      .appBarTheme
+                      .systemOverlayStyle
+                      ?.copyWith(statusBarIconBrightness: Brightness.light),
+                ),
+                SliverToBoxAdapter(
+                  child: BlocBuilder<AccountViewManageCubit, bool>(
+                    builder: (ctx, state) => state
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, left: 16.0, right: 16.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Randy Shop', //   'professionalCubit.professional.namePro',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const PrimaryInfo(),
+                                ]),
+                          ),
                   ),
                 ),
-              ));
-        });
-  }
-
-  void onEventReceived(BuildContext context, UserState state) async {
-    await waitForDialog();
-
-    // empêche cette page d'écouter les évenements lancés dans les pages au dessus
-    if (!(ModalRoute.of(context)?.isCurrent ?? false)) return;
-
-    if (state is UserLoggingOut) {
-      loadingDialogCompleter =
-          showLoadingBarrier(context: context, text: "Déconnexion…");
-    } else if (state is ShareUserLoadingState) {
-      loadingDialogCompleter = showLoadingBarrier(
-        context: context,
-      );
-    } else if (state is ShareUserSuccessState) {
-      await Share.share(state.shareLink);
-    } else if (state is UserErrorState) {
-      showErrorToast(content: state.error, context: context);
-    }
+              ],
+              body: Material(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: BlocBuilder<AccountViewManageCubit, bool>(
+                        builder: (ctx, state) => state
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16.0, right: 16.0),
+                                child: MyAccount())
+                            : MyProfessionalBoard())),
+              ),
+            );
+          },
+        ));
   }
 
   void onActionsPressed() => showAppBottomSheet(
@@ -345,5 +250,63 @@ class _AccountScreenState extends State<AccountScreen>
                 ]));
       },
     );
+  }
+
+  void onEventReceived(BuildContext context, ProfessionalState state) async {
+    await waitForDialog();
+
+    // if (state is ShareAnimeLoadingState) {
+    //   loadingDialogCompleter = showLoadingBarrier(
+    //     context: context,
+    //   );
+    // } else if (state is ShareAnimeSuccesState) {
+    //   await Share.share(state.link);
+    // } else if (state is AnimeManipErrorState) {
+    //   showErrorToast(content: state.error, context: context);
+    // }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
+
+class _TabBarGap extends StatefulWidget {
+  final ScrollController controller;
+
+  const _TabBarGap({required this.controller});
+
+  @override
+  State<_TabBarGap> createState() => _TabBarGapState();
+}
+
+class _TabBarGapState extends State<_TabBarGap> {
+  double gap = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      if (!widget.controller.hasClients) return;
+
+      // calcule la distance entre le début du body (du NestedScrollView) et
+      // le haut de l'écran, et en fait un SizedBox. L'écart s'adapte en
+      // fonction de la distance entre les deux, ce qui donne l'effet sticky.
+      setState(() {
+        gap = max(
+            widget.controller.position.pixels -
+                (widget.controller.position.maxScrollExtent -
+                    MediaQuery.of(context).viewPadding.top -
+                    kToolbarHeight),
+            0);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: gap);
   }
 }

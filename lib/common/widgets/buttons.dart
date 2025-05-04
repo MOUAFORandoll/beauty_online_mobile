@@ -2,13 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:beauty/utils/themes.dart';
 
-enum _ButtonStyle { primary, secondary, black, white }
+enum _ButtonStyle { primary, secondary, black, white, transparent }
 
 class BeautyButton extends StatelessWidget {
   final _ButtonStyle _hierarchy;
   final VoidCallback? onPressed;
   final String text;
   final bool large;
+  final bool isSelected;
   final Widget? icon;
 
   const BeautyButton.primary({
@@ -16,12 +17,14 @@ class BeautyButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.large = true,
+    this.isSelected = false,
     this.icon,
   }) : _hierarchy = _ButtonStyle.primary;
 
   const BeautyButton.secondary({
     super.key,
     required this.onPressed,
+    this.isSelected = false,
     required this.text,
     this.large = true,
     this.icon,
@@ -30,6 +33,7 @@ class BeautyButton extends StatelessWidget {
   const BeautyButton.black({
     super.key,
     required this.onPressed,
+    this.isSelected = false,
     required this.text,
     this.large = true,
     this.icon,
@@ -39,9 +43,19 @@ class BeautyButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.isSelected = false,
     this.large = true,
     this.icon,
   }) : _hierarchy = _ButtonStyle.white;
+
+  const BeautyButton.transparent({
+    super.key,
+    required this.onPressed,
+    this.isSelected = false,
+    required this.text,
+    this.large = true,
+    this.icon,
+  }) : _hierarchy = _ButtonStyle.transparent;
 
   Color _backgroundColor(BuildContext context) {
     switch (_hierarchy) {
@@ -53,6 +67,8 @@ class BeautyButton extends StatelessWidget {
         return AppTheme.black;
       case _ButtonStyle.white:
         return AppTheme.white;
+      case _ButtonStyle.transparent:
+        return AppTheme.black.withOpacity(.6);
     }
   }
 
@@ -66,6 +82,8 @@ class BeautyButton extends StatelessWidget {
         return AppTheme.white;
       case _ButtonStyle.white:
         return AppTheme.black;
+      case _ButtonStyle.transparent:
+        return AppTheme.white;
     }
   }
 
@@ -85,6 +103,12 @@ class BeautyButton extends StatelessWidget {
         backgroundColor: _backgroundColor(context),
         foregroundColor: _foregroundColor(context),
         minimumSize: large ? null : const Size(0, 40.0),
+        // _ButtonStyle.transparent,
+
+        side: _hierarchy == _ButtonStyle.transparent && isSelected
+            ? BorderSide(color: Colors.white, width: 3)
+            : null,
+        // OutlinedBorder? shape,
       ),
       child: icon == null
           ? t
