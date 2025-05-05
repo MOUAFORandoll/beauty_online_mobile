@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/Professional/models/professional.dart';
 import 'package:beauty/Professional/services/professional_service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:potatoes/libs.dart';
 import 'package:potatoes/potatoes.dart' hide PreferencesService;
@@ -23,7 +24,8 @@ class NewProfessionalCubit extends Cubit<NewProfessionalState> {
       required String description,
       required double longitude,
       required double latitude,
-      required String titleEmplacement}) {
+      required String titleEmplacement,
+      required XFile? image}) {
     print(state);
     emit(const NewProfessionalUploadingState());
     var data = {
@@ -32,17 +34,13 @@ class NewProfessionalCubit extends Cubit<NewProfessionalState> {
       "description": description,
       "longitude": longitude,
       "latitude": latitude,
-      "titleEmplacement": titleEmplacement
+      "titleEmplacement": titleEmplacement,
     };
     professionalService
-        .createUserProfile(
-      data: data,
-      // file:
-      //     (stateBefore is NewProfessionalMediaState) ? stateBefore.file : null,
-    )
-        .then((post) {
+        .createUserProfile(data: data, cover: image)
+        .then((profil) {
       professionalCubit.getInitialState();
-      emit(NewProfessionalUploadedState(post));
+      emit(NewProfessionalUploadedState(profil));
       Timer(const Duration(seconds: 5), () {
         emit(const NewProfessionalIdleState());
       });

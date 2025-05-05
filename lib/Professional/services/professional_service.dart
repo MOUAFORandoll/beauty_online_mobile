@@ -6,6 +6,7 @@ import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/models/user.dart';
 import 'package:beauty/common/services/api_service.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfessionalService extends ApiService {
   static const String _createUserProfile = '/profile-professionnels';
@@ -22,12 +23,17 @@ class ProfessionalService extends ApiService {
 
   const ProfessionalService(super._dio);
 
-  Future<Professional> createUserProfile({
-    required Map data
-  }) {
+  Future<Professional> createUserProfile(
+      {required Map<String, dynamic> data, required XFile? cover}) async {
+    final FormData formData = FormData.fromMap(data);
+
+    if (cover != null) {
+      formData.files
+          .add(MapEntry('cover', await MultipartFile.fromFile(cover.path)));
+    }
     return compute(
         dio.post(_createUserProfile,
-            options: Options(headers: withAuth()), data: data),
+            options: Options(headers: withAuth()), data: formData),
         mapper: Professional.fromJson);
   }
 

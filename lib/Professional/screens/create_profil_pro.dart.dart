@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
@@ -34,6 +35,7 @@ import 'package:beauty/utils/assets.dart';
 import 'package:beauty/utils/dialogs.dart';
 import 'package:beauty/utils/svg_utils.dart';
 import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/loadPicture.dart';
 
 class CreateProfilProScreen extends StatefulWidget {
   const CreateProfilProScreen({super.key});
@@ -69,6 +71,16 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
   bool isLoading = false;
 
   final _services = ["COIFFURE", "MANICURE"];
+  XFile? _image;
+
+  Future<void> _pickImage() async {
+    final image = await pickImage(context);
+    if (image != null) {
+      setState(() {
+        _image = image;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,14 +169,43 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        hintText:
-                            "Décrivez votre activité \n Ex: Salon spécialisé en coiffure afro...",
-                      ),
-                      maxLines: 3,
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: _pickImage,
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(10), // Arrondi circulaire
+                            child: _image == null
+                                ? toSvgIcon(
+                                    icon: Assets.iconsCamera,
+                                    size:
+                                        MediaQuery.of(context).size.width * .23,
+                                  )
+                                : Image.file(
+                                    File(_image!.path),
+                                    height:
+                                        MediaQuery.of(context).size.width * .23,
+                                    width:
+                                        MediaQuery.of(context).size.width * .23,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _descriptionController,
+                            decoration: const InputDecoration(
+                              hintText:
+                                  "Décrivez votre activité \n Ex: Salon spécialisé en coiffure afro...",
+                            ),
+                            maxLines: 3,
+                          ),
+                        )
+                      ],
                     ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
@@ -257,6 +298,7 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
     if (_currentStep == 0) {
       if (_formInfoKey.currentState!.validate() && _selectedService != null) {
         setState(() => _currentStep++);
+        _getLocation();
       }
     }
     if (_currentStep == 1) {
@@ -272,7 +314,8 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
             description: _descriptionController.text,
             longitude: longitude!,
             latitude: latitude!,
-            titleEmplacement: _emplacementController.text);
+            titleEmplacement: _emplacementController.text,
+            image: _image);
       } else {
         // showErrorToast(
         //     content: 'Veuillez accepter les conditions', context: context);

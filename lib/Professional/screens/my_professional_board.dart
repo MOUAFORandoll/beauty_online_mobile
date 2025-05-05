@@ -66,13 +66,17 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
   Widget build(BuildContext context) {
     return BlocConsumer<ProfessionalCubit, ProfessionalState>(
         listener: onEventReceived,
-        builder: (context, state) => state is InitializingProfessionalState
-            ? ProfessionalBoardLoaderBuilder()
-            : state is ProfessionalLoggedState
-                ? existProfessionnel()
-                : state is NoProfessionnalFondState
-                    ? noExistProfessionnel()
-                    : errorFindProfessionnel());
+        builder: (context, state) =>
+
+            // noExistProfessionnel()
+
+            state is InitializingProfessionalState
+                ? ProfessionalBoardLoaderBuilder()
+                : state is ProfessionalLoggedState
+                    ? existProfessionnel()
+                    : state is NoProfessionnalFondState
+                        ? noExistProfessionnel()
+                        : errorFindProfessionnel());
   }
 
   Widget existProfessionnel() => Scaffold(

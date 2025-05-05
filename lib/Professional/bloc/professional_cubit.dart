@@ -52,9 +52,13 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
       print(
         'proffdddddvvvff= ',
       );
-
-      if ((e as ApiError).error!.code == 'PROFILE_PRO_NOT_FOUND') {
-        emit(NoProfessionnalFondState());
+      emit(NoProfessionnalFondState());
+      if ((e as ApiError).error != null) {
+        if ((e).error!.code == 'PROFILE_PRO_NOT_FOUND') {
+          emit(NoProfessionnalFondState());
+        } else {
+          emit(ProfessionalErrorState(e));
+        }
       } else {
         emit(ProfessionalErrorState(e));
       }

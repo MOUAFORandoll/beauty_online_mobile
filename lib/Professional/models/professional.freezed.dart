@@ -25,6 +25,7 @@ mixin _$Professional {
   String get namePro => throw _privateConstructorUsedError;
   String get service => throw _privateConstructorUsedError;
   Position get position => throw _privateConstructorUsedError;
+  String get cover => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_reservation')
   int get nombreReservation => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_catalogue')
@@ -53,6 +54,7 @@ abstract class $ProfessionalCopyWith<$Res> {
       @JsonKey(name: 'name_pro') String namePro,
       String service,
       Position position,
+      String cover,
       @JsonKey(name: 'nombre_reservation') int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') int nombreCatalogue,
       @JsonKey(name: 'nombre_actes') int nombreActes});
@@ -79,6 +81,7 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
     Object? namePro = null,
     Object? service = null,
     Object? position = null,
+    Object? cover = null,
     Object? nombreReservation = null,
     Object? nombreCatalogue = null,
     Object? nombreActes = null,
@@ -100,6 +103,10 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as Position,
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String,
       nombreReservation: null == nombreReservation
           ? _value.nombreReservation
           : nombreReservation // ignore: cast_nullable_to_non_nullable
@@ -139,6 +146,7 @@ abstract class _$$ProfessionalImplCopyWith<$Res>
       @JsonKey(name: 'name_pro') String namePro,
       String service,
       Position position,
+      String cover,
       @JsonKey(name: 'nombre_reservation') int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') int nombreCatalogue,
       @JsonKey(name: 'nombre_actes') int nombreActes});
@@ -164,6 +172,7 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
     Object? namePro = null,
     Object? service = null,
     Object? position = null,
+    Object? cover = null,
     Object? nombreReservation = null,
     Object? nombreCatalogue = null,
     Object? nombreActes = null,
@@ -185,6 +194,10 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as Position,
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String,
       nombreReservation: null == nombreReservation
           ? _value.nombreReservation
           : nombreReservation // ignore: cast_nullable_to_non_nullable
@@ -209,6 +222,7 @@ class _$ProfessionalImpl extends _Professional {
       @JsonKey(name: 'name_pro') required this.namePro,
       required this.service,
       required this.position,
+      required this.cover,
       @JsonKey(name: 'nombre_reservation') required this.nombreReservation,
       @JsonKey(name: 'nombre_catalogue') required this.nombreCatalogue,
       @JsonKey(name: 'nombre_actes') required this.nombreActes})
@@ -227,6 +241,8 @@ class _$ProfessionalImpl extends _Professional {
   @override
   final Position position;
   @override
+  final String cover;
+  @override
   @JsonKey(name: 'nombre_reservation')
   final int nombreReservation;
   @override
@@ -238,7 +254,7 @@ class _$ProfessionalImpl extends _Professional {
 
   @override
   String toString() {
-    return 'Professional(id: $id, namePro: $namePro, service: $service, position: $position, nombreReservation: $nombreReservation, nombreCatalogue: $nombreCatalogue, nombreActes: $nombreActes)';
+    return 'Professional(id: $id, namePro: $namePro, service: $service, position: $position, cover: $cover, nombreReservation: $nombreReservation, nombreCatalogue: $nombreCatalogue, nombreActes: $nombreActes)';
   }
 
   @override
@@ -251,6 +267,7 @@ class _$ProfessionalImpl extends _Professional {
             (identical(other.service, service) || other.service == service) &&
             (identical(other.position, position) ||
                 other.position == position) &&
+            (identical(other.cover, cover) || other.cover == cover) &&
             (identical(other.nombreReservation, nombreReservation) ||
                 other.nombreReservation == nombreReservation) &&
             (identical(other.nombreCatalogue, nombreCatalogue) ||
@@ -262,7 +279,7 @@ class _$ProfessionalImpl extends _Professional {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, namePro, service, position,
-      nombreReservation, nombreCatalogue, nombreActes);
+      cover, nombreReservation, nombreCatalogue, nombreActes);
 
   /// Create a copy of Professional
   /// with the given fields replaced by the non-null parameter values.
@@ -286,6 +303,7 @@ abstract class _Professional extends Professional {
       @JsonKey(name: 'name_pro') required final String namePro,
       required final String service,
       required final Position position,
+      required final String cover,
       @JsonKey(name: 'nombre_reservation') required final int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') required final int nombreCatalogue,
       @JsonKey(name: 'nombre_actes')
@@ -304,6 +322,8 @@ abstract class _Professional extends Professional {
   String get service;
   @override
   Position get position;
+  @override
+  String get cover;
   @override
   @JsonKey(name: 'nombre_reservation')
   int get nombreReservation;
@@ -330,8 +350,8 @@ Position _$PositionFromJson(Map<String, dynamic> json) {
 mixin _$Position {
   @JsonKey(name: 'title_emplacement')
   String get titleEmplacement => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
-  double get latitude => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
   String? get town => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
 
@@ -352,8 +372,8 @@ abstract class $PositionCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'title_emplacement') String titleEmplacement,
-      double longitude,
-      double latitude,
+      String longitude,
+      String latitude,
       String? town,
       String? country});
 }
@@ -387,11 +407,11 @@ class _$PositionCopyWithImpl<$Res, $Val extends Position>
       longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       town: freezed == town
           ? _value.town
           : town // ignore: cast_nullable_to_non_nullable
@@ -414,8 +434,8 @@ abstract class _$$PositionImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'title_emplacement') String titleEmplacement,
-      double longitude,
-      double latitude,
+      String longitude,
+      String latitude,
       String? town,
       String? country});
 }
@@ -447,11 +467,11 @@ class __$$PositionImplCopyWithImpl<$Res>
       longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       town: freezed == town
           ? _value.town
           : town // ignore: cast_nullable_to_non_nullable
@@ -482,9 +502,9 @@ class _$PositionImpl extends _Position {
   @JsonKey(name: 'title_emplacement')
   final String titleEmplacement;
   @override
-  final double longitude;
+  final String longitude;
   @override
-  final double latitude;
+  final String latitude;
   @override
   final String? town;
   @override
@@ -535,8 +555,8 @@ abstract class _Position extends Position {
   const factory _Position(
       {@JsonKey(name: 'title_emplacement')
       required final String titleEmplacement,
-      required final double longitude,
-      required final double latitude,
+      required final String longitude,
+      required final String latitude,
       final String? town,
       final String? country}) = _$PositionImpl;
   const _Position._() : super._();
@@ -548,9 +568,9 @@ abstract class _Position extends Position {
   @JsonKey(name: 'title_emplacement')
   String get titleEmplacement;
   @override
-  double get longitude;
+  String get longitude;
   @override
-  double get latitude;
+  String get latitude;
   @override
   String? get town;
   @override

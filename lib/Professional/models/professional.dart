@@ -12,6 +12,7 @@ class Professional with _$Professional {
     @JsonKey(name: 'name_pro') required String namePro,
     required String service,
     required Position position,
+    required String cover,
     @JsonKey(name: 'nombre_reservation') required int nombreReservation,
     @JsonKey(name: 'nombre_catalogue') required int nombreCatalogue,
     @JsonKey(name: 'nombre_actes') required int nombreActes,
@@ -27,8 +28,8 @@ class Position with _$Position {
 
   const factory Position({
     @JsonKey(name: 'title_emplacement') required String titleEmplacement,
-    required double longitude,
-    required double latitude,
+    required String longitude,
+    required String latitude,
     String? town,
     String? country,
   }) = _Position;
