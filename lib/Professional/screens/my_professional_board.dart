@@ -1,8 +1,9 @@
 import 'dart:math';
 
-import 'package:beauty/Professionnal/bloc/professional_cubit.dart';
-import 'package:beauty/Professionnal/widgets/catalogue.dart';
-import 'package:beauty/Professionnal/widgets/stories.dart';
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
+import 'package:beauty/Professional/screens/create_profil_pro.dart.dart';
+import 'package:beauty/Professional/widgets/catalogue.dart';
+import 'package:beauty/Professional/widgets/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/screens/home.dart';
@@ -112,9 +113,8 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
                   ),
               child: toSvgIcon(icon: Assets.iconsMore)));
 
-  Widget noExistProfessionnel() => Scaffold(
-        primary: false,
-        body: SafeArea(
+  Widget noExistProfessionnel() => SingleChildScrollView(
+        child: SafeArea(
           child: Material(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: Center(
@@ -152,9 +152,10 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
 
                     BeautyButton.primary(
                       onPressed: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(builder: (_) => const CreateProfessionalProfileScreen()),
-                        // );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const CreateProfilProScreen()),
+                        );
                       },
                       text: "Créer mon profil",
                     ),

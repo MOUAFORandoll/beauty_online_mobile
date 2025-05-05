@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:beauty/Professionnal/models/professional.dart';
-import 'package:beauty/Professionnal/services/professional_service.dart';
+import 'package:beauty/Professional/models/professional.dart';
+import 'package:beauty/Professional/services/professional_service.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, OAuthProvider;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -35,11 +35,11 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
     return null;
   }
 
-  void getInitialState() {
+  void getInitialState() async {
     try {
       emit(InitializingProfessionalState());
       print('proffff');
-      professionalService.findUserProfile().then((professional) {
+      await professionalService.findUserProfile().then((professional) {
         print(
           'proffvvvff===${professional}',
         );
@@ -49,8 +49,15 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
           emit(NoProfessionnalFondState());
       });
     } catch (e) {
-      print(e);
-      emit(ProfessionalErrorState(e));
+      print(
+        'proffdddddvvvff= ',
+      );
+
+      if ((e as ApiError).error!.code == 'PROFILE_PRO_NOT_FOUND') {
+        emit(NoProfessionnalFondState());
+      } else {
+        emit(ProfessionalErrorState(e));
+      }
     }
     ;
   }

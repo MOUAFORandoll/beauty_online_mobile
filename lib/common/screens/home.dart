@@ -1,6 +1,8 @@
+import 'package:beauty/Fil/screens/fil_actu.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
-import 'package:beauty/common/screens/acceuil.dart';
+import 'package:beauty/map/screens/map.dart';
+import 'package:beauty/notifications/screens/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
@@ -23,9 +25,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   late final navigationCubit = context.read<HomeBottomNavigationCubit>();
   late final pages = [
-    {'title': 'Social', 'page': AcceuilScreen()},
-    {'title': 'Pour toi', 'page': Container()},
-    {'title': 'Animes', 'page': Container()},
+    {'title': 'Social', 'page': FilActuScreen()},
+    {'title': 'Find', 'page': MapScreen()},
+    {'title': 'Notifications', 'page': NotificationsScreen()},
     {'title': 'Compte', 'page': AccountScreen()},
   ];
   bool activityInitiallyLoaded = false;

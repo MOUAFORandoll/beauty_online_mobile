@@ -7,8 +7,8 @@ import 'package:beauty/common/widgets/search_bar.dart';
 import 'package:beauty/common/widgets/section_title.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 
-class AcceuilScreen extends StatelessWidget {
-  const AcceuilScreen({super.key});
+class FilActuScreen extends StatelessWidget {
+  const FilActuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

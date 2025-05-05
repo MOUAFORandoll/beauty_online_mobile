@@ -1,12 +1,10 @@
+import 'package:beauty/common/models/service_second_model.dart';
+import 'package:beauty/common/widgets/filter_tabs.dart';
+import 'package:beauty/common/widgets/package_card.dart';
 import 'package:beauty/common/widgets/section_title_second.dart';
-import 'package:flutter/material.dart';
-import '../widgets/shop_header.dart';
-import '../widgets/shop_action_buttons.dart';
-import '../widgets/shop_discounts.dart';
-import '../widgets/filter_tabs.dart';
-import '../widgets/service_card.dart';
-import '../widgets/package_card.dart';
-import '../models/service_second_model.dart';
+import 'package:beauty/common/widgets/shop_action_buttons.dart';
+import 'package:beauty/common/widgets/shop_header.dart';
+import 'package:flutter/material.dart'; 
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});

@@ -20,7 +20,16 @@ String _translateError(dynamic error) {
   if (apiError.isUnauthenticatedError) return unauthenticatedMessage;
   if (apiError.isNoInternetConnectionError) return noInternetMessage;
   if (apiError.isInternalServerError) return defaultMessage;
-  if (apiError.error != null) return apiError.error!.displayMessages![1].value;
+  if (apiError.error != null) {
+    if (apiError.error!.displayMessages![1].value is List) {
+      var finalMessage = '';
+      (apiError.error!.displayMessages![1].value as List)
+          .forEach((e) => finalMessage = finalMessage + e + ' ');
+      return finalMessage;
+    } else {
+      return apiError.error!.displayMessages![1].value;
+    }
+  }
 
   return defaultMessage;
 }

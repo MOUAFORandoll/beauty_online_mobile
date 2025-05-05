@@ -1,3 +1,4 @@
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
@@ -14,6 +15,7 @@ class PrimaryInfo extends StatefulWidget {
 class _PrimaryInfoState extends State<PrimaryInfo>
     with SingleTickerProviderStateMixin {
   late final userCubit = context.read<UserCubit>();
+  late final professionalCubit = context.read<ProfessionalCubit>();
 
   final isCollapsed = ValueNotifier<bool>(true);
   @override
@@ -39,7 +41,7 @@ class _PrimaryInfoState extends State<PrimaryInfo>
                 width: 4,
               ),
               Text(
-                "Douala, Cameroun",
+                professionalCubit.professional.position.titleEmplacement,
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     // color: AppTheme.onHighGreen,
                     ),
@@ -65,7 +67,7 @@ class _PrimaryInfoState extends State<PrimaryInfo>
               width: 4,
             ),
             Text(
-              "10 Reservations",
+              "${professionalCubit.professional.nombreReservation} Reservations",
               style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -90,7 +92,7 @@ class _PrimaryInfoState extends State<PrimaryInfo>
               width: 4,
             ),
             Text(
-              "20 Actes",
+              "${professionalCubit.professional.nombreCatalogue} Catalogues",
               style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),

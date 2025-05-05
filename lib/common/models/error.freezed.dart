@@ -21,12 +21,8 @@ Error _$ErrorFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Error {
   String get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
   @JsonKey(name: 'display_messages')
   List<IDisplayText>? get displayMessages => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get details => throw _privateConstructorUsedError;
-  @JsonKey(name: 'status_code')
-  int get statusCode => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
 
   /// Serializes this Error to a JSON map.
@@ -45,10 +41,7 @@ abstract class $ErrorCopyWith<$Res> {
   @useResult
   $Res call(
       {String code,
-      String message,
       @JsonKey(name: 'display_messages') List<IDisplayText>? displayMessages,
-      Map<String, dynamic>? details,
-      @JsonKey(name: 'status_code') int statusCode,
       String url});
 }
 
@@ -68,10 +61,7 @@ class _$ErrorCopyWithImpl<$Res, $Val extends Error>
   @override
   $Res call({
     Object? code = null,
-    Object? message = null,
     Object? displayMessages = freezed,
-    Object? details = freezed,
-    Object? statusCode = null,
     Object? url = null,
   }) {
     return _then(_value.copyWith(
@@ -79,22 +69,10 @@ class _$ErrorCopyWithImpl<$Res, $Val extends Error>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
       displayMessages: freezed == displayMessages
           ? _value.displayMessages
           : displayMessages // ignore: cast_nullable_to_non_nullable
               as List<IDisplayText>?,
-      details: freezed == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -112,10 +90,7 @@ abstract class _$$ErrorImplCopyWith<$Res> implements $ErrorCopyWith<$Res> {
   @useResult
   $Res call(
       {String code,
-      String message,
       @JsonKey(name: 'display_messages') List<IDisplayText>? displayMessages,
-      Map<String, dynamic>? details,
-      @JsonKey(name: 'status_code') int statusCode,
       String url});
 }
 
@@ -133,10 +108,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? code = null,
-    Object? message = null,
     Object? displayMessages = freezed,
-    Object? details = freezed,
-    Object? statusCode = null,
     Object? url = null,
   }) {
     return _then(_$ErrorImpl(
@@ -144,22 +116,10 @@ class __$$ErrorImplCopyWithImpl<$Res>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
       displayMessages: freezed == displayMessages
           ? _value._displayMessages
           : displayMessages // ignore: cast_nullable_to_non_nullable
               as List<IDisplayText>?,
-      details: freezed == details
-          ? _value._details
-          : details // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -173,22 +133,16 @@ class __$$ErrorImplCopyWithImpl<$Res>
 class _$ErrorImpl implements _Error {
   const _$ErrorImpl(
       {required this.code,
-      required this.message,
       @JsonKey(name: 'display_messages')
       final List<IDisplayText>? displayMessages,
-      final Map<String, dynamic>? details,
-      @JsonKey(name: 'status_code') required this.statusCode,
       required this.url})
-      : _displayMessages = displayMessages,
-        _details = details;
+      : _displayMessages = displayMessages;
 
   factory _$ErrorImpl.fromJson(Map<String, dynamic> json) =>
       _$$ErrorImplFromJson(json);
 
   @override
   final String code;
-  @override
-  final String message;
   final List<IDisplayText>? _displayMessages;
   @override
   @JsonKey(name: 'display_messages')
@@ -200,25 +154,12 @@ class _$ErrorImpl implements _Error {
     return EqualUnmodifiableListView(value);
   }
 
-  final Map<String, dynamic>? _details;
-  @override
-  Map<String, dynamic>? get details {
-    final value = _details;
-    if (value == null) return null;
-    if (_details is EqualUnmodifiableMapView) return _details;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
-  @override
-  @JsonKey(name: 'status_code')
-  final int statusCode;
   @override
   final String url;
 
   @override
   String toString() {
-    return 'Error(code: $code, message: $message, displayMessages: $displayMessages, details: $details, statusCode: $statusCode, url: $url)';
+    return 'Error(code: $code, displayMessages: $displayMessages, url: $url)';
   }
 
   @override
@@ -227,25 +168,15 @@ class _$ErrorImpl implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
             (identical(other.code, code) || other.code == code) &&
-            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
                 .equals(other._displayMessages, _displayMessages) &&
-            const DeepCollectionEquality().equals(other._details, _details) &&
-            (identical(other.statusCode, statusCode) ||
-                other.statusCode == statusCode) &&
             (identical(other.url, url) || other.url == url));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      code,
-      message,
-      const DeepCollectionEquality().hash(_displayMessages),
-      const DeepCollectionEquality().hash(_details),
-      statusCode,
-      url);
+  int get hashCode => Object.hash(runtimeType, code,
+      const DeepCollectionEquality().hash(_displayMessages), url);
 
   /// Create a copy of Error
   /// with the given fields replaced by the non-null parameter values.
@@ -266,11 +197,8 @@ class _$ErrorImpl implements _Error {
 abstract class _Error implements Error {
   const factory _Error(
       {required final String code,
-      required final String message,
       @JsonKey(name: 'display_messages')
       final List<IDisplayText>? displayMessages,
-      final Map<String, dynamic>? details,
-      @JsonKey(name: 'status_code') required final int statusCode,
       required final String url}) = _$ErrorImpl;
 
   factory _Error.fromJson(Map<String, dynamic> json) = _$ErrorImpl.fromJson;
@@ -278,15 +206,8 @@ abstract class _Error implements Error {
   @override
   String get code;
   @override
-  String get message;
-  @override
   @JsonKey(name: 'display_messages')
   List<IDisplayText>? get displayMessages;
-  @override
-  Map<String, dynamic>? get details;
-  @override
-  @JsonKey(name: 'status_code')
-  int get statusCode;
   @override
   String get url;
 
@@ -305,7 +226,7 @@ IDisplayText _$IDisplayTextFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$IDisplayText {
   String get lang => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
+  dynamic get value => throw _privateConstructorUsedError;
 
   /// Serializes this IDisplayText to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -323,7 +244,7 @@ abstract class $IDisplayTextCopyWith<$Res> {
           IDisplayText value, $Res Function(IDisplayText) then) =
       _$IDisplayTextCopyWithImpl<$Res, IDisplayText>;
   @useResult
-  $Res call({String lang, String value});
+  $Res call({String lang, dynamic value});
 }
 
 /// @nodoc
@@ -342,17 +263,17 @@ class _$IDisplayTextCopyWithImpl<$Res, $Val extends IDisplayText>
   @override
   $Res call({
     Object? lang = null,
-    Object? value = null,
+    Object? value = freezed,
   }) {
     return _then(_value.copyWith(
       lang: null == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -365,7 +286,7 @@ abstract class _$$IDisplayTextImplCopyWith<$Res>
       __$$IDisplayTextImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String lang, String value});
+  $Res call({String lang, dynamic value});
 }
 
 /// @nodoc
@@ -382,17 +303,17 @@ class __$$IDisplayTextImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? lang = null,
-    Object? value = null,
+    Object? value = freezed,
   }) {
     return _then(_$IDisplayTextImpl(
       lang: null == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ));
   }
 }
@@ -408,7 +329,7 @@ class _$IDisplayTextImpl implements _IDisplayText {
   @override
   final String lang;
   @override
-  final String value;
+  final dynamic value;
 
   @override
   String toString() {
@@ -421,12 +342,13 @@ class _$IDisplayTextImpl implements _IDisplayText {
         (other.runtimeType == runtimeType &&
             other is _$IDisplayTextImpl &&
             (identical(other.lang, lang) || other.lang == lang) &&
-            (identical(other.value, value) || other.value == value));
+            const DeepCollectionEquality().equals(other.value, value));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, lang, value);
+  int get hashCode => Object.hash(
+      runtimeType, lang, const DeepCollectionEquality().hash(value));
 
   /// Create a copy of IDisplayText
   /// with the given fields replaced by the non-null parameter values.
@@ -447,7 +369,7 @@ class _$IDisplayTextImpl implements _IDisplayText {
 abstract class _IDisplayText implements IDisplayText {
   const factory _IDisplayText(
       {required final String lang,
-      required final String value}) = _$IDisplayTextImpl;
+      required final dynamic value}) = _$IDisplayTextImpl;
 
   factory _IDisplayText.fromJson(Map<String, dynamic> json) =
       _$IDisplayTextImpl.fromJson;
@@ -455,7 +377,7 @@ abstract class _IDisplayText implements IDisplayText {
   @override
   String get lang;
   @override
-  String get value;
+  dynamic get value;
 
   /// Create a copy of IDisplayText
   /// with the given fields replaced by the non-null parameter values.

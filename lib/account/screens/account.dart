@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:beauty/Professionnal/bloc/professional_cubit.dart';
-import 'package:beauty/Professionnal/screens/my_professional_board.dart';
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
+import 'package:beauty/Professional/screens/my_professional_board.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/screens/my_account.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
@@ -52,7 +52,10 @@ class _AccountScreenState extends State<AccountScreen>
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: () async => userCubit.reset(true),
+        onRefresh: () async {
+          userCubit.reset(true);
+          professionalCubit.getInitialState();
+        },
         child: BlocConsumer<ProfessionalCubit, ProfessionalState>(
           listener: onEventReceived,
           builder: (context, state) {
@@ -159,7 +162,8 @@ class _AccountScreenState extends State<AccountScreen>
                                                 MainAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Randy Shop', //   'professionalCubit.professional.namePro',
+                                                professionalCubit
+                                                    .professional.namePro,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)

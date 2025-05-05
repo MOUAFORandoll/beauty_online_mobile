@@ -1,8 +1,10 @@
-import 'package:beauty/Professionnal/bloc/professional_cubit.dart';
-import 'package:beauty/Professionnal/services/professional_service.dart';
+import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
+import 'package:beauty/Professional/services/professional_service.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/auth/screens/complete_info.dart';
+import 'package:beauty/common/services/geolocation_service.dart';
 import 'package:beauty/firebase_options.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -95,6 +97,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => AuthService(dio)),
         RepositoryProvider(create: (_) => UserService(dio)),
         RepositoryProvider(create: (_) => ProfessionalService(dio)),
+        RepositoryProvider(create: (_) => GeolocationService()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -107,6 +110,11 @@ class MyApp extends StatelessWidget {
                   )),
           BlocProvider(
               create: (context) => ProfessionalCubit(
+                    context.read(),
+                  )),
+          BlocProvider(
+              create: (context) => NewProfessionalCubit(
+                    context.read(),
                     context.read(),
                   )),
           BlocProvider(create: (_) => AccountViewManageCubit()),

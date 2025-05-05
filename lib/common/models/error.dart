@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
- 
+
 part 'error.freezed.dart';
 part 'error.g.dart';
 
@@ -7,10 +7,7 @@ part 'error.g.dart';
 class Error with _$Error {
   const factory Error({
     required String code,
-    required String message,
     @JsonKey(name: 'display_messages') List<IDisplayText>? displayMessages,
-    Map<String, dynamic>? details,
-    @JsonKey(name: 'status_code') required int statusCode,
     required String url,
   }) = _Error;
 
@@ -21,7 +18,7 @@ class Error with _$Error {
 class IDisplayText with _$IDisplayText {
   const factory IDisplayText({
     required String lang,
-    required String value,
+    required dynamic value,
   }) = _IDisplayText;
 
   factory IDisplayText.fromJson(Map<String, dynamic> json) =>

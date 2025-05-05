@@ -1,8 +1,7 @@
-import 'package:beauty/common/screens/shop_screen.dart';
+import 'package:beauty/Fil/screens/shop_screen.dart'; 
 import 'package:beauty/common/models/salon_model.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:potatoes/libs.dart';
 
 class SalonCard extends StatelessWidget {

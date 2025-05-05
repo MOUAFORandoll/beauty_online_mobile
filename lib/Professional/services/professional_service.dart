@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:beauty/Professionnal/models/professional.dart';
+import 'package:beauty/Professional/models/professional.dart';
 import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
@@ -22,12 +22,12 @@ class ProfessionalService extends ApiService {
 
   const ProfessionalService(super._dio);
 
-  Future<Professional> createUserProfile(
-      {required String namePro, required String service}) {
+  Future<Professional> createUserProfile({
+    required Map data
+  }) {
     return compute(
         dio.post(_createUserProfile,
-            options: Options(headers: withAuth()),
-            data: {"namePro": namePro, "service": service}),
+            options: Options(headers: withAuth()), data: data),
         mapper: Professional.fromJson);
   }
 

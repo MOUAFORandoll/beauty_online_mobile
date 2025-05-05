@@ -207,7 +207,7 @@ abstract class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           elevation: 0,
-          padding: const EdgeInsets.only(bottom: 16.0),
+        
         ),
       ),
       tabBarTheme: TabBarTheme(

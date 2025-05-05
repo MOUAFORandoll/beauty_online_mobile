@@ -70,10 +70,6 @@ class UserCubit extends ObjectCubit<User, UserState> {
         if (error.dio?.error is InvalidAuthenticationHeadersException) {
           // si pour une raison obscure on arrive pas à générer les headers d'authentification
           signOut();
-        } else if (error.error?.code == "USER_APP_UPGRADE") {
-          final stateBefore = state;
-          emit(const UserShouldUpgradeAppState());
-          emit(stateBefore);
         }
       }
     });
