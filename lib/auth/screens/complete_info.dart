@@ -123,7 +123,8 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                         authCubit.completeUserName(
                           userName: userNameController.text,
                           phone: _phoneNumber.number,
-                          countryCode: _phoneNumber.countryCode,
+                          countryCode: _phoneNumber.countryISOCode,
+                          codePhone: _phoneNumber.countryCode,
                         );
                       }
                     },
@@ -142,7 +143,6 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
     if (state is AuthLoadingState) {
       loadingDialogCompleter = showLoadingBarrier(context: context);
     } else if (state is CompletedUserSuccessUserState) {
-      
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const HomeScreen()),
           (r) => false);

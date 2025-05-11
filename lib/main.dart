@@ -6,6 +6,7 @@ import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/auth/screens/complete_info.dart';
 import 'package:beauty/common/services/geolocation_service.dart';
 import 'package:beauty/firebase_options.dart';
+import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -97,6 +98,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => AuthService(dio)),
         RepositoryProvider(create: (_) => UserService(dio)),
         RepositoryProvider(create: (_) => ProfessionalService(dio)),
+        RepositoryProvider(create: (_) => NotificationsService(dio)),
         RepositoryProvider(create: (_) => GeolocationService()),
       ],
       child: MultiBlocProvider(

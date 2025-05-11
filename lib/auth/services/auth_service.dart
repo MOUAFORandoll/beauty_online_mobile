@@ -27,6 +27,7 @@ class AuthService extends ApiService {
     required String userName,
     required String phone,
     required String countryCode,
+    required String codePhone,
   }) {
     return compute(
       dio.patch(
@@ -36,6 +37,7 @@ class AuthService extends ApiService {
           'countryCode': countryCode,
           'phone': phone,
           'userName': userName,
+          'codePhone': codePhone,
         },
       ),
       mapper: User.fromJson,

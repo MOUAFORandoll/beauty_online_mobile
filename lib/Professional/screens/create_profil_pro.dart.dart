@@ -23,7 +23,7 @@ import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:beauty/account/screens/edit_profile.dart';
+import 'package:beauty/account/screens/settings/edit_profile.dart';
 import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';

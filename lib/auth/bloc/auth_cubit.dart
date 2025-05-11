@@ -98,6 +98,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String userName,
     required String countryCode,
     required String phone,
+    required String codePhone,
   }) async {
     final stateBefore = state;
     final idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
@@ -106,7 +107,10 @@ class AuthCubit extends Cubit<AuthState> {
 
     await authService
         .completeUserProfile(
-            userName: userName, phone: phone, countryCode: countryCode)
+            userName: userName,
+            phone: phone,
+            countryCode: countryCode,
+            codePhone: codePhone)
         .then((user) {
       userCubit.preferencesService.saveUser(user).then((_) {
         emit(const CompletedUserSuccessUserState());

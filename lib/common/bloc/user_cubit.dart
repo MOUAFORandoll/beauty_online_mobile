@@ -89,19 +89,20 @@ class UserCubit extends ObjectCubit<User, UserState> {
   }
 
   void updateUser({
-    String? username,
-    String? biography,
-    List<String>? genres,
+    int? type,
+    String? data,
+    String? countryCode,
+    String? codePhone,
   }) {
     final stateBefore = state;
 
     emit(const UserUpdatingState());
     userService
         .updateUser(
-      username: username,
-      biography: biography,
-      genres: genres,
-    )
+            type: type,
+            data: data,
+            countryCode: countryCode,
+            codePhone: codePhone)
         .then((user) {
       preferencesService.saveUser(user);
       emit(const UserUpdatedState());

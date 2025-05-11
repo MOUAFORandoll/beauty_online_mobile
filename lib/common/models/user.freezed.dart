@@ -28,6 +28,7 @@ mixin _$User {
   String get authProvider => throw _privateConstructorUsedError;
   String? get countryCode => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
+  String? get codePhone => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +52,8 @@ abstract class $UserCopyWith<$Res> {
       String firebaseUID,
       String authProvider,
       String? countryCode,
-      String? phone});
+      String? phone,
+      String? codePhone});
 }
 
 /// @nodoc
@@ -77,6 +79,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? authProvider = null,
     Object? countryCode = freezed,
     Object? phone = freezed,
+    Object? codePhone = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -111,6 +114,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
+      codePhone: freezed == codePhone
+          ? _value.codePhone
+          : codePhone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -130,7 +137,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String firebaseUID,
       String authProvider,
       String? countryCode,
-      String? phone});
+      String? phone,
+      String? codePhone});
 }
 
 /// @nodoc
@@ -153,6 +161,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? authProvider = null,
     Object? countryCode = freezed,
     Object? phone = freezed,
+    Object? codePhone = freezed,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -187,6 +196,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
+      codePhone: freezed == codePhone
+          ? _value.codePhone
+          : codePhone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -202,7 +215,8 @@ class _$UserImpl extends _User {
       required this.firebaseUID,
       required this.authProvider,
       this.countryCode,
-      this.phone})
+      this.phone,
+      this.codePhone})
       : super._();
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -224,10 +238,12 @@ class _$UserImpl extends _User {
   final String? countryCode;
   @override
   final String? phone;
+  @override
+  final String? codePhone;
 
   @override
   String toString() {
-    return 'User(id: $id, pictureUrl: $pictureUrl, email: $email, userName: $userName, firebaseUID: $firebaseUID, authProvider: $authProvider, countryCode: $countryCode, phone: $phone)';
+    return 'User(id: $id, pictureUrl: $pictureUrl, email: $email, userName: $userName, firebaseUID: $firebaseUID, authProvider: $authProvider, countryCode: $countryCode, phone: $phone, codePhone: $codePhone)';
   }
 
   @override
@@ -247,13 +263,15 @@ class _$UserImpl extends _User {
                 other.authProvider == authProvider) &&
             (identical(other.countryCode, countryCode) ||
                 other.countryCode == countryCode) &&
-            (identical(other.phone, phone) || other.phone == phone));
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.codePhone, codePhone) ||
+                other.codePhone == codePhone));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, pictureUrl, email, userName,
-      firebaseUID, authProvider, countryCode, phone);
+      firebaseUID, authProvider, countryCode, phone, codePhone);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -280,7 +298,8 @@ abstract class _User extends User {
       required final String firebaseUID,
       required final String authProvider,
       final String? countryCode,
-      final String? phone}) = _$UserImpl;
+      final String? phone,
+      final String? codePhone}) = _$UserImpl;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -301,6 +320,8 @@ abstract class _User extends User {
   String? get countryCode;
   @override
   String? get phone;
+  @override
+  String? get codePhone;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

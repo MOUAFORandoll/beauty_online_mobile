@@ -1,7 +1,7 @@
 import 'package:beauty/Fil/screens/fil_actu.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
-import 'package:beauty/map/screens/map.dart';
+import 'package:beauty/map/screens/map_screen.dart';
 import 'package:beauty/notifications/screens/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
@@ -49,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
         child:
             BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
           builder: (context, state) => Scaffold(
-            appBar: state.currentIndex == 0 || state.currentIndex == 3
+            appBar: state.currentIndex == 0 ||
+                    state.currentIndex == 3 ||
+                    state.currentIndex == 1
                 ? null
                 : AppBar(
                     forceMaterialTransparency: true,

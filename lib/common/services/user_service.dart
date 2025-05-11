@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
-import 'package:potatoes/libs.dart'; 
+import 'package:potatoes/libs.dart';
 import 'package:beauty/common/models/user.dart';
-import 'package:beauty/common/services/api_service.dart'; 
+import 'package:beauty/common/services/api_service.dart';
 
 class UserService extends ApiService {
   static const String _getMe = '/users/me';
@@ -118,18 +118,24 @@ class UserService extends ApiService {
         mapper: User.fromJson);
   }
 
-  Future<User> updateUser({
-    String? username,
-    String? biography,
-    List<String>? genres,
-  }) {
+  Future<User> updateUser(
+      {int? type, String? data, String? countryCode, String? codePhone}) {
+    print(
+      {
+        if (type == 0) 'userName': data,
+        if (type == 1) 'phone': data,
+        if (type == 1) 'countryCode': countryCode,
+        if (type == 1) 'codePhone': codePhone,
+      },
+    );
     return compute(
         dio.patch(
           _updateUser,
           data: {
-            if (username != null) 'username': username,
-            if (biography != null) 'biography': biography,
-            if (genres != null) 'favorite_genres': genres,
+            if (type == 0) 'userName': data,
+            if (type == 1) 'phone': data,
+            if (type == 1) 'countryCode': countryCode,
+            if (type == 1) 'codePhone': codePhone,
           },
           options: Options(headers: withAuth()),
         ),
@@ -165,7 +171,6 @@ class UserService extends ApiService {
       ),
     );
   }
- 
 
   Future<PaginatedList<User>> searchUser(
       {required String search, int page = 1, CancelToken? cancelToken}) async {

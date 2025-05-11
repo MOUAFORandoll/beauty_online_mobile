@@ -16,6 +16,8 @@ class User with _$User {
     required String authProvider,
       String? countryCode,
       String? phone,
+      String? codePhone,
+      
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

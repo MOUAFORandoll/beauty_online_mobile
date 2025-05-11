@@ -15,6 +15,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       authProvider: json['authProvider'] as String,
       countryCode: json['countryCode'] as String?,
       phone: json['phone'] as String?,
+      codePhone: json['codePhone'] as String?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'authProvider': instance.authProvider,
       'countryCode': instance.countryCode,
       'phone': instance.phone,
+      'codePhone': instance.codePhone,
     };
