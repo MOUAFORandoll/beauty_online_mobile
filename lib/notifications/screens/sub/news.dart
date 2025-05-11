@@ -9,7 +9,7 @@ import 'package:beauty/common/widgets/search_bar.dart';
 import 'package:beauty/common/widgets/section_title.dart';
 import 'package:beauty/notifications/bloc/load_notifications_cubit.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart' hide SearchBar, Notification;
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/auto_list/widgets/auto_list_view.dart';

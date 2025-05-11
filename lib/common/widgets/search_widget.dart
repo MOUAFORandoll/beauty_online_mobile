@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/bloc/home_bottom_navigation_cubit.dart'; 
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});

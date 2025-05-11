@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class ActivityLoaderBuilder extends StatelessWidget {
   final int count;

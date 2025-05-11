@@ -8,7 +8,7 @@ import 'package:beauty/common/widgets/section_title.dart';
 import 'package:beauty/notifications/screens/sub/generales.dart';
 import 'package:beauty/notifications/screens/sub/news.dart';
 import 'package:beauty/notifications/screens/sub/rendez_vous.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 
 class NotificationsScreen extends StatefulWidget {

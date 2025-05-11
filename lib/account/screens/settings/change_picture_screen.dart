@@ -6,8 +6,8 @@ import 'package:potatoes/libs.dart';
 import 'package:potatoes/potatoes.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/utils/dialogs.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class ChangePictureScreen extends StatefulWidget {
   final XFile image;

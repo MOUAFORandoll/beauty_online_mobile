@@ -21,6 +21,9 @@ class ProfessionalService extends ApiService {
   static const String _updateUserPosition =
       '/profile-professionnels/{id}/update-position';
 
+  static const String _catalogue = '/realisations';
+  static const String _stories = '/realisations';
+
   const ProfessionalService(super._dio);
 
   Future<Professional> createUserProfile(
@@ -89,5 +92,18 @@ class ProfessionalService extends ApiService {
     return compute(dio.patch(_updateUserPosition.replaceAll('{id}', id),
         options: Options(headers: withAuth()),
         data: {'latitude': latitude, 'longitude': longitude}));
+  }
+
+  Future<Professional> addCatalogue({
+    required FormData data,
+  }) async {
+    return compute(
+        dio.post(_catalogue, options: Options(headers: withAuth()), data: data),
+        mapper: Professional.fromJson);
+  }
+
+  Future<void> deleteCatalogue({required String id}) {
+    return compute(dio.delete(_deleteProfile + '/${id}',
+        options: Options(headers: withAuth())));
   }
 }

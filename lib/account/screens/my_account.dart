@@ -14,10 +14,10 @@ import 'package:beauty/common/widgets/action_widget.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/dialogs.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});

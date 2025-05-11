@@ -2,8 +2,8 @@ import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
-import 'package:beauty/utils/month_to_string.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/month_to_string.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class PrimaryInfo extends StatefulWidget {
   const PrimaryInfo({super.key});

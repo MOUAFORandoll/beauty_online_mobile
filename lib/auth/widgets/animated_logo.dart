@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/assets.dart';
+import 'package:beauty/common/utils/assets.dart';
 
 class AnimatedLogo extends StatefulWidget {
   final VoidCallback? onEnd;

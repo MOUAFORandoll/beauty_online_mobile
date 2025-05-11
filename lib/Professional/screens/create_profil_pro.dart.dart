@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/widgets/catalogue.dart';
-import 'package:beauty/Professional/widgets/stories.dart';
+import 'package:beauty/Professional/screens/sub/catalogue.dart';
+import 'package:beauty/Professional/screens/sub/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/screens/home.dart';
@@ -31,10 +31,10 @@ import 'package:beauty/common/widgets/action_widget.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/dialogs.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/utils/loadPicture.dart';
 
 class CreateProfilProScreen extends StatefulWidget {

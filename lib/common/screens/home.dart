@@ -12,8 +12,8 @@ import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/screens/app_upgrade.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:beauty/common/widgets/search_widget.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
 
 class ErrorBuilder extends StatelessWidget {
   final VoidCallback retry;

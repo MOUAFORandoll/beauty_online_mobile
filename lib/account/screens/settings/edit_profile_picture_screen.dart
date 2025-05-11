@@ -4,9 +4,9 @@ import 'package:potatoes/libs.dart';
 import 'package:beauty/account/screens/settings/change_picture_screen.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class EditProfilePictureScreen extends StatelessWidget {
   const EditProfilePictureScreen({super.key});

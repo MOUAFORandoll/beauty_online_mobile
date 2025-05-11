@@ -1,5 +1,5 @@
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import '../models/service_second_model.dart';

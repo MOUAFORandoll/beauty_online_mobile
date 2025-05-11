@@ -7,7 +7,7 @@ import 'package:beauty/auth/bloc/auth_cubit.dart';
 import 'package:beauty/common/utils/validators.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/dialogs.dart';
+import 'package:beauty/common/utils/dialogs.dart';
 
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';

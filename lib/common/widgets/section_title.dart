@@ -1,4 +1,4 @@
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 

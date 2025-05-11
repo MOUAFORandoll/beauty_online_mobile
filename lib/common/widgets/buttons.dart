@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 enum _ButtonStyle { primary, secondary, black, white, transparent }
 

@@ -1,3 +1,4 @@
+import 'package:beauty/Professional/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/Professional/services/professional_service.dart';
@@ -28,7 +29,7 @@ import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/services/preferences_service.dart';
 import 'package:beauty/common/services/user_service.dart';
 import 'package:beauty/common/widgets/read_more_theme.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -111,7 +112,11 @@ class MyApp extends StatelessWidget {
                     preferencesService,
                   )),
           BlocProvider(
-              create: (context) => ProfessionalCubit(
+              create: (context) =>
+                  ProfessionalCubit(context.read(), preferencesService)),
+          BlocProvider(
+              create: (context) => GestionProfessionalCubit(
+                    context.read(),
                     context.read(),
                   )),
           BlocProvider(

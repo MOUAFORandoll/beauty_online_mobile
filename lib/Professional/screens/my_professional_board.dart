@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/Professional/screens/create_profil_pro.dart.dart';
-import 'package:beauty/Professional/widgets/catalogue.dart';
-import 'package:beauty/Professional/widgets/stories.dart';
+import 'package:beauty/Professional/screens/sub/add_catalogue.dart';
+import 'package:beauty/Professional/screens/sub/catalogue.dart';
+import 'package:beauty/Professional/screens/sub/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/screens/home.dart';
@@ -27,10 +28,10 @@ import 'package:beauty/common/widgets/action_widget.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/dialogs.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class MyProfessionalBoard extends StatefulWidget {
   const MyProfessionalBoard({super.key});
@@ -113,7 +114,10 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
           : FloatingActionButton(
               heroTag: 'nouveau',
               onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => _tabController.index == 0
+                            ? AddProductScreen()
+                            : AddProductScreen()),
                   ),
               child: toSvgIcon(icon: Assets.iconsMore)));
 

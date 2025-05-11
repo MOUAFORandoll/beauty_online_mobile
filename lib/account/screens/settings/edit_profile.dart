@@ -10,7 +10,7 @@ import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/utils/validators.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
-import 'package:beauty/utils/dialogs.dart';
+import 'package:beauty/common/utils/dialogs.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final int type;

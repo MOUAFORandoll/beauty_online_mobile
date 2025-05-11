@@ -17,14 +17,17 @@ part 'professional_state.dart';
 
 class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
   final ProfessionalService professionalService;
+  final PreferencesService preferencesService;
 
   ProfessionalCubit(
     this.professionalService,
+    this.preferencesService,
   ) : super(const InitializingProfessionalState()) {
     log('InitializingProfessionalState');
 
     getInitialState();
     log('InitializingProfessionalStat===e');
+    getInitialStateOnline();
   }
 
   @override
@@ -35,7 +38,18 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
     return null;
   }
 
-  void getInitialState() async {
+  void getInitialState() {
+    final professional = preferencesService.professional;
+    log('professional =======from store======================${professional}');
+    if (professional == null) {
+      emit(const NoProfessionnalFondState());
+    } else {
+      
+      emit(ProfessionalLoggedState(professional));
+    }
+  }
+
+  void getInitialStateOnline() async {
     try {
       emit(InitializingProfessionalState());
       print('proffff');

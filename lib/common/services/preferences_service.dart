@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:beauty/Professional/models/professional.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -10,6 +11,7 @@ import 'package:beauty/common/models/user.dart';
 
 class PreferencesService extends SecuredPreferencesService {
   static const String _keyUser = 'user';
+  static const String _keyPro = 'professional';
   static const String _keyUserUID = 'user_id';
   static const String _keyDeviceToken = 'device-token';
   static const String _keyAuthToken = 'auth_token';
@@ -32,6 +34,19 @@ class PreferencesService extends SecuredPreferencesService {
     return Future.wait([
       preferences.setString(_keyUserUID, user.id),
       preferences.setString(_keyUser, jsonEncode(user)),
+    ]);
+  }
+
+  Professional? get professional {
+    final value = preferences.getString(_keyPro);
+
+    if (value == null) return null;
+    return Professional.fromJson(jsonDecode(value) as Map<String, dynamic>);
+  }
+
+  Future<void> saveProfessional(Professional professional) {
+    return Future.wait([
+      preferences.setString(_keyPro, jsonEncode(professional)),
     ]);
   }
 

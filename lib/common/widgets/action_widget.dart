@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class ActionWidget extends StatelessWidget {
   final String title;

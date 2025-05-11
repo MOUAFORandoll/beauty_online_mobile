@@ -1,5 +1,5 @@
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {

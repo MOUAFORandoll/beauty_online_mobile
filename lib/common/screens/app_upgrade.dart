@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:beauty/auth/widgets/animated_logo.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 class AppUpgradeScreen extends StatelessWidget {
   const AppUpgradeScreen({super.key});

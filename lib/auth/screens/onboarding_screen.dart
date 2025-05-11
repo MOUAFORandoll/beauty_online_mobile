@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:beauty/auth/screens/complete_info.dart';
-import 'package:beauty/utils/assets.dart';
+import 'package:beauty/common/utils/assets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,8 +15,8 @@ import 'package:beauty/common/screens/home.dart';
 import 'package:beauty/common/services/api_service.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/utils/dialogs.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OnboardingScreen extends StatefulWidget {

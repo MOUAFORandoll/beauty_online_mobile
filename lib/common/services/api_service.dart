@@ -23,13 +23,13 @@ class ApiLinks extends potatoes.Links {
 
 //IPhone
   @override
-  String get devUrl => "http://172.20.10.8:8080/api";
+  String get devUrl => "http://192.168.1.105:8080/api";
 
   @override
-  String get stagingUrl => "http://172.20.10.8:8080/api";
+  String get stagingUrl => "http://192.168.1.105:8080/api";
 
   @override
-  String get productionUrl => "http://172.20.10.8:8080/api";
+  String get productionUrl => "http://192.168.1.105:8080/api";
 
 //Power
   // @override

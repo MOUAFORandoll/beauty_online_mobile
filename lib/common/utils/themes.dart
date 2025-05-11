@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:readmore/readmore.dart';
 import 'package:beauty/common/widgets/read_more_theme.dart';
-import 'package:beauty/utils/assets.dart';
+import 'package:beauty/common/utils/assets.dart';
 
 abstract class AppTheme {
   static const Color primaryYellow = Color(0xFFFFCC33);

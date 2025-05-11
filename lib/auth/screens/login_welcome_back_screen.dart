@@ -3,7 +3,7 @@ import 'package:potatoes/libs.dart';
 import 'package:beauty/auth/bloc/auth_cubit.dart';
 import 'package:beauty/common/screens/home.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/themes.dart';
 
 @Deprecated("Not used anymore")
 class LoginWelcomeBackScreen extends StatefulWidget {

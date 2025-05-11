@@ -11,9 +11,9 @@ import 'package:potatoes/libs.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/common/services/api_service.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
-import 'package:beauty/utils/themes.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsScreen extends StatefulWidget {

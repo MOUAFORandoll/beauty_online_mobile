@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/utils/assets.dart';
-import 'package:beauty/utils/svg_utils.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
 
 enum AuthProvider { apple, google }
 
