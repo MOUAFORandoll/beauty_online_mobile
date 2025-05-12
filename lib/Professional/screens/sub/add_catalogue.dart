@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:beauty/Professional/bloc/gestion_professional_cubit.dart';
+import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/buttons.dart';
@@ -122,6 +123,7 @@ class _AddProductScreenState extends State<AddProductScreen>
       listener: (ctx, state) {
         if (state is AddCatalogueSuccessState) {
           if (mounted) {
+            context.read<LoadMeCatalogueCubit>().reset();
             showSuccessToast(
                 context: context, content: 'Produit ajouté avec succès!');
             setState(() {

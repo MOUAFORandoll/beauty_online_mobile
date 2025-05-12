@@ -21,8 +21,8 @@ class UserService extends ApiService {
   static const String _userFollowing = '/users/following';
   static const String _logout = '/users/logout';
   static const String _delete = '/users';
-  static const String _animeView = '/users/animes-viewed';
-  static const String _animeWatchlist = '/users/animes-watchlist';
+  static const String _catalogueView = '/users/catalogues-viewed';
+  static const String _catalogueWatchlist = '/users/catalogues-watchlist';
   static const String _posts = '/posts';
   static const String _quizUser = '/quiz';
   static const String _shareUser = '/users/:idUser/share';

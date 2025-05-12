@@ -44,8 +44,18 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
     if (professional == null) {
       emit(const NoProfessionnalFondState());
     } else {
-      
       emit(ProfessionalLoggedState(professional));
+    }
+  }
+
+  void updateCatalogueCount(int delta) {
+    final professional = preferencesService.professional;
+    if (professional != null) {
+      final updatedProfessional = professional.copyWith(
+        nombreCatalogue: professional.nombreCatalogue! + delta,
+      );
+      preferencesService.saveProfessional(updatedProfessional);
+      emit(ProfessionalLoggedState(updatedProfessional));
     }
   }
 
@@ -57,10 +67,12 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
         print(
           'proffvvvff===${professional}',
         );
-        if (professional != null)
+        if (professional != null) {
+          preferencesService.saveProfessional(professional);
           emit(ProfessionalLoggedState(professional));
-        else
+        } else {
           emit(NoProfessionnalFondState());
+        }
       });
     } catch (e) {
       print(

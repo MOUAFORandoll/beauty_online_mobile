@@ -26,6 +26,6 @@ abstract class NotificationType {
   static const String episodeCommentLikes = 'episode_comment_likes';
   static const String newEpisode = 'new_episode';
   static const String inactivityPost = 'inactivity_post';
-  static const String inactivityAnime = 'inactivity_anime';
+  static const String inactivityCatalogue = 'inactivity_catalogue';
   static const String inactivityEpisode = 'inactivity_episode';
 }

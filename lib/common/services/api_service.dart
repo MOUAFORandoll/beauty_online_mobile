@@ -12,24 +12,24 @@ class ApiLinks extends potatoes.Links {
   const ApiLinks();
 
 //Box
-  // @override
-  // String get devUrl => "http://192.168.1.114:8080/api";
+  @override
+  String get devUrl => "http://192.168.1.129:8080/api";
 
-  // @override
-  // String get stagingUrl => "http://192.168.1.114:8080/api";
+  @override
+  String get stagingUrl => "http://192.168.1.129:8080/api";
 
-  // @override
-  // String get productionUrl => "http://192.168.1.114:8080/api";
+  @override
+  String get productionUrl => "http://192.168.1.129:8080/api";
 
 //IPhone
-  @override
-  String get devUrl => "http://192.168.1.105:8080/api";
+  // @override
+  // String get devUrl => "http://192.168.1.105:8080/api";
 
-  @override
-  String get stagingUrl => "http://192.168.1.105:8080/api";
+  // @override
+  // String get stagingUrl => "http://192.168.1.105:8080/api";
 
-  @override
-  String get productionUrl => "http://192.168.1.105:8080/api";
+  // @override
+  // String get productionUrl => "http://192.168.1.105:8080/api";
 
 //Power
   // @override

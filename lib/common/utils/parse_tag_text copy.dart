@@ -33,7 +33,7 @@ RichText parseTextWithWidgets(BuildContext context, String inputText,
       var icon = Assets.iconsbeauty;
 
       switch (type) {
-        case 'anime':
+        case 'catalogue':
           icon = Assets.iconsTrending;
 
           break;

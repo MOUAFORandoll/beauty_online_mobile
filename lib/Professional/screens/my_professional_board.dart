@@ -102,7 +102,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Catalogue(),
+                  CatalogueView(),
                   Stories(),
                   Stories(),
                 ],
@@ -229,13 +229,13 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
   void onEventReceived(BuildContext context, ProfessionalState state) async {
     await waitForDialog();
 
-    // if (state is ShareAnimeLoadingState) {
+    // if (state is ShareCatalogueLoadingState) {
     //   loadingDialogCompleter = showLoadingBarrier(
     //     context: context,
     //   );
-    // } else if (state is ShareAnimeSuccesState) {
+    // } else if (state is ShareCatalogueSuccesState) {
     //   await Share.share(state.link);
-    // } else if (state is AnimeManipErrorState) {
+    // } else if (state is CatalogueManipErrorState) {
     //   showErrorToast(content: state.error, context: context);
     // }
   }

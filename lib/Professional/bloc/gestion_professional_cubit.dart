@@ -27,16 +27,9 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
   }) async {
     final stateBefore = state;
 
-    var data = {'title': libelle, 'prix': prix};
-    log(data.toString());
+    var data = {'title': libelle, 'price': prix};
     emit(const AddCatalogueLoadingState());
     final FormData formData = FormData.fromMap(data);
-    // formData.files = {
-    //   'images': images
-    //       .map((image) =>
-    //           MapEntry('images[]', MultipartFile.fromFileSync(image.path)))
-    //       .toList()
-    // };
 
     formData.files.addAll(images
         .map((image) =>
@@ -51,11 +44,9 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
         data: formData,
       )
           .then((onValue) {
-        print(onValue);
-        print("=================================onValue");
+        myProfessionalCubit.updateCatalogueCount(1);
         emit(AddCatalogueSuccessState());
       }).catchError((handleError, _) {
-        print('============error=====${handleError}');
         emit(GestionProfessionalErrorState(handleError, null));
         emit(stateBefore);
       });
@@ -77,10 +68,12 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
         id: id,
       )
           .then((onValue) {
+        myProfessionalCubit.updateCatalogueCount(-1);
         emit(DeletedCatalogueSuccessState());
         emit(stateBefore);
       }).onError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));
+
         emit(stateBefore);
       });
     } catch (error, stackTrace) {

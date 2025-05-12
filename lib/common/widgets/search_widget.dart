@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
-import 'package:beauty/common/bloc/home_bottom_navigation_cubit.dart'; 
+import 'package:beauty/common/bloc/home_bottom_navigation_cubit.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 
@@ -34,7 +34,7 @@ class SearchWidget extends StatelessWidget {
     // if ([2, 3].contains(index)) {
     //   showSearch(
     //     context: context,
-    //     delegate: HomeSearchAnimeDelegate(context),
+    //     delegate: HomeSearchCatalogueDelegate(context),
     //   );
     // }
     // if ([0, 1].contains(index)) {

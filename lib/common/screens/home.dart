@@ -1,4 +1,4 @@
-import 'package:beauty/Fil/screens/fil_actu.dart';
+import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
 import 'package:beauty/map/screens/map_screen.dart';
@@ -49,42 +49,6 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
         child:
             BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
           builder: (context, state) => Scaffold(
-            appBar: state.currentIndex == 0 ||
-                    state.currentIndex == 3 ||
-                    state.currentIndex == 1
-                ? null
-                : AppBar(
-                    forceMaterialTransparency: true,
-                    title: BlocBuilder<HomeBottomNavigationCubit,
-                        HomeBottomNavigationState>(
-                      builder: (_, state) =>
-                          Text(pages[state.currentIndex]['title'] as String),
-                    ),
-                    centerTitle: true,
-                    systemOverlayStyle: Theme.of(context)
-                        .appBarTheme
-                        .systemOverlayStyle
-                        ?.copyWith(
-                          systemNavigationBarColor: Theme.of(context)
-                              .bottomNavigationBarTheme
-                              .backgroundColor,
-                          systemNavigationBarDividerColor: Theme.of(context)
-                              .bottomNavigationBarTheme
-                              .backgroundColor,
-                        ),
-                    // leading: Padding(
-                    //   padding: const EdgeInsets.only(left: 16.0),
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // Navigator.of(context).push(MaterialPageRoute(
-                    //       //     builder: (context) => const AccountScreen()));
-                    //     },
-                    //     child:
-                    //         const Center(child: UserProfilePicture(size: 40.0)),
-                    //   ),
-                    // ),
-                    // actions: [const SearchWidget()],
-                  ),
             body: PageView(
               controller: navigationCubit.state.pageController,
               onPageChanged: (index) =>
@@ -153,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                 borderRadius: BorderRadius.circular(32.0)),
             child: toSvgIcon(
               icon: icon,
-              color:
-                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+              color: Colors
+                  .white, //  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ))
         : toSvgIcon(
             icon: icon,

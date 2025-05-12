@@ -118,11 +118,12 @@ class SocialLoaderBuilder extends StatelessWidget {
   }
 }
 
-class AnimeLoaderBuilder extends StatelessWidget {
+class CatalogueLoaderBuilder extends StatelessWidget {
   final int count;
   final bool padding;
 
-  const AnimeLoaderBuilder({super.key, this.count = 6, this.padding = false});
+  const CatalogueLoaderBuilder(
+      {super.key, this.count = 6, this.padding = false});
 
   @override
   Widget build(BuildContext context) {
@@ -434,8 +435,8 @@ class EpisodeViewLoaderBuilder extends StatelessWidget {
   }
 }
 
-class AnimeViewLoaderBuilder extends StatelessWidget {
-  const AnimeViewLoaderBuilder({super.key});
+class CatalogueViewLoaderBuilder extends StatelessWidget {
+  const CatalogueViewLoaderBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -698,8 +699,8 @@ class QuizViewLoaderBuilder extends StatelessWidget {
                         ),
                       ),
                     ]))));
-  }}
-
+  }
+}
 
 class ProfessionalBoardLoaderBuilder extends StatelessWidget {
   final int count;
@@ -743,7 +744,7 @@ class ProfessionalBoardLoaderBuilder extends StatelessWidget {
           )
         ],
       ),
-    separatorBuilder: (_, i) => const SizedBox(height: 16.0),
+      separatorBuilder: (_, i) => const SizedBox(height: 16.0),
       itemCount: count,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       physics: const NeverScrollableScrollPhysics(),

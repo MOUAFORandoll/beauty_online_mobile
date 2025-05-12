@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:beauty/Professional/models/catalogue.dart';
 import 'package:beauty/Professional/models/professional.dart';
+import 'package:beauty/Professional/screens/sub/catalogue.dart';
 import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
@@ -94,16 +96,42 @@ class ProfessionalService extends ApiService {
         data: {'latitude': latitude, 'longitude': longitude}));
   }
 
-  Future<Professional> addCatalogue({
+  Future<Catalogue> addCatalogue({
     required FormData data,
   }) async {
     return compute(
         dio.post(_catalogue, options: Options(headers: withAuth()), data: data),
-        mapper: Professional.fromJson);
+        mapper: Catalogue.fromJson);
+  }
+
+  Future<PaginatedList<Catalogue>> meCatalogue({
+    int page = 1,
+  }) async {
+    return compute(
+        dio.get(_catalogue,
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, Catalogue.fromJson));
+  }
+
+  Future<PaginatedList<Catalogue>> professionalCatalogue({
+    int page = 1,
+  }) async {
+    return compute(
+        dio.get(_catalogue,
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, Catalogue.fromJson));
   }
 
   Future<void> deleteCatalogue({required String id}) {
-    return compute(dio.delete(_deleteProfile + '/${id}',
+    return compute(dio.delete(_catalogue + '/${id}',
         options: Options(headers: withAuth())));
   }
 }

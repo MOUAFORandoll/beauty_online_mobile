@@ -5,7 +5,8 @@ import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:beauty/common/utils/assets.dart';
 
 abstract class AppTheme {
-  static const Color primaryYellow = Color(0xFFFFCC33);
+  static const Color primaryYellow =
+      Color.fromARGB(255, 236, 64, 122); // Color(0xFFFFCC33);
   static const Color darkSecondary = Color(0xFFE5C36C);
 
   static const Color primaryBlack = Color(0xFF090909);
@@ -25,7 +26,7 @@ abstract class AppTheme {
   static const Color onMidOrange = Color(0xFF331400);
   static const Color lowRed = Color(0xFFFF0717);
 
-  static const Color mainText = Colors.black;
+  static const Color mainText = Colors.white; // Colors.black;
   static const Color disabledText = Color(0xFF9F9F9F);
 
   static TextTheme _textTheme(BuildContext context) {
@@ -207,7 +208,6 @@ abstract class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           elevation: 0,
-        
         ),
       ),
       tabBarTheme: TabBarTheme(
