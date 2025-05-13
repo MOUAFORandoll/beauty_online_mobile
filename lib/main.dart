@@ -1,13 +1,15 @@
 import 'package:beauty/Professional/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
-import 'package:beauty/Professional/bloc/professional_cubit.dart'; 
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/Professional/services/professional_service.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/auth/screens/complete_info.dart';
 import 'package:beauty/common/services/geolocation_service.dart';
 import 'package:beauty/firebase_options.dart';
+import 'package:beauty/home/bloc/load_actu_cubit.dart';
+import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -102,7 +104,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => ProfessionalService(dio)),
         RepositoryProvider(create: (_) => NotificationsService(dio)),
         RepositoryProvider(create: (_) => GeolocationService()),
-        
+        RepositoryProvider(create: (_) => ActuService(dio)),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -132,6 +134,7 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(context.read(), context.read())),
           BlocProvider(
               create: (context) => LoadMeCatalogueCubit(context.read())),
+          BlocProvider(create: (context) => LoadActuCubit(context.read())),
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(

@@ -1,4 +1,4 @@
-import 'package:beauty/Fil/screens/shop_screen.dart'; 
+// import 'package:beauty/Fil/screens/shop_screen.dart'; 
 import 'package:beauty/common/models/salon_model.dart';
 import 'package:beauty/common/services/cache_manager.dart';
 import 'package:flutter/material.dart'; 
@@ -12,9 +12,9 @@ class SalonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const ShopScreen()),
-      ),
+      // onTap: () => Navigator.of(context).push(
+      //   MaterialPageRoute(builder: (_) => const ShopScreen()),
+      // ),
       child: Container(
         width: 290,
         decoration: BoxDecoration(

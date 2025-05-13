@@ -41,7 +41,8 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:
+               const EdgeInsets.all(16.0),
               child: Row(
                 children: [
                   Stack(

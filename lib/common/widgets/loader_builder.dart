@@ -153,6 +153,43 @@ class CatalogueLoaderBuilder extends StatelessWidget {
   }
 }
 
+class ActuLoaderBuilder extends StatelessWidget {
+  final int count;
+  final bool padding;
+
+  const ActuLoaderBuilder(
+      {super.key, this.count = 6, this.padding = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return 
+    
+    GridView.builder(
+      padding: padding ? EdgeInsets.only(top: 2.0) : EdgeInsets.zero,
+      physics: const PageScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 2.0,
+          mainAxisSpacing: 2.0,
+          childAspectRatio: .65),
+      itemBuilder: (_, __) => Container(
+        alignment: Alignment.center,
+        color: Theme.of(context).colorScheme.tertiaryContainer,
+        child: SizedBox(
+          height: 16.0,
+          width: 16.0,
+          child: CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.onTertiaryContainer,
+            strokeWidth: 2.0,
+          ),
+        ),
+      ),
+      itemCount: count, // Nombre de carrés souhaité
+    );
+  }
+}
+
 class QuizLoaderBuilder extends StatelessWidget {
   final int count;
 

@@ -1,16 +1,30 @@
 import 'dart:math';
 
+import 'package:beauty/common/widgets/empty_builder.dart';
+import 'package:beauty/common/widgets/error_builder.dart';
 import 'package:beauty/common/widgets/loader_builder.dart';
+import 'package:beauty/home/bloc/load_actu_cubit.dart';
+import 'package:beauty/home/models/actu.dart';
+import 'package:beauty/home/widgets/item_actu.dart';
 import 'package:flutter/material.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
+import 'package:potatoes/auto_list/widgets/auto_list_view.dart';
+import 'package:potatoes/libs.dart';
 import '../widgets/status_bar.dart';
 import '../widgets/search_tabs.dart';
 import '../widgets/content_grid.dart';
 import '../widgets/bottom_navigation.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class FilActuScreen extends StatelessWidget {
+class FilActuScreen extends StatefulWidget {
   const FilActuScreen({super.key});
+
+  @override
+  State<FilActuScreen> createState() => _FilActuScreenState();
+}
+
+class _FilActuScreenState extends State<FilActuScreen> {
+  late final cubit = context.read<LoadActuCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +36,25 @@ class FilActuScreen extends StatelessWidget {
         SizedBox(height: 80, child: StoriesLoaderBuilder()),
 
         Expanded(
-          child: PinterestGridPage(),
-        ),
+            child: AutoListView.get<Actu>(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewPadding.bottom),
+                cubit: cubit,
+                viewType: ViewType.grid,
+                itemBuilder: (context, actu) => ActuItem(actu),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 2.0,
+                    mainAxisSpacing: 2.0,
+                    childAspectRatio: .65),
+                emptyBuilder: (ctx) => const EmptyBuilder(),
+                errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
+                loadingBuilder: (_) => const ActuLoaderBuilder(count: 12),
+                loadingMoreBuilder: (_) =>
+                    const ActuLoaderBuilder(padding: true))
+
+            //  PinterestGridPage(),
+            ),
         // Expanded(
         //   child: ContentGrid(),
         // ),
