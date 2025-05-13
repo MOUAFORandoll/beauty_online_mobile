@@ -38,64 +38,64 @@ abstract class AppTheme {
 
     return jakarta.copyWith(
       displayLarge: jakarta.displayLarge?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 57.0,
       ),
       displayMedium: jakarta.displayMedium?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 45.0,
       ),
       displaySmall: arco.displaySmall?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 36.0,
         fontWeight: FontWeight.bold,
       ),
       headlineLarge: jakarta.headlineLarge?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 32.0,
       ),
       headlineMedium: jakarta.headlineMedium?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 28.0,
       ),
       headlineSmall: jakarta.headlineSmall?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 24.0,
       ),
       titleLarge: arco.titleLarge?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 20.0,
         fontWeight: FontWeight.bold,
       ),
       titleMedium: jakarta.titleMedium?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 16.0,
       ),
       titleSmall: jakarta.titleSmall?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 14.0,
       ),
-      bodyLarge: jakarta.bodyLarge?.copyWith(
-          color: mainText, fontSize: 16.0, fontWeight: FontWeight.bold),
+      bodyLarge: jakarta.bodyLarge
+          ?.copyWith(color: black, fontSize: 16.0, fontWeight: FontWeight.bold),
       bodyMedium: jakarta.bodyMedium?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 14.0,
       ),
       bodySmall: jakarta.bodySmall?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 12.0,
       ),
       labelLarge: arco.labelLarge?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 14.0,
         fontWeight: FontWeight.bold,
       ),
       labelMedium: jakarta.labelMedium?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 12.0,
       ),
       labelSmall: jakarta.labelSmall?.copyWith(
-        color: mainText,
+        color: black,
         fontSize: 11.0,
       ),
     );
