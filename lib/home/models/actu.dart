@@ -1,7 +1,6 @@
 import 'package:beauty/Professional/models/catalogue.dart';
 import 'package:beauty/Professional/models/professional.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:beauty/common/utils/datetime_converter.dart';
+import 'package:freezed_annotation/freezed_annotation.dart'; 
 part 'actu.freezed.dart';
 part 'actu.g.dart';
 
@@ -17,7 +16,5 @@ class Actu with _$Actu {
     required List<RealisationFile> realisationFiles,
   }) = _Actu;
 
-  factory Actu.fromJson(Map<String, dynamic> json) {
-    return _Actu.fromJson(json);
-  }
+  factory Actu.fromJson(Map<String, dynamic> json) => _$ActuFromJson(json);
 }
