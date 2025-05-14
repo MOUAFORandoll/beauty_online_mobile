@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/models/professional.dart';
-import 'package:beauty/Professional/services/professional_service.dart';
+import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:potatoes/libs.dart';
@@ -36,9 +36,8 @@ class NewProfessionalCubit extends Cubit<NewProfessionalState> {
       "latitude": latitude,
       "titleEmplacement": titleEmplacement,
     };
-    professionalService
-        .createUserProfile(data: data, cover: image)
-        .then((profil) {
+    professionalService.createUserProfile(data: data, cover: image).then(
+        (profil) {
       professionalCubit.getInitialState();
       emit(NewProfessionalUploadedState(profil));
       Timer(const Duration(seconds: 5), () {

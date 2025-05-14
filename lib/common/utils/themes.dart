@@ -251,7 +251,7 @@ abstract class AppTheme {
               borderRadius: BorderRadius.circular(100.0)),
           elevation: 0,
           side: BorderSide.none,
-          textStyle: textTheme.labelLarge,
+          textStyle: textTheme.labelLarge!.copyWith(color: mainText),
           minimumSize: const Size.fromHeight(40.0),
         ),
       ),
@@ -382,11 +382,11 @@ abstract class AppTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: baseTheme.elevatedButtonTheme.style?.copyWith(
           backgroundColor: WidgetStatePropertyAll(primaryYellow),
-          foregroundColor: WidgetStatePropertyAll(primaryBlack),
+          foregroundColor: WidgetStatePropertyAll(mainText),
         )),
         filledButtonTheme: FilledButtonThemeData(
-            style: baseTheme.filledButtonTheme.style?.copyWith(
-                foregroundColor: WidgetStatePropertyAll(primaryBlack))),
+            style: baseTheme.filledButtonTheme.style
+                ?.copyWith(foregroundColor: WidgetStatePropertyAll(mainText))),
         floatingActionButtonTheme: baseTheme.floatingActionButtonTheme.copyWith(
           foregroundColor: primaryBlack,
         ),

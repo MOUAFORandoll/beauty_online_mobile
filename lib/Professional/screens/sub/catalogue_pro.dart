@@ -1,6 +1,10 @@
-import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
-import 'package:beauty/Professional/models/catalogue.dart';
-import 'package:beauty/Professional/widgets/item_catalogue.dart';
+
+import 'package:beauty/common/models/catalogue.dart';
+import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/my_pro/services/professional_service.dart';
+import 'package:beauty/professional/bloc/load_pro_catalogue_cubit.dart';
+import 'package:beauty/common/models/catalogue.dart';
+import 'package:beauty/professional/widgets/item_catalogue.dart';
 import 'package:beauty/common/models/service_model.dart';
 import 'package:beauty/common/widgets/empty_builder.dart';
 import 'package:beauty/common/widgets/error_builder.dart';
@@ -13,15 +17,24 @@ import 'package:potatoes/auto_content/widgets/auto_content_view.dart';
 import 'package:potatoes/auto_list.dart';
 import 'package:potatoes/libs.dart';
 
-class CatalogueView extends StatefulWidget {
-  const CatalogueView({super.key});
-
+class CatalogueProView extends StatefulWidget {
+ 
+static Widget get({
+    required BuildContext context,
+    required Professional professional,
+  }) {
+    return BlocProvider(
+     create: (context) =>LoadProCatalogueCubit(context.read<ProfessionalService>(), professional.id),
+                   child: CatalogueProView._(),
+    );
+  }
+    const CatalogueProView._();
   @override
-  State<CatalogueView> createState() => _CatalogueViewState();
+  State<CatalogueProView> createState() => _CatalogueProViewState();
 }
 
-class _CatalogueViewState extends State<CatalogueView> {
-  late final cubit = context.read<LoadMeCatalogueCubit>();
+class _CatalogueProViewState extends State<CatalogueProView> {
+  late final cubit = context.read<LoadProCatalogueCubit>();
 
   @override
   Widget build(BuildContext context) {

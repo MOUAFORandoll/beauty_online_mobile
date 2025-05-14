@@ -23,9 +23,9 @@ mixin _$Professional {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_pro')
   String get namePro => throw _privateConstructorUsedError;
-  String get service => throw _privateConstructorUsedError;
-  Position get position => throw _privateConstructorUsedError;
-  String get cover => throw _privateConstructorUsedError;
+  String? get service => throw _privateConstructorUsedError;
+  Position? get position => throw _privateConstructorUsedError;
+  String? get cover => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_reservation')
   int get nombreReservation => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_catalogue')
@@ -52,14 +52,14 @@ abstract class $ProfessionalCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'name_pro') String namePro,
-      String service,
-      Position position,
-      String cover,
+      String? service,
+      Position? position,
+      String? cover,
       @JsonKey(name: 'nombre_reservation') int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') int nombreCatalogue,
       @JsonKey(name: 'nombre_actes') int nombreActes});
 
-  $PositionCopyWith<$Res> get position;
+  $PositionCopyWith<$Res>? get position;
 }
 
 /// @nodoc
@@ -79,9 +79,9 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
   $Res call({
     Object? id = null,
     Object? namePro = null,
-    Object? service = null,
-    Object? position = null,
-    Object? cover = null,
+    Object? service = freezed,
+    Object? position = freezed,
+    Object? cover = freezed,
     Object? nombreReservation = null,
     Object? nombreCatalogue = null,
     Object? nombreActes = null,
@@ -95,18 +95,18 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
           ? _value.namePro
           : namePro // ignore: cast_nullable_to_non_nullable
               as String,
-      service: null == service
+      service: freezed == service
           ? _value.service
           : service // ignore: cast_nullable_to_non_nullable
-              as String,
-      position: null == position
+              as String?,
+      position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as Position,
-      cover: null == cover
+              as Position?,
+      cover: freezed == cover
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       nombreReservation: null == nombreReservation
           ? _value.nombreReservation
           : nombreReservation // ignore: cast_nullable_to_non_nullable
@@ -126,8 +126,12 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PositionCopyWith<$Res> get position {
-    return $PositionCopyWith<$Res>(_value.position, (value) {
+  $PositionCopyWith<$Res>? get position {
+    if (_value.position == null) {
+      return null;
+    }
+
+    return $PositionCopyWith<$Res>(_value.position!, (value) {
       return _then(_value.copyWith(position: value) as $Val);
     });
   }
@@ -144,15 +148,15 @@ abstract class _$$ProfessionalImplCopyWith<$Res>
   $Res call(
       {String id,
       @JsonKey(name: 'name_pro') String namePro,
-      String service,
-      Position position,
-      String cover,
+      String? service,
+      Position? position,
+      String? cover,
       @JsonKey(name: 'nombre_reservation') int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') int nombreCatalogue,
       @JsonKey(name: 'nombre_actes') int nombreActes});
 
   @override
-  $PositionCopyWith<$Res> get position;
+  $PositionCopyWith<$Res>? get position;
 }
 
 /// @nodoc
@@ -170,9 +174,9 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? namePro = null,
-    Object? service = null,
-    Object? position = null,
-    Object? cover = null,
+    Object? service = freezed,
+    Object? position = freezed,
+    Object? cover = freezed,
     Object? nombreReservation = null,
     Object? nombreCatalogue = null,
     Object? nombreActes = null,
@@ -186,18 +190,18 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
           ? _value.namePro
           : namePro // ignore: cast_nullable_to_non_nullable
               as String,
-      service: null == service
+      service: freezed == service
           ? _value.service
           : service // ignore: cast_nullable_to_non_nullable
-              as String,
-      position: null == position
+              as String?,
+      position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as Position,
-      cover: null == cover
+              as Position?,
+      cover: freezed == cover
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       nombreReservation: null == nombreReservation
           ? _value.nombreReservation
           : nombreReservation // ignore: cast_nullable_to_non_nullable
@@ -220,9 +224,9 @@ class _$ProfessionalImpl extends _Professional {
   const _$ProfessionalImpl(
       {required this.id,
       @JsonKey(name: 'name_pro') required this.namePro,
-      required this.service,
-      required this.position,
-      required this.cover,
+      this.service,
+      this.position,
+      this.cover,
       @JsonKey(name: 'nombre_reservation') required this.nombreReservation,
       @JsonKey(name: 'nombre_catalogue') required this.nombreCatalogue,
       @JsonKey(name: 'nombre_actes') required this.nombreActes})
@@ -237,11 +241,11 @@ class _$ProfessionalImpl extends _Professional {
   @JsonKey(name: 'name_pro')
   final String namePro;
   @override
-  final String service;
+  final String? service;
   @override
-  final Position position;
+  final Position? position;
   @override
-  final String cover;
+  final String? cover;
   @override
   @JsonKey(name: 'nombre_reservation')
   final int nombreReservation;
@@ -301,9 +305,9 @@ abstract class _Professional extends Professional {
   const factory _Professional(
       {required final String id,
       @JsonKey(name: 'name_pro') required final String namePro,
-      required final String service,
-      required final Position position,
-      required final String cover,
+      final String? service,
+      final Position? position,
+      final String? cover,
       @JsonKey(name: 'nombre_reservation') required final int nombreReservation,
       @JsonKey(name: 'nombre_catalogue') required final int nombreCatalogue,
       @JsonKey(name: 'nombre_actes')
@@ -319,11 +323,11 @@ abstract class _Professional extends Professional {
   @JsonKey(name: 'name_pro')
   String get namePro;
   @override
-  String get service;
+  String? get service;
   @override
-  Position get position;
+  Position? get position;
   @override
-  String get cover;
+  String? get cover;
   @override
   @JsonKey(name: 'nombre_reservation')
   int get nombreReservation;
@@ -349,9 +353,9 @@ Position _$PositionFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Position {
   @JsonKey(name: 'title_emplacement')
-  String get titleEmplacement => throw _privateConstructorUsedError;
-  String get longitude => throw _privateConstructorUsedError;
-  String get latitude => throw _privateConstructorUsedError;
+  String? get titleEmplacement => throw _privateConstructorUsedError;
+  String? get longitude => throw _privateConstructorUsedError;
+  String? get latitude => throw _privateConstructorUsedError;
   String? get town => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
 
@@ -371,9 +375,9 @@ abstract class $PositionCopyWith<$Res> {
       _$PositionCopyWithImpl<$Res, Position>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'title_emplacement') String titleEmplacement,
-      String longitude,
-      String latitude,
+      {@JsonKey(name: 'title_emplacement') String? titleEmplacement,
+      String? longitude,
+      String? latitude,
       String? town,
       String? country});
 }
@@ -393,25 +397,25 @@ class _$PositionCopyWithImpl<$Res, $Val extends Position>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? titleEmplacement = null,
-    Object? longitude = null,
-    Object? latitude = null,
+    Object? titleEmplacement = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
     Object? town = freezed,
     Object? country = freezed,
   }) {
     return _then(_value.copyWith(
-      titleEmplacement: null == titleEmplacement
+      titleEmplacement: freezed == titleEmplacement
           ? _value.titleEmplacement
           : titleEmplacement // ignore: cast_nullable_to_non_nullable
-              as String,
-      longitude: null == longitude
+              as String?,
+      longitude: freezed == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
+              as String?,
+      latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       town: freezed == town
           ? _value.town
           : town // ignore: cast_nullable_to_non_nullable
@@ -433,9 +437,9 @@ abstract class _$$PositionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'title_emplacement') String titleEmplacement,
-      String longitude,
-      String latitude,
+      {@JsonKey(name: 'title_emplacement') String? titleEmplacement,
+      String? longitude,
+      String? latitude,
       String? town,
       String? country});
 }
@@ -453,25 +457,25 @@ class __$$PositionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? titleEmplacement = null,
-    Object? longitude = null,
-    Object? latitude = null,
+    Object? titleEmplacement = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
     Object? town = freezed,
     Object? country = freezed,
   }) {
     return _then(_$PositionImpl(
-      titleEmplacement: null == titleEmplacement
+      titleEmplacement: freezed == titleEmplacement
           ? _value.titleEmplacement
           : titleEmplacement // ignore: cast_nullable_to_non_nullable
-              as String,
-      longitude: null == longitude
+              as String?,
+      longitude: freezed == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
+              as String?,
+      latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       town: freezed == town
           ? _value.town
           : town // ignore: cast_nullable_to_non_nullable
@@ -488,9 +492,9 @@ class __$$PositionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PositionImpl extends _Position {
   const _$PositionImpl(
-      {@JsonKey(name: 'title_emplacement') required this.titleEmplacement,
-      required this.longitude,
-      required this.latitude,
+      {@JsonKey(name: 'title_emplacement') this.titleEmplacement,
+      this.longitude,
+      this.latitude,
       this.town,
       this.country})
       : super._();
@@ -500,11 +504,11 @@ class _$PositionImpl extends _Position {
 
   @override
   @JsonKey(name: 'title_emplacement')
-  final String titleEmplacement;
+  final String? titleEmplacement;
   @override
-  final String longitude;
+  final String? longitude;
   @override
-  final String latitude;
+  final String? latitude;
   @override
   final String? town;
   @override
@@ -553,10 +557,9 @@ class _$PositionImpl extends _Position {
 
 abstract class _Position extends Position {
   const factory _Position(
-      {@JsonKey(name: 'title_emplacement')
-      required final String titleEmplacement,
-      required final String longitude,
-      required final String latitude,
+      {@JsonKey(name: 'title_emplacement') final String? titleEmplacement,
+      final String? longitude,
+      final String? latitude,
       final String? town,
       final String? country}) = _$PositionImpl;
   const _Position._() : super._();
@@ -566,11 +569,11 @@ abstract class _Position extends Position {
 
   @override
   @JsonKey(name: 'title_emplacement')
-  String get titleEmplacement;
+  String? get titleEmplacement;
   @override
-  String get longitude;
+  String? get longitude;
   @override
-  String get latitude;
+  String? get latitude;
   @override
   String? get town;
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:beauty/common/models/professional.dart'; 
+import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, OAuthProvider;
@@ -13,22 +13,25 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:beauty/common/services/api_error.dart';
 import 'package:beauty/common/services/preferences_service.dart';
 
-part 'professional_state.dart';
+part 'my_professional_state.dart';
 
-class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
+class MyProfessionalCubit
+    extends ObjectCubit<Professional, MyProfessionalState> {
   final ProfessionalService professionalService;
   final PreferencesService preferencesService;
 
-  ProfessionalCubit(this.professionalService, this.preferencesService,
-      Professional professional)
-      : super(const InitializingProfessionalState()) {
-    emit(ProfessionalLoggedState(professional));
-   
+  MyProfessionalCubit(
+    this.professionalService,
+    this.preferencesService,
+  ) : super(const InitializingMyProfessionalState()) {
+    getInitialState();
+    log('InitializingProfessionalStat===e');
+    getInitialStateOnline();
   }
 
   @override
-  Professional? getObject(ProfessionalState state) {
-    if (state is ProfessionalLoggedState) {
+  Professional? getObject(MyProfessionalState state) {
+    if (state is MyProfessionalLoggedState) {
       return state.professional;
     }
     return null;
@@ -40,7 +43,7 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
     if (professional == null) {
       emit(const NoProfessionnalFondState());
     } else {
-      emit(ProfessionalLoggedState(professional));
+      emit(MyProfessionalLoggedState(professional));
     }
   }
 
@@ -51,13 +54,13 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
         nombreCatalogue: professional.nombreCatalogue! + delta,
       );
       preferencesService.saveProfessional(updatedProfessional);
-      emit(ProfessionalLoggedState(updatedProfessional));
+      emit(MyProfessionalLoggedState(updatedProfessional));
     }
   }
 
   void getInitialStateOnline() async {
     try {
-      emit(InitializingProfessionalState());
+      // emit(InitializingMyProfessionalState());
       print('proffff');
       await professionalService.findUserProfile().then((professional) {
         print(
@@ -65,7 +68,7 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
         );
         if (professional != null) {
           preferencesService.saveProfessional(professional);
-          emit(ProfessionalLoggedState(professional));
+          emit(MyProfessionalLoggedState(professional));
         } else {
           emit(NoProfessionnalFondState());
         }
@@ -75,13 +78,17 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
         'proffdddddvvvff= ',
       );
       emit(NoProfessionnalFondState());
-      if ((e as ApiError).error != null) {
-        if ((e).error!.code == 'PROFILE_PRO_NOT_FOUND') {
-          emit(NoProfessionnalFondState());
+      try {
+        if ((e as ApiError).error != null) {
+          if ((e).error!.code == 'PROFILE_PRO_NOT_FOUND') {
+            emit(NoProfessionnalFondState());
+          } else {
+            emit(ProfessionalErrorState(e));
+          }
         } else {
           emit(ProfessionalErrorState(e));
         }
-      } else {
+      } catch (e) {
         emit(ProfessionalErrorState(e));
       }
     }

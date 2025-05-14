@@ -1,21 +1,20 @@
-import 'package:beauty/my_pro/bloc/my_professional_cubit.dart'; 
+import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/utils/month_to_string.dart';
 import 'package:beauty/common/utils/themes.dart';
 
-class PrimaryInfo extends StatefulWidget {
-  const PrimaryInfo({super.key});
+class PrimaryInfoProClient extends StatefulWidget {
+  const PrimaryInfoProClient({super.key});
 
   @override
-  State<PrimaryInfo> createState() => _PrimaryInfoState();
+  State<PrimaryInfoProClient> createState() => _PrimaryInfoProClientState();
 }
 
-class _PrimaryInfoState extends State<PrimaryInfo>
+class _PrimaryInfoProClientState extends State<PrimaryInfoProClient>
     with SingleTickerProviderStateMixin {
-  late final userCubit = context.read<UserCubit>();
-  late final professionalCubit = context.read<MyProfessionalCubit>();
+  late final professionalCubit = context.read<ProfessionalCubit>();
 
   final isCollapsed = ValueNotifier<bool>(true);
   @override
@@ -41,7 +40,7 @@ class _PrimaryInfoState extends State<PrimaryInfo>
                 width: 4,
               ),
               Text(
-                professionalCubit.professional.position!.titleEmplacement??'',
+                professionalCubit.professional.position!.titleEmplacement ?? '',
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     // color: AppTheme.onHighGreen,
                     ),

@@ -1,6 +1,6 @@
-import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
-import 'package:beauty/Professional/models/catalogue.dart';
-import 'package:beauty/Professional/widgets/item_catalogue.dart';
+import 'package:beauty/professional/bloc/load_pro_catalogue_cubit.dart';
+import 'package:beauty/common/models/catalogue.dart';
+import 'package:beauty/professional/widgets/item_catalogue.dart';
 import 'package:beauty/common/models/service_model.dart';
 import 'package:beauty/common/widgets/empty_builder.dart';
 import 'package:beauty/common/widgets/error_builder.dart';
@@ -16,13 +16,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class CatalogueForUserDialog extends StatelessWidget {
-  final Catalogue catalogue;
-  final Function() onReserve;
+  final Catalogue catalogue; 
 
   const CatalogueForUserDialog({
     Key? key,
-    required this.catalogue,
-    required this.onReserve,
+    required this.catalogue, 
   }) : super(key: key);
 
   @override
@@ -185,7 +183,7 @@ class CatalogueForUserDialog extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: onReserve,
+                    onPressed: (){},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink.shade400,
                       foregroundColor: Colors.white,

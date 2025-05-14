@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:beauty/Professional/bloc/new_professional_cubit.dart';
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/screens/sub/catalogue.dart';
-import 'package:beauty/Professional/screens/sub/stories.dart';
+import 'package:beauty/my_pro/bloc/new_professional_cubit.dart';
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
+import 'package:beauty/my_pro/screens/sub/catalogue.dart';
+import 'package:beauty/my_pro/screens/sub/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/screens/home.dart';

@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/screens/my_professional_board.dart';
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
+import 'package:beauty/my_pro/screens/my_professional_board.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/screens/my_account.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
@@ -46,7 +46,7 @@ class _AccountScreenState extends State<AccountScreen>
   }
 
   late final userCubit = context.read<UserCubit>();
-  late final professionalCubit = context.read<ProfessionalCubit>();
+  late final professionalCubit = context.read<MyProfessionalCubit>();
   late final ScrollController _scrollController = ScrollController();
 
   @override
@@ -56,7 +56,7 @@ class _AccountScreenState extends State<AccountScreen>
           userCubit.reset(true);
           professionalCubit.getInitialState();
         },
-        child: BlocConsumer<ProfessionalCubit, ProfessionalState>(
+        child: BlocConsumer<MyProfessionalCubit, MyProfessionalState>(
           listener: onEventReceived,
           builder: (context, state) {
             return NestedScrollView(
@@ -148,10 +148,11 @@ class _AccountScreenState extends State<AccountScreen>
                   child: BlocBuilder<AccountViewManageCubit, bool>(
                     builder: (ctx, state) => state
                         ? Container()
-                        : BlocConsumer<ProfessionalCubit, ProfessionalState>(
+                        : BlocConsumer<MyProfessionalCubit,
+                            MyProfessionalState>(
                             listener: onEventReceived,
                             builder: (context, state) =>
-                                state is ProfessionalLoggedState
+                                state is MyProfessionalLoggedState
                                     ? Padding(
                                         padding: const EdgeInsets.only(
                                             top: 8.0, left: 16.0, right: 16.0),
@@ -277,7 +278,7 @@ class _AccountScreenState extends State<AccountScreen>
     );
   }
 
-  void onEventReceived(BuildContext context, ProfessionalState state) async {
+  void onEventReceived(BuildContext context, MyProfessionalState state) async {
     await waitForDialog();
 
     // if (state is ShareCatalogueLoadingState) {

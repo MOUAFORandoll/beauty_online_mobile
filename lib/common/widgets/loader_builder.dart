@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ActivityLoaderBuilder extends StatelessWidget {
   final int count;
@@ -157,37 +160,48 @@ class ActuLoaderBuilder extends StatelessWidget {
   final int count;
   final bool padding;
 
-  const ActuLoaderBuilder(
-      {super.key, this.count = 6, this.padding = false});
+  ActuLoaderBuilder({super.key, this.count = 6, this.padding = false});
+  final List<Color> colors = List.generate(30, (_) => getRandomColor());
 
   @override
   Widget build(BuildContext context) {
-    return 
-    
-    GridView.builder(
-      padding: padding ? EdgeInsets.only(top: 2.0) : EdgeInsets.zero,
-      physics: const PageScrollPhysics(),
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 2.0,
-          mainAxisSpacing: 2.0,
-          childAspectRatio: .65),
-      itemBuilder: (_, __) => Container(
-        alignment: Alignment.center,
-        color: Theme.of(context).colorScheme.tertiaryContainer,
-        child: SizedBox(
-          height: 16.0,
-          width: 16.0,
-          child: CircularProgressIndicator(
-            color: Theme.of(context).colorScheme.onTertiaryContainer,
-            strokeWidth: 2.0,
-          ),
-        ),
-      ),
-      itemCount: count, // Nombre de carrés souhaité
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: MasonryGridView.count(
+          crossAxisCount: 2, // 📌 Deux colonnes
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          itemCount: colors.length,
+          itemBuilder: (context, index) {
+            return Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.center,
+              height: 150 + Random().nextInt(250).toDouble(),
+              child: SizedBox(
+                height: 16.0,
+                width: 16.0,
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                  strokeWidth: 2.0,
+                ),
+              ),
+            );
+          },
+        ));
   }
+}
+
+Color getRandomColor() {
+  final random = Random();
+  return Color.fromARGB(
+    255,
+    random.nextInt(200),
+    random.nextInt(200),
+    random.nextInt(200),
+  );
 }
 
 class QuizLoaderBuilder extends StatelessWidget {
@@ -789,3 +803,44 @@ class ProfessionalBoardLoaderBuilder extends StatelessWidget {
     );
   }
 }
+
+
+
+
+// AutoListView.manual<Quiz>(
+//               cubit: widget.cubit,
+//               autoManage: false,
+//               itemBuilder: (context, quiz) =>
+//                   ItemQuiz.get(context: context, quiz: quiz),
+//               physics: const NeverScrollableScrollPhysics(),
+//               shrinkWrap: true,
+//               emptyBuilder: (ctx) => EmptyBuilder(height: errorBuilderHeight),
+//               errorBuilder: (context, retry) => ErrorBuilder(
+//                 retry: retry,
+//                 height: errorBuilderHeight,
+//               ),
+//               loadingBuilder: widgetBuilder,
+//               manualLoadMoreBuilder: (ctx, loadMore) => Container(
+//                 margin: const EdgeInsets.only(right: 16.0),
+//                 alignment: Alignment.bottomRight,
+//                 child: TextButton.icon(
+//                   iconAlignment: IconAlignment.end,
+//                   style: TextButton.styleFrom(
+//                     padding: EdgeInsets.zero,
+//                     textStyle: Theme.of(context).textTheme.labelMedium,
+//                   ),
+//                   onPressed: loadMore,
+//                   icon: toSvgIcon(icon: Assets.iconsDirectionDown, size: 12.0),
+//                   label: const Text("Voir plus"),
+//                 ),
+//               ),
+//               loadingMoreBuilder: (context) => Container(
+//                   padding: const EdgeInsets.only(top: 16, bottom: 28)
+//                       .add(const EdgeInsets.symmetric(horizontal: 16)),
+//                   child: LinearProgressIndicator(
+//                     color: Theme.of(context).colorScheme.onTertiaryContainer,
+//                     backgroundColor:
+//                         Theme.of(context).colorScheme.tertiaryContainer,
+//                     borderRadius: BorderRadius.circular(30),
+//                   )),
+//             ),

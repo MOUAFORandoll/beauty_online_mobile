@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/screens/create_profil_pro.dart.dart';
-import 'package:beauty/Professional/screens/sub/add_catalogue.dart';
-import 'package:beauty/Professional/screens/sub/catalogue.dart';
-import 'package:beauty/Professional/screens/sub/stories.dart';
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
+import 'package:beauty/my_pro/screens/create_profil_pro.dart.dart';
+import 'package:beauty/my_pro/screens/sub/add_catalogue.dart';
+import 'package:beauty/my_pro/screens/sub/catalogue.dart';
+import 'package:beauty/my_pro/screens/sub/stories.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/screens/home.dart';
@@ -60,20 +60,20 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
     });
   }
 
-  late final professionalCubit = context.read<ProfessionalCubit>();
+  late final professionalCubit = context.read<MyProfessionalCubit>();
   late final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfessionalCubit, ProfessionalState>(
+    return BlocConsumer<MyProfessionalCubit, MyProfessionalState>(
         listener: onEventReceived,
         builder: (context, state) =>
 
             // noExistProfessionnel()
 
-            state is InitializingProfessionalState
+            state is InitializingMyProfessionalState
                 ? ProfessionalBoardLoaderBuilder()
-                : state is ProfessionalLoggedState
+                : state is MyProfessionalLoggedState
                     ? existProfessionnel()
                     : state is NoProfessionnalFondState
                         ? noExistProfessionnel()
@@ -226,7 +226,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
         ),
       );
 
-  void onEventReceived(BuildContext context, ProfessionalState state) async {
+  void onEventReceived(BuildContext context, MyProfessionalState state) async {
     await waitForDialog();
 
     // if (state is ShareCatalogueLoadingState) {

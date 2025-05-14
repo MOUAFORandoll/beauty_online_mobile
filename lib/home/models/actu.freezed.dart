@@ -22,10 +22,10 @@ Actu _$ActuFromJson(Map<String, dynamic> json) {
 mixin _$Actu {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
+  String? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'profile_professionnel')
   Professional get profileProfessionnel => throw _privateConstructorUsedError;
-  @JsonKey(name: 'r,ealisation_files')
+  @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles =>
       throw _privateConstructorUsedError;
 
@@ -46,9 +46,9 @@ abstract class $ActuCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      String price,
+      String? price,
       @JsonKey(name: 'profile_professionnel') Professional profileProfessionnel,
-      @JsonKey(name: 'r,ealisation_files')
+      @JsonKey(name: 'realisation_files')
       List<RealisationFile> realisationFiles});
 
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
@@ -71,7 +71,7 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
   }) {
@@ -84,10 +84,10 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileProfessionnel: null == profileProfessionnel
           ? _value.profileProfessionnel
           : profileProfessionnel // ignore: cast_nullable_to_non_nullable
@@ -120,9 +120,9 @@ abstract class _$$ActuImplCopyWith<$Res> implements $ActuCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      String price,
+      String? price,
       @JsonKey(name: 'profile_professionnel') Professional profileProfessionnel,
-      @JsonKey(name: 'r,ealisation_files')
+      @JsonKey(name: 'realisation_files')
       List<RealisationFile> realisationFiles});
 
   @override
@@ -143,7 +143,7 @@ class __$$ActuImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
   }) {
@@ -156,10 +156,10 @@ class __$$ActuImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileProfessionnel: null == profileProfessionnel
           ? _value.profileProfessionnel
           : profileProfessionnel // ignore: cast_nullable_to_non_nullable
@@ -178,10 +178,10 @@ class _$ActuImpl implements _Actu {
   const _$ActuImpl(
       {required this.id,
       required this.title,
-      required this.price,
+      this.price,
       @JsonKey(name: 'profile_professionnel')
       required this.profileProfessionnel,
-      @JsonKey(name: 'r,ealisation_files')
+      @JsonKey(name: 'realisation_files')
       required final List<RealisationFile> realisationFiles})
       : _realisationFiles = realisationFiles;
 
@@ -193,13 +193,13 @@ class _$ActuImpl implements _Actu {
   @override
   final String title;
   @override
-  final String price;
+  final String? price;
   @override
   @JsonKey(name: 'profile_professionnel')
   final Professional profileProfessionnel;
   final List<RealisationFile> _realisationFiles;
   @override
-  @JsonKey(name: 'r,ealisation_files')
+  @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles {
     if (_realisationFiles is EqualUnmodifiableListView)
       return _realisationFiles;
@@ -256,10 +256,10 @@ abstract class _Actu implements Actu {
   const factory _Actu(
       {required final String id,
       required final String title,
-      required final String price,
+      final String? price,
       @JsonKey(name: 'profile_professionnel')
       required final Professional profileProfessionnel,
-      @JsonKey(name: 'r,ealisation_files')
+      @JsonKey(name: 'realisation_files')
       required final List<RealisationFile> realisationFiles}) = _$ActuImpl;
 
   factory _Actu.fromJson(Map<String, dynamic> json) = _$ActuImpl.fromJson;
@@ -269,12 +269,12 @@ abstract class _Actu implements Actu {
   @override
   String get title;
   @override
-  String get price;
+  String? get price;
   @override
   @JsonKey(name: 'profile_professionnel')
   Professional get profileProfessionnel;
   @override
-  @JsonKey(name: 'r,ealisation_files')
+  @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles;
 
   /// Create a copy of Actu

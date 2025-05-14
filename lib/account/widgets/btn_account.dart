@@ -1,4 +1,4 @@
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
+import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/buttons.dart';

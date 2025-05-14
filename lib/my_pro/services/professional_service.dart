@@ -1,12 +1,9 @@
 import 'dart:io';
+import 'package:beauty/common/models/catalogue.dart';
 
-import 'package:beauty/Professional/models/catalogue.dart';
-import 'package:beauty/Professional/models/professional.dart';
-import 'package:beauty/Professional/screens/sub/catalogue.dart';
-import 'package:path/path.dart';
+import 'package:beauty/common/models/professional.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
-import 'package:beauty/common/models/user.dart';
 import 'package:beauty/common/services/api_service.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -119,9 +116,10 @@ class ProfessionalService extends ApiService {
 
   Future<PaginatedList<Catalogue>> professionalCatalogue({
     int page = 1,
+    required String id,
   }) async {
     return compute(
-        dio.get(_catalogue,
+        dio.get(_catalogue + '/professional/${id}',
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,

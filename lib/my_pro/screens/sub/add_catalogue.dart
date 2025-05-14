@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:beauty/Professional/bloc/gestion_professional_cubit.dart';
-import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
+import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
+import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/buttons.dart';

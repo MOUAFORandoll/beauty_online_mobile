@@ -28,38 +28,63 @@ class _FilActuScreenState extends State<FilActuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: kToolbarHeight,
-        ),
-        SizedBox(height: 80, child: StoriesLoaderBuilder()),
-
-        Expanded(
-            child: AutoListView.get<Actu>(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewPadding.bottom),
-                cubit: cubit,
-                viewType: ViewType.grid,
-                itemBuilder: (context, actu) => ActuItem(actu),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 2.0,
-                    mainAxisSpacing: 2.0,
-                    childAspectRatio: .65),
-                emptyBuilder: (ctx) => const EmptyBuilder(),
-                errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
-                loadingBuilder: (_) => const ActuLoaderBuilder(count: 12),
-                loadingMoreBuilder: (_) =>
-                    const ActuLoaderBuilder(padding: true))
-
-            //  PinterestGridPage(),
+    return RefreshIndicator(
+        onRefresh: () async {
+          cubit.reset();
+        },
+        child: Column(
+          children: [
+            SizedBox(
+              height: kToolbarHeight,
             ),
-        // Expanded(
-        //   child: ContentGrid(),
-        // ),
-      ],
-    );
+            SizedBox(height: 80, child: StoriesLoaderBuilder()),
+
+            Expanded(
+                child: AutoListView.get<Actu>(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewPadding.bottom),
+              cubit: cubit,
+              viewType: ViewType.custom,
+              customBuilder: (context, actus) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: MasonryGridView.count(
+                    crossAxisCount: 2, // 📌 Deux colonnes
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    shrinkWrap: true,
+                    physics: PageScrollPhysics(),
+                    itemCount: actus.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.tertiaryContainer,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          alignment: Alignment.center,
+                          height: 150 + Random().nextInt(250).toDouble(),
+                          child: ActuItem(actus[index]));
+                    },
+                  )),
+              // viewType: ViewType.grid,
+              // itemBuilder: (context, actu) => ActuItem(actu),
+              // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 3,
+              //     crossAxisSpacing: 2.0,
+              //     mainAxisSpacing: 2.0,
+              //     childAspectRatio: .65),
+              emptyBuilder: (ctx) => const EmptyBuilder(),
+              errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
+              loadingBuilder: (_) => ActuLoaderBuilder(count: 12),
+            )
+
+                //  PinterestGridPage(),
+                ),
+            // Expanded(
+            //   child: ContentGrid(),
+            // ),
+          ],
+        ));
   }
 }
 

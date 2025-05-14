@@ -1,18 +1,8 @@
-import 'package:beauty/Professional/bloc/gestion_professional_cubit.dart';
-import 'package:beauty/Professional/bloc/load_me_catalogue_cubit.dart';
-import 'package:beauty/Professional/models/catalogue.dart';
-import 'package:beauty/Professional/widgets/item_catalogue.dart';
-import 'package:beauty/common/models/service_model.dart';
+import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
+import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
+import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/utils/dialogs.dart';
-import 'package:beauty/common/widgets/empty_builder.dart';
-import 'package:beauty/common/widgets/error_builder.dart';
-import 'package:beauty/common/widgets/loader_builder.dart';
-import 'package:beauty/common/widgets/section_title.dart';
-import 'package:beauty/common/widgets/service_item.dart';
-import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:potatoes/auto_content/widgets/auto_content_view.dart';
-import 'package:potatoes/auto_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -207,14 +197,6 @@ class CatalogueForProDialog extends StatelessWidget {
                                   .read<GestionProfessionalCubit>()
                                   .deleteCatalogue(id: catalogue.id);
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.pink.shade400,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              elevation: 2,
-                            ),
                             child: const Text(
                               'SUPPRIMER',
                               style: TextStyle(

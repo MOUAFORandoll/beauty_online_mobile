@@ -1,6 +1,6 @@
-import 'package:beauty/Professional/models/catalogue.dart';
-import 'package:beauty/Professional/models/professional.dart';
-import 'package:freezed_annotation/freezed_annotation.dart'; 
+import 'package:beauty/common/models/catalogue.dart';
+import 'package:beauty/common/models/professional.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 part 'actu.freezed.dart';
 part 'actu.g.dart';
 
@@ -9,10 +9,10 @@ class Actu with _$Actu {
   const factory Actu({
     required String id,
     required String title,
-    required String price,
+    String? price,
     @JsonKey(name: 'profile_professionnel')
     required Professional profileProfessionnel,
-    @JsonKey(name: 'r,ealisation_files')
+    @JsonKey(name: 'realisation_files')
     required List<RealisationFile> realisationFiles,
   }) = _Actu;
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
-import 'package:beauty/Professional/services/professional_service.dart';
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
+import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +13,7 @@ part 'gestion_professional_state.dart';
 
 class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
   final ProfessionalService professionalService;
-  final ProfessionalCubit myProfessionalCubit;
+  final MyProfessionalCubit myProfessionalCubit;
 
   GestionProfessionalCubit(
     this.professionalService,
