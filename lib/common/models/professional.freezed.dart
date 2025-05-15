@@ -23,6 +23,8 @@ mixin _$Professional {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_pro')
   String get namePro => throw _privateConstructorUsedError;
+  @JsonKey(name: 'description')
+  String get description => throw _privateConstructorUsedError;
   String? get service => throw _privateConstructorUsedError;
   Position? get position => throw _privateConstructorUsedError;
   String? get cover => throw _privateConstructorUsedError;
@@ -52,6 +54,7 @@ abstract class $ProfessionalCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'name_pro') String namePro,
+      @JsonKey(name: 'description') String description,
       String? service,
       Position? position,
       String? cover,
@@ -79,6 +82,7 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
   $Res call({
     Object? id = null,
     Object? namePro = null,
+    Object? description = null,
     Object? service = freezed,
     Object? position = freezed,
     Object? cover = freezed,
@@ -94,6 +98,10 @@ class _$ProfessionalCopyWithImpl<$Res, $Val extends Professional>
       namePro: null == namePro
           ? _value.namePro
           : namePro // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       service: freezed == service
           ? _value.service
@@ -148,6 +156,7 @@ abstract class _$$ProfessionalImplCopyWith<$Res>
   $Res call(
       {String id,
       @JsonKey(name: 'name_pro') String namePro,
+      @JsonKey(name: 'description') String description,
       String? service,
       Position? position,
       String? cover,
@@ -174,6 +183,7 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? namePro = null,
+    Object? description = null,
     Object? service = freezed,
     Object? position = freezed,
     Object? cover = freezed,
@@ -189,6 +199,10 @@ class __$$ProfessionalImplCopyWithImpl<$Res>
       namePro: null == namePro
           ? _value.namePro
           : namePro // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       service: freezed == service
           ? _value.service
@@ -224,6 +238,7 @@ class _$ProfessionalImpl extends _Professional {
   const _$ProfessionalImpl(
       {required this.id,
       @JsonKey(name: 'name_pro') required this.namePro,
+      @JsonKey(name: 'description') required this.description,
       this.service,
       this.position,
       this.cover,
@@ -240,6 +255,9 @@ class _$ProfessionalImpl extends _Professional {
   @override
   @JsonKey(name: 'name_pro')
   final String namePro;
+  @override
+  @JsonKey(name: 'description')
+  final String description;
   @override
   final String? service;
   @override
@@ -258,7 +276,7 @@ class _$ProfessionalImpl extends _Professional {
 
   @override
   String toString() {
-    return 'Professional(id: $id, namePro: $namePro, service: $service, position: $position, cover: $cover, nombreReservation: $nombreReservation, nombreCatalogue: $nombreCatalogue, nombreActes: $nombreActes)';
+    return 'Professional(id: $id, namePro: $namePro, description: $description, service: $service, position: $position, cover: $cover, nombreReservation: $nombreReservation, nombreCatalogue: $nombreCatalogue, nombreActes: $nombreActes)';
   }
 
   @override
@@ -268,6 +286,8 @@ class _$ProfessionalImpl extends _Professional {
             other is _$ProfessionalImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.namePro, namePro) || other.namePro == namePro) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.service, service) || other.service == service) &&
             (identical(other.position, position) ||
                 other.position == position) &&
@@ -282,8 +302,17 @@ class _$ProfessionalImpl extends _Professional {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, namePro, service, position,
-      cover, nombreReservation, nombreCatalogue, nombreActes);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      namePro,
+      description,
+      service,
+      position,
+      cover,
+      nombreReservation,
+      nombreCatalogue,
+      nombreActes);
 
   /// Create a copy of Professional
   /// with the given fields replaced by the non-null parameter values.
@@ -305,6 +334,7 @@ abstract class _Professional extends Professional {
   const factory _Professional(
       {required final String id,
       @JsonKey(name: 'name_pro') required final String namePro,
+      @JsonKey(name: 'description') required final String description,
       final String? service,
       final Position? position,
       final String? cover,
@@ -322,6 +352,9 @@ abstract class _Professional extends Professional {
   @override
   @JsonKey(name: 'name_pro')
   String get namePro;
+  @override
+  @JsonKey(name: 'description')
+  String get description;
   @override
   String? get service;
   @override

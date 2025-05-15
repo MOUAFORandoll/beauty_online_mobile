@@ -1,6 +1,6 @@
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
-import 'package:beauty/my_pro/widgets/item_catalogue.dart';
+import 'package:beauty/my_pro/widgets/my_item_catalogue.dart';
 import 'package:beauty/common/models/service_model.dart';
 import 'package:beauty/common/widgets/empty_builder.dart';
 import 'package:beauty/common/widgets/error_builder.dart';
@@ -30,7 +30,7 @@ class _CatalogueViewState extends State<CatalogueView> {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
         cubit: cubit,
         viewType: ViewType.grid,
-        itemBuilder: (context, catalogue) => CatalogueItem(catalogue),
+        itemBuilder: (context, catalogue) => MyCatalogueItem(catalogue),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             crossAxisSpacing: 2.0,

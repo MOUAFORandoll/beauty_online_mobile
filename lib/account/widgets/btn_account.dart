@@ -4,11 +4,7 @@ import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:potatoes/libs.dart';
-import 'package:beauty/common/utils/assets.dart';
-import 'package:beauty/common/utils/svg_utils.dart';
-import 'package:beauty/common/utils/themes.dart';
 
 class BtnAccount extends StatefulWidget {
   @override

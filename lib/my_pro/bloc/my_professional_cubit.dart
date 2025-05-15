@@ -40,9 +40,7 @@ class MyProfessionalCubit
   void getInitialState() {
     final professional = preferencesService.professional;
     log('professional =======from store======================${professional}');
-    if (professional == null) {
-      emit(const NoProfessionnalFondState());
-    } else {
+    if (professional != null) {
       emit(MyProfessionalLoggedState(professional));
     }
   }
@@ -83,16 +81,52 @@ class MyProfessionalCubit
           if ((e).error!.code == 'PROFILE_PRO_NOT_FOUND') {
             emit(NoProfessionnalFondState());
           } else {
-            emit(ProfessionalErrorState(e));
+            emit(MyProfessionalErrorState(e));
           }
         } else {
-          emit(ProfessionalErrorState(e));
+          emit(MyProfessionalErrorState(e));
         }
       } catch (e) {
-        emit(ProfessionalErrorState(e));
+        emit(MyProfessionalErrorState(e));
       }
     }
     ;
+  }
+
+  void updateProfilePicture({required File file}) {
+    final stateBefore = state;
+
+    emit(const MyProfessionalUpdatingState());
+    professionalService.updateProfilePicture(file: file).then((professional) {
+      preferencesService.saveProfessional(professional);
+      emit(const MyProfessionalUpdatedState());
+      emit(MyProfessionalLoggedState(professional));
+    }, onError: (error, trace) {
+      emit(UpdateMyProfessionalErrorState(error, trace));
+      emit(stateBefore);
+    });
+  }
+
+  void updateProfilePro({
+    int? type,
+    String? data,
+  }) {
+    final stateBefore = state;
+
+    emit(const MyProfessionalUpdatingState());
+    professionalService
+        .updateProfilePro(
+      type: type,
+      data: data,
+    )
+        .then((professional) {
+      preferencesService.saveProfessional(professional);
+      emit(const MyProfessionalUpdatedState());
+      emit(MyProfessionalLoggedState(professional));
+    }, onError: (error, trace) {
+      emit(UpdateMyProfessionalErrorState(error, trace));
+      emit(stateBefore);
+    });
   }
 
   Professional get professional {

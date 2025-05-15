@@ -1,20 +1,17 @@
-import 'dart:io';
 
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:open_settings/open_settings.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
-import 'package:beauty/common/services/api_service.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -33,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   late final userCubit = context.read<UserCubit>();
-  late final professionalCubit = context.read<ProfessionalCubit>();
+  late final professionalCubit = context.read<MyProfessionalCubit>();
 
   late final preferencesService = userCubit.preferencesService;
 
@@ -175,7 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                                 ],
                               )),
                         ),
-                      if (professionalState is ProfessionalLoggedState)
+                      if (professionalState is MyProfessionalLoggedState)
                         Column(
                           children: [
                             Row(

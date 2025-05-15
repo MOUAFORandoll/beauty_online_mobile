@@ -10,6 +10,7 @@ _$ProfessionalImpl _$$ProfessionalImplFromJson(Map<String, dynamic> json) =>
     _$ProfessionalImpl(
       id: json['id'] as String,
       namePro: json['name_pro'] as String,
+      description: json['description'] as String,
       service: json['service'] as String?,
       position: json['position'] == null
           ? null
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$ProfessionalImplToJson(_$ProfessionalImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name_pro': instance.namePro,
+      'description': instance.description,
       'service': instance.service,
       'position': instance.position,
       'cover': instance.cover,

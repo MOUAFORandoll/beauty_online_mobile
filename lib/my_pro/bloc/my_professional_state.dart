@@ -16,9 +16,9 @@ class MyProfessionalLoggedState extends CubitSuccessState with MyProfessionalSta
   List<Object?> get props => [Professional];
 }
 
-class ProfessionalLoadingState extends CubitLoadingState
+class MyProfessionalLoadingState extends CubitLoadingState
     with MyProfessionalState {
-  const ProfessionalLoadingState() : super();
+  const MyProfessionalLoadingState() : super();
 }
 
 class NoProfessionnalFondState extends CubitInformationState
@@ -26,6 +26,19 @@ class NoProfessionnalFondState extends CubitInformationState
   const NoProfessionnalFondState();
 }
 
-class ProfessionalErrorState extends CubitErrorState with MyProfessionalState {
-  ProfessionalErrorState(super.error, [super.trace]);
+class MyProfessionalErrorState extends CubitErrorState with MyProfessionalState {
+  MyProfessionalErrorState(super.error, [super.trace]);
+}
+
+
+class MyProfessionalUpdatingState extends CubitLoadingState with MyProfessionalState {
+  const MyProfessionalUpdatingState() : super();
+}
+
+class MyProfessionalUpdatedState extends CubitInformationState with MyProfessionalState {
+  const MyProfessionalUpdatedState() : super();
+}
+
+class UpdateMyProfessionalErrorState extends CubitErrorState with MyProfessionalState {
+  UpdateMyProfessionalErrorState(super.error, [super.trace]);
 }

@@ -205,11 +205,7 @@ abstract class AppTheme {
           return Theme.of(context).colorScheme.onSurface;
         }),
       ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          elevation: 0,
-        ),
-      ),
+      textButtonTheme: TextButtonThemeData(),
       tabBarTheme: TabBarTheme(
         labelStyle: textTheme.labelLarge?.copyWith(fontSize: 12),
         unselectedLabelStyle: textTheme.labelLarge?.copyWith(fontSize: 12),

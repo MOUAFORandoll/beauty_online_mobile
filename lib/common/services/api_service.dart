@@ -20,7 +20,7 @@ class ApiLinks extends potatoes.Links {
 
   @override
   String get productionUrl => "http://192.168.1.129:8080/api";
- 
+
   static const privacy = 'https://www.beauty.app/privacy-policy';
 }
 

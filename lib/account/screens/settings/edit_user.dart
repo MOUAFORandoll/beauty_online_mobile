@@ -5,23 +5,19 @@ import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:potatoes/libs.dart';
 import 'package:potatoes/potatoes.dart';
-import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
+
 import 'package:beauty/common/bloc/user_cubit.dart';
-import 'package:beauty/common/utils/validators.dart';
-import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditUserScreen extends StatefulWidget {
   final int type;
-  const EditProfileScreen({super.key, required this.type});
+  const EditUserScreen({super.key, required this.type});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<EditUserScreen> createState() => _EditUserScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen>
-    with CompletableMixin {
+class _EditUserScreenState extends State<EditUserScreen> with CompletableMixin {
   late final userCubit = context.read<UserCubit>();
   late final TextEditingController controller = TextEditingController(text: '');
   late PhoneNumber _phoneNumber;

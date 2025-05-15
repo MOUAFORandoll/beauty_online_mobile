@@ -1,22 +1,13 @@
-import 'package:beauty/account/widgets/head.dart';
+import 'package:beauty/account/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:beauty/account/screens/settings/edit_profile.dart';
-import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
-import 'package:beauty/account/screens/settings/settings_screen.dart';
+import 'package:beauty/account/screens/settings/edit_user.dart';
+
 import 'package:beauty/common/bloc/user_cubit.dart';
-import 'package:beauty/common/widgets/action_widget.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/widgets/profile_picture.dart';
-import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/dialogs.dart';
-import 'package:beauty/common/utils/svg_utils.dart';
-import 'package:beauty/common/utils/themes.dart';
 
 class MyUserInfo extends StatefulWidget {
   const MyUserInfo({super.key});
@@ -64,7 +55,7 @@ class _MyUserInfoState extends State<MyUserInfo>
                               context: context,
                               isScrollControlled: true,
                               builder: (innerContext) =>
-                                  EditProfileScreen(type: 0)),
+                                  EditUserScreen(type: 0)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -110,7 +101,7 @@ class _MyUserInfoState extends State<MyUserInfo>
                               isScrollControlled: true,
                               context: context,
                               builder: (innerContext) =>
-                                  EditProfileScreen(type: 1)),
+                                  EditUserScreen(type: 1)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

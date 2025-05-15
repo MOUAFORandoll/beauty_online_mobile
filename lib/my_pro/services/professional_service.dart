@@ -6,6 +6,7 @@ import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/services/api_service.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:path/path.dart';
 
 class ProfessionalService extends ApiService {
   static const String _createUserProfile = '/profile-professionnels';
@@ -13,7 +14,9 @@ class ProfessionalService extends ApiService {
   static const String _findUserProfile = '/profile-professionnels/me';
   static const String _filterProfiles = '/profile-professionnels/filter';
   static const String _findProfileById = '/profile-professionnels/{id}';
-  static const String _updateUserProfile = '/profile-professionnels/{id}';
+  static const String _updateUserProfile = '/profile-professionnels';
+  static const String _updaterProfileCover = '/profile-professionnels/cover';
+
   static const String _deleteProfile = '/profile-professionnels/{id}';
   static const String _findProfilesByProximity =
       '/profile-professionnels/proximity';
@@ -66,10 +69,37 @@ class ProfessionalService extends ApiService {
         mapper: Professional.fromJson);
   }
 
-  Future<Professional> updateUserProfile(
-      {required String id, required Professional profile}) {
-    return compute(dio.put(_updateUserProfile.replaceAll('{id}', id),
-        options: Options(headers: withAuth()), data: profile.toJson()));
+  Future<Professional> updateProfilePicture({required File file}) async {
+    return compute(
+        dio.patch(_updaterProfileCover,
+            options: Options(headers: withAuth()),
+            data: FormData.fromMap({
+              'image': await MultipartFile.fromFile(file.path,
+                  filename: basename(file.path))
+            })),
+        mapper: Professional.fromJson);
+  }
+
+  Future<Professional> updateProfilePro({
+    required int? type,
+    String? data,
+  }) {
+    print(
+      {
+        if (type == 0) 'name_pro': data,
+        if (type == 1) 'description': data,
+      },
+    );
+    return compute(
+        dio.patch(
+          _updateUserProfile,
+          options: Options(headers: withAuth()),
+          data: {
+            if (type == 0) 'name_pro': data,
+            if (type == 1) 'description': data,
+          },
+        ),
+        mapper: Professional.fromJson);
   }
 
   Future<void> deleteProfile({required String id}) {

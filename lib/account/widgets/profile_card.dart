@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:beauty/common/bloc/user_cubit.dart';
-import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/loadPicture.dart';
 import 'package:beauty/common/widgets/profile_picture.dart';

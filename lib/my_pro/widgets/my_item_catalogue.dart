@@ -8,10 +8,10 @@ import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 
-class CatalogueItem extends StatelessWidget {
+class MyCatalogueItem extends StatelessWidget {
   final Catalogue catalogue;
 
-  const CatalogueItem(
+  const MyCatalogueItem(
     this.catalogue,
   );
 

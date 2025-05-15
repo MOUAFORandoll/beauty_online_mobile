@@ -10,6 +10,7 @@ class Professional with _$Professional {
   const factory Professional({
     required String id,
     @JsonKey(name: 'name_pro') required String namePro,
+    @JsonKey(name: 'description') required String description,
     String? service,
     Position? position,
     String? cover,
@@ -27,7 +28,7 @@ class Position with _$Position {
   const Position._();
 
   const factory Position({
-    @JsonKey(name: 'title_emplacement')   String? titleEmplacement,
+    @JsonKey(name: 'title_emplacement') String? titleEmplacement,
     String? longitude,
     String? latitude,
     String? town,

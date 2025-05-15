@@ -1,36 +1,16 @@
 import 'dart:math';
 
 import 'package:beauty/professional/bloc/professional_cubit.dart';
-import 'package:beauty/common/models/professional.dart'; 
+import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/professional/screens/sub/primary_info_pro_client.dart';
 import 'package:beauty/professional/screens/sub/stories.dart';
-import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
-import 'package:beauty/account/widgets/btn_account.dart';
-import 'package:beauty/account/widgets/primary_info.dart';
-import 'package:beauty/common/screens/home.dart';
 import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/services/professional_cubit_manager.dart';
-import 'package:beauty/common/widgets/loader_builder.dart';
-import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:html/parser.dart';
-import 'package:intl/intl.dart';
-import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:beauty/account/screens/settings/edit_profile.dart';
-import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
-import 'package:beauty/account/screens/settings/settings_screen.dart';
-import 'package:beauty/common/bloc/user_cubit.dart';
-import 'package:beauty/common/widgets/action_widget.dart';
-import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/widgets/profile_picture.dart';
+
 import 'package:beauty/common/utils/assets.dart';
-import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
 
@@ -93,9 +73,7 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: () async {
-          professionalCubit.getInitialState();
-        },
+        onRefresh: () async {},
         child: BlocConsumer<ProfessionalCubit, ProfessionalState>(
             listener: onEventReceived,
             builder: (context, state) {
@@ -122,18 +100,25 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                               fit: StackFit.expand,
                               children: [
                                 Image(
-                                  fit: BoxFit.cover,
-                                  image: context.read<AppCacheManager>().getImage(
-                                      'https://cdn.pixabay.com/photo/2025/03/31/21/30/italy-9505446_1280.jpg'),
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Icon(
-                                    Icons.error,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onTertiaryContainer,
-                                    size: 32,
-                                  ),
-                                ),
+                                    fit: BoxFit.cover,
+                                    image: context
+                                        .read<AppCacheManager>()
+                                        .getImage(professionalCubit
+                                                .professional.cover ??
+                                            ''),
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container()
+
+                                    // errorBuilder: (context, error, stackTrace) =>
+                                    //     Icon(
+                                    //   Icons.error,
+                                    //   color: Theme.of(context)
+                                    //       .colorScheme
+                                    //       .onTertiaryContainer,
+                                    //   size: 32,
+                                    // ),
+                                    ),
 
                                 Positioned(
                                   bottom: 0,
@@ -169,12 +154,6 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                                       child: Column(children: [
                                         Row(
                                           children: [
-                                            GestureDetector(
-                                                onTap: () {},
-                                                child: const UserProfilePicture(
-                                                  size: 80,
-                                                  isSquare: true,
-                                                )),
                                             SizedBox(
                                               width: 24,
                                             ),
@@ -190,6 +169,7 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                                                       .textTheme
                                                       .labelLarge!
                                                       .copyWith(
+                                                          fontSize: 30,
                                                           color: Colors.white),
                                                 ),
                                                 const SizedBox(height: 4),
@@ -253,10 +233,10 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                                       child: TabBarView(
                                         controller: _tabController,
                                         children: [
-                                          CatalogueProView.get(context: context,
-                                          professional:
-                                          professionalCubit.professional
-                                          ),
+                                          CatalogueProView.get(
+                                              context: context,
+                                              professional: professionalCubit
+                                                  .professional),
                                           Stories(),
                                           Stories(),
                                         ],

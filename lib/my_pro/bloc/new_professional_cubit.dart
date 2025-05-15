@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:beauty/Professional/bloc/professional_cubit.dart';
+ 
 import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -13,7 +13,7 @@ part 'new_professional_state.dart';
 
 class NewProfessionalCubit extends Cubit<NewProfessionalState> {
   final ProfessionalService professionalService;
-  final ProfessionalCubit professionalCubit;
+  final MyProfessionalCubit professionalCubit;
 
   NewProfessionalCubit(this.professionalService, this.professionalCubit)
       : super(const NewProfessionalIdleState());

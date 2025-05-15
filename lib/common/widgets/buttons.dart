@@ -75,7 +75,7 @@ class BeautyButton extends StatelessWidget {
   Color _foregroundColor(BuildContext context) {
     switch (_hierarchy) {
       case _ButtonStyle.primary:
-        return AppTheme.black;
+        return AppTheme.white;
       case _ButtonStyle.secondary:
         return Theme.of(context).colorScheme.onTertiaryContainer;
       case _ButtonStyle.black:

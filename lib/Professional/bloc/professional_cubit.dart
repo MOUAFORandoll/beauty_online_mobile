@@ -22,73 +22,19 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
   ProfessionalCubit(this.professionalService, this.preferencesService,
       Professional professional)
       : super(const InitializingProfessionalState()) {
-    emit(ProfessionalLoggedState(professional));
+    emit(ProfessionalLoadedState(professional));
    
   }
 
   @override
   Professional? getObject(ProfessionalState state) {
-    if (state is ProfessionalLoggedState) {
+    if (state is ProfessionalLoadedState) {
       return state.professional;
     }
     return null;
   }
-
-  void getInitialState() {
-    final professional = preferencesService.professional;
-    log('professional =======from store======================${professional}');
-    if (professional == null) {
-      emit(const NoProfessionnalFondState());
-    } else {
-      emit(ProfessionalLoggedState(professional));
-    }
-  }
-
-  void updateCatalogueCount(int delta) {
-    final professional = preferencesService.professional;
-    if (professional != null) {
-      final updatedProfessional = professional.copyWith(
-        nombreCatalogue: professional.nombreCatalogue! + delta,
-      );
-      preferencesService.saveProfessional(updatedProfessional);
-      emit(ProfessionalLoggedState(updatedProfessional));
-    }
-  }
-
-  void getInitialStateOnline() async {
-    try {
-      emit(InitializingProfessionalState());
-      print('proffff');
-      await professionalService.findUserProfile().then((professional) {
-        print(
-          'proffvvvff===${professional}',
-        );
-        if (professional != null) {
-          preferencesService.saveProfessional(professional);
-          emit(ProfessionalLoggedState(professional));
-        } else {
-          emit(NoProfessionnalFondState());
-        }
-      });
-    } catch (e) {
-      print(
-        'proffdddddvvvff= ',
-      );
-      emit(NoProfessionnalFondState());
-      if ((e as ApiError).error != null) {
-        if ((e).error!.code == 'PROFILE_PRO_NOT_FOUND') {
-          emit(NoProfessionnalFondState());
-        } else {
-          emit(ProfessionalErrorState(e));
-        }
-      } else {
-        emit(ProfessionalErrorState(e));
-      }
-    }
-    ;
-  }
-
-  Professional get professional {
+ 
+   Professional get professional {
     final professional = getObject(state) ?? object;
 
     if (professional != null) return professional;

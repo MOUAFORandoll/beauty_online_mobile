@@ -29,32 +29,6 @@ class CatalogueItem extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           catalogueItemImage(catalogue: catalogue, context: context),
-          Positioned.fill(
-            child: Container(
-              color: Colors.black.withOpacity(0.2),
-              child: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  toSvgIcon(
-                      icon: Assets.iconsBookmark,
-                      size: 32.0,
-                      color: AppTheme.white),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    '${catalogue.price} €',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(color: AppTheme.white),
-                  )
-                ],
-              )),
-            ),
-          ),
         ],
       ),
     );

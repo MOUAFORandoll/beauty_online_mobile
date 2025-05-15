@@ -34,7 +34,7 @@ class ProfessionalItem extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: ProfilePicture(
               image: professionalCubit.professional.cover,
-              size: 32.0,
+              size: 64.0,
             ),
             title: Text(professionalCubit.professional.namePro,
                 maxLines: 1,

@@ -1,29 +1,23 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:beauty/common/utils/loadPicture.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
+import 'package:beauty/my_pro/screens/my_pro_setting.dart';
 import 'package:beauty/my_pro/screens/my_professional_board.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/screens/my_account.dart';
 import 'package:beauty/account/widgets/btn_account.dart';
 import 'package:beauty/account/widgets/primary_info.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
-import 'package:intl/intl.dart';
-import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:beauty/account/screens/settings/edit_profile.dart';
-import 'package:beauty/account/screens/settings/edit_profile_picture_screen.dart';
-import 'package:beauty/account/screens/settings/settings_screen.dart';
+
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/action_widget.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
@@ -81,18 +75,36 @@ class _AccountScreenState extends State<AccountScreen>
                     background: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Image(
-                          fit: BoxFit.cover,
-                          image: context.read<AppCacheManager>().getImage(
-                              'https://cdn.pixabay.com/photo/2025/03/31/21/30/italy-9505446_1280.jpg'),
-                          errorBuilder: (context, error, stackTrace) => Icon(
-                            Icons.error,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onTertiaryContainer,
-                            size: 32,
+                        if (state is MyProfessionalLoggedState)
+                          Image(
+                              fit: BoxFit.cover,
+                              image: context.read<AppCacheManager>().getImage(
+                                  professionalCubit.professional.cover ?? ''),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container()
+                              // errorBuilder: (context, error, stackTrace) =>     Icon(
+                              //   Icons.error,
+                              //   color: Theme.of(context)
+                              //       .colorScheme
+                              //       .onTertiaryContainer,
+                              //   size: 32,
+                              // ),
+                              ),
+                        if (state is MyProfessionalUpdatingState)
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(80)),
+                              child: Positioned(
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
                         // Positioned(
                         //   top: 0,
                         //   left: 0,
@@ -148,9 +160,7 @@ class _AccountScreenState extends State<AccountScreen>
                   child: BlocBuilder<AccountViewManageCubit, bool>(
                     builder: (ctx, state) => state
                         ? Container()
-                        : BlocConsumer<MyProfessionalCubit,
-                            MyProfessionalState>(
-                            listener: onEventReceived,
+                        : BlocBuilder<MyProfessionalCubit, MyProfessionalState>(
                             builder: (context, state) =>
                                 state is MyProfessionalLoggedState
                                     ? Padding(
@@ -205,24 +215,38 @@ class _AccountScreenState extends State<AccountScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (professionalCubit.professional != null)
+                  ActionWidget(
+                    title: 'Changer Couverture',
+                    icon: Assets.iconPictureAdd,
+                    onTap: () async {
+                      Navigator.pop(context);
+                      final image = await pickImage(context);
+                      if (image != null) {
+                        professionalCubit.updateProfilePicture(
+                            file: File(image.path));
+                      }
+                    },
+                  ),
+                const SizedBox(height: 16),
+                ActionWidget(
+                  title: 'Paramètres Professionnel',
+                  icon: Assets.iconsSetting,
+                  onTap: () {
+                    Navigator.of(innerContext).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const MyProSetting()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
                 ActionWidget(
                   title: 'Partager…',
                   icon: Assets.iconsShare,
                   onTap: () {
                     userCubit.shareUser();
                     Navigator.of(innerContext).pop();
-                  },
-                ),
-                const SizedBox(height: 16),
-                ActionWidget(
-                  title: 'Paramètres',
-                  icon: Assets.iconsSetting,
-                  onTap: () {
-                    Navigator.of(innerContext).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsScreen()),
-                    );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -280,16 +304,9 @@ class _AccountScreenState extends State<AccountScreen>
 
   void onEventReceived(BuildContext context, MyProfessionalState state) async {
     await waitForDialog();
-
-    // if (state is ShareCatalogueLoadingState) {
-    //   loadingDialogCompleter = showLoadingBarrier(
-    //     context: context,
-    //   );
-    // } else if (state is ShareCatalogueSuccesState) {
-    //   await Share.share(state.link);
-    // } else if (state is CatalogueManipErrorState) {
-    //   showErrorToast(content: state.error, context: context);
-    // }
+    if (state is UpdateMyProfessionalErrorState) {
+      showErrorToast(content: state.error, context: context);
+    }
   }
 
   @override

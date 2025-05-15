@@ -1,6 +1,6 @@
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
-import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart'; 
-import 'package:beauty/Professional/bloc/professional_cubit.dart'; 
+import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
+import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
 import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/auth/screens/complete_info.dart';
@@ -11,6 +11,7 @@ import 'package:beauty/home/bloc/load_actu_cubit.dart';
 import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/new_professional_cubit.dart';
+import 'package:beauty/my_pro/hairdresser-app/lib/cubits/availability_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -142,6 +143,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   LoadActuCubit(context.read(), context.read())),
+          BlocProvider(create: (context) => AvailabilityCubit()),
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(

@@ -66,13 +66,7 @@ class _FilActuScreenState extends State<FilActuScreen> {
                           child: ActuItem(actus[index]));
                     },
                   )),
-              // viewType: ViewType.grid,
-              // itemBuilder: (context, actu) => ActuItem(actu),
-              // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 3,
-              //     crossAxisSpacing: 2.0,
-              //     mainAxisSpacing: 2.0,
-              //     childAspectRatio: .65),
+             
               emptyBuilder: (ctx) => const EmptyBuilder(),
               errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
               loadingBuilder: (_) => ActuLoaderBuilder(count: 12),
