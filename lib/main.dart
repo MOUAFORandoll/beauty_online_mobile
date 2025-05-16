@@ -1,3 +1,4 @@
+import 'package:beauty/agenda/cubit/schedule_cubit.dart' show ScheduleCubit;
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
@@ -143,7 +144,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   LoadActuCubit(context.read(), context.read())),
-          BlocProvider(create: (context) => AvailabilityCubit()),
+          BlocProvider(create: (context) => ScheduleCubit()),
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(

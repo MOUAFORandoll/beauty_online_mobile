@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:beauty/agenda/screens/add_schedule_screen.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/hairdresser-app/lib/screens/availability_summary_screen.dart';
 import 'package:beauty/my_pro/screens/create_profil_pro.dart.dart';
@@ -106,22 +107,23 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
                 children: [
                   CatalogueView(),
                   Stories(),
-                  AvailabilitySummaryScreen(),
+                  MonAgenda(),
                 ],
               ),
             )
           ])),
-      floatingActionButton: _tabController.index == 2
-          ? null
-          : FloatingActionButton(
-              heroTag: 'nouveau',
-              onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => _tabController.index == 0
-                            ? AddProductScreen()
-                            : AddProductScreen()),
-                  ),
-              child: toSvgIcon(icon: Assets.iconsMore)));
+      floatingActionButton: FloatingActionButton(
+          heroTag: 'nouveau',
+          onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => _tabController.index == 0
+                      ? AddProductScreen()
+                      : _tabController.index == 1
+                          ? AddProductScreen()
+                          : AddScheduleScreen(),
+                ),
+              ),
+          child: toSvgIcon(icon: Assets.iconsMore)));
 
   Widget noExistProfessionnel() => SingleChildScrollView(
         child: SafeArea(
