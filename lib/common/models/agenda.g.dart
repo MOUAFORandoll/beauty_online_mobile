@@ -9,8 +9,8 @@ part of 'agenda.dart';
 _$AgendaImpl _$$AgendaImplFromJson(Map<String, dynamic> json) => _$AgendaImpl(
       id: json['id'] as String,
       day: DateTime.parse(json['day'] as String),
-      crenaux: (json['crenaux'] as List<dynamic>)
-          .map((e) => Crenau.fromJson(e as Map<String, dynamic>))
+      creneaux: (json['creneaux'] as List<dynamic>)
+          .map((e) => Creneau.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -18,16 +18,16 @@ Map<String, dynamic> _$$AgendaImplToJson(_$AgendaImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'day': instance.day.toIso8601String(),
-      'crenaux': instance.crenaux,
+      'creneaux': instance.creneaux,
     };
 
-_$CrenauImpl _$$CrenauImplFromJson(Map<String, dynamic> json) => _$CrenauImpl(
+_$CreneauImpl _$$CreneauImplFromJson(Map<String, dynamic> json) => _$CreneauImpl(
       id: json['id'] as String,
       startTimeAvailable: json['startTimeAvailable'] as String,
       endTimeAvailable: json['endTimeAvailable'] as String,
     );
 
-Map<String, dynamic> _$$CrenauImplToJson(_$CrenauImpl instance) =>
+Map<String, dynamic> _$$CreneauImplToJson(_$CreneauImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'startTimeAvailable': instance.startTimeAvailable,

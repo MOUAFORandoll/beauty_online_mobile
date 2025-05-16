@@ -164,22 +164,22 @@ class ProfessionalService extends ApiService {
     );
   }
 
-  Future<Agenda> addCrenau({
+  Future<Agenda> addCreneau({
     required idAgenda,
     required data,
   }) async {
     return compute(
-        dio.post(_agendas + '/${idAgenda}/crenau',
+        dio.post(_agendas + '/${idAgenda}/creneau',
             options: Options(headers: withAuth()), data: data),
         mapper: Agenda.fromJson);
   }
 
-  Future deleteCrenau({
-    required idCrenau,
+  Future deleteCreneau({
+    required idCreneau,
   }) async {
     return compute(
       dio.delete(
-        _agendas + '/crenau/${idCrenau}',
+        _agendas + '/creneau/${idCreneau}',
         options: Options(headers: withAuth()),
       ),
     );

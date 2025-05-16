@@ -8,19 +8,19 @@ class Agenda with _$Agenda {
   const factory Agenda({
     required String id,
     required DateTime day,
-    required List<Crenau> crenaux,
+    required List<Creneau> creneaux,
   }) = _Agenda;
 
   factory Agenda.fromJson(Map<String, dynamic> json) => _$AgendaFromJson(json);
 }
 
 @freezed
-class Crenau with _$Crenau {
-  const factory Crenau({
+class Creneau with _$Creneau {
+  const factory Creneau({
     required String id,
     required String startTimeAvailable,
     required String endTimeAvailable,
-  }) = _Crenau;
+  }) = _Creneau;
 
-  factory Crenau.fromJson(Map<String, dynamic> json) => _$CrenauFromJson(json);
+  factory Creneau.fromJson(Map<String, dynamic> json) => _$CreneauFromJson(json);
 }

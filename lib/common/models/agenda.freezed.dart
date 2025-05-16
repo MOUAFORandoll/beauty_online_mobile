@@ -22,7 +22,7 @@ Agenda _$AgendaFromJson(Map<String, dynamic> json) {
 mixin _$Agenda {
   String get id => throw _privateConstructorUsedError;
   DateTime get day => throw _privateConstructorUsedError;
-  List<Crenau> get crenaux => throw _privateConstructorUsedError;
+  List<Creneau> get creneaux => throw _privateConstructorUsedError;
 
   /// Serializes this Agenda to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $AgendaCopyWith<$Res> {
   factory $AgendaCopyWith(Agenda value, $Res Function(Agenda) then) =
       _$AgendaCopyWithImpl<$Res, Agenda>;
   @useResult
-  $Res call({String id, DateTime day, List<Crenau> crenaux});
+  $Res call({String id, DateTime day, List<Creneau> creneaux});
 }
 
 /// @nodoc
@@ -58,7 +58,7 @@ class _$AgendaCopyWithImpl<$Res, $Val extends Agenda>
   $Res call({
     Object? id = null,
     Object? day = null,
-    Object? crenaux = null,
+    Object? creneaux = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,10 +69,10 @@ class _$AgendaCopyWithImpl<$Res, $Val extends Agenda>
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      crenaux: null == crenaux
-          ? _value.crenaux
-          : crenaux // ignore: cast_nullable_to_non_nullable
-              as List<Crenau>,
+      creneaux: null == creneaux
+          ? _value.creneaux
+          : creneaux // ignore: cast_nullable_to_non_nullable
+              as List<Creneau>,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$AgendaImplCopyWith<$Res> implements $AgendaCopyWith<$Res> {
       __$$AgendaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, DateTime day, List<Crenau> crenaux});
+  $Res call({String id, DateTime day, List<Creneau> creneaux});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class __$$AgendaImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? day = null,
-    Object? crenaux = null,
+    Object? creneaux = null,
   }) {
     return _then(_$AgendaImpl(
       id: null == id
@@ -113,10 +113,10 @@ class __$$AgendaImplCopyWithImpl<$Res>
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      crenaux: null == crenaux
-          ? _value._crenaux
-          : crenaux // ignore: cast_nullable_to_non_nullable
-              as List<Crenau>,
+      creneaux: null == creneaux
+          ? _value._creneaux
+          : creneaux // ignore: cast_nullable_to_non_nullable
+              as List<Creneau>,
     ));
   }
 }
@@ -127,8 +127,8 @@ class _$AgendaImpl implements _Agenda {
   const _$AgendaImpl(
       {required this.id,
       required this.day,
-      required final List<Crenau> crenaux})
-      : _crenaux = crenaux;
+      required final List<Creneau> creneaux})
+      : _creneaux = creneaux;
 
   factory _$AgendaImpl.fromJson(Map<String, dynamic> json) =>
       _$$AgendaImplFromJson(json);
@@ -137,17 +137,17 @@ class _$AgendaImpl implements _Agenda {
   final String id;
   @override
   final DateTime day;
-  final List<Crenau> _crenaux;
+  final List<Creneau> _creneaux;
   @override
-  List<Crenau> get crenaux {
-    if (_crenaux is EqualUnmodifiableListView) return _crenaux;
+  List<Creneau> get creneaux {
+    if (_creneaux is EqualUnmodifiableListView) return _creneaux;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_crenaux);
+    return EqualUnmodifiableListView(_creneaux);
   }
 
   @override
   String toString() {
-    return 'Agenda(id: $id, day: $day, crenaux: $crenaux)';
+    return 'Agenda(id: $id, day: $day, creneaux: $creneaux)';
   }
 
   @override
@@ -157,13 +157,13 @@ class _$AgendaImpl implements _Agenda {
             other is _$AgendaImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.day, day) || other.day == day) &&
-            const DeepCollectionEquality().equals(other._crenaux, _crenaux));
+            const DeepCollectionEquality().equals(other._creneaux, _creneaux));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, day, const DeepCollectionEquality().hash(_crenaux));
+      runtimeType, id, day, const DeepCollectionEquality().hash(_creneaux));
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -185,7 +185,7 @@ abstract class _Agenda implements Agenda {
   const factory _Agenda(
       {required final String id,
       required final DateTime day,
-      required final List<Crenau> crenaux}) = _$AgendaImpl;
+      required final List<Creneau> creneaux}) = _$AgendaImpl;
 
   factory _Agenda.fromJson(Map<String, dynamic> json) = _$AgendaImpl.fromJson;
 
@@ -194,7 +194,7 @@ abstract class _Agenda implements Agenda {
   @override
   DateTime get day;
   @override
-  List<Crenau> get crenaux;
+  List<Creneau> get creneaux;
 
   /// Create a copy of Agenda
   /// with the given fields replaced by the non-null parameter values.
@@ -204,44 +204,44 @@ abstract class _Agenda implements Agenda {
       throw _privateConstructorUsedError;
 }
 
-Crenau _$CrenauFromJson(Map<String, dynamic> json) {
-  return _Crenau.fromJson(json);
+Creneau _$CreneauFromJson(Map<String, dynamic> json) {
+  return _Creneau.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Crenau {
+mixin _$Creneau {
   String get id => throw _privateConstructorUsedError;
   String get startTimeAvailable => throw _privateConstructorUsedError;
   String get endTimeAvailable => throw _privateConstructorUsedError;
 
-  /// Serializes this Crenau to a JSON map.
+  /// Serializes this Creneau to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Crenau
+  /// Create a copy of Creneau
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CrenauCopyWith<Crenau> get copyWith => throw _privateConstructorUsedError;
+  $CreneauCopyWith<Creneau> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CrenauCopyWith<$Res> {
-  factory $CrenauCopyWith(Crenau value, $Res Function(Crenau) then) =
-      _$CrenauCopyWithImpl<$Res, Crenau>;
+abstract class $CreneauCopyWith<$Res> {
+  factory $CreneauCopyWith(Creneau value, $Res Function(Creneau) then) =
+      _$CreneauCopyWithImpl<$Res, Creneau>;
   @useResult
   $Res call({String id, String startTimeAvailable, String endTimeAvailable});
 }
 
 /// @nodoc
-class _$CrenauCopyWithImpl<$Res, $Val extends Crenau>
-    implements $CrenauCopyWith<$Res> {
-  _$CrenauCopyWithImpl(this._value, this._then);
+class _$CreneauCopyWithImpl<$Res, $Val extends Creneau>
+    implements $CreneauCopyWith<$Res> {
+  _$CreneauCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Crenau
+  /// Create a copy of Creneau
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -268,24 +268,24 @@ class _$CrenauCopyWithImpl<$Res, $Val extends Crenau>
 }
 
 /// @nodoc
-abstract class _$$CrenauImplCopyWith<$Res> implements $CrenauCopyWith<$Res> {
-  factory _$$CrenauImplCopyWith(
-          _$CrenauImpl value, $Res Function(_$CrenauImpl) then) =
-      __$$CrenauImplCopyWithImpl<$Res>;
+abstract class _$$CreneauImplCopyWith<$Res> implements $CreneauCopyWith<$Res> {
+  factory _$$CreneauImplCopyWith(
+          _$CreneauImpl value, $Res Function(_$CreneauImpl) then) =
+      __$$CreneauImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String startTimeAvailable, String endTimeAvailable});
 }
 
 /// @nodoc
-class __$$CrenauImplCopyWithImpl<$Res>
-    extends _$CrenauCopyWithImpl<$Res, _$CrenauImpl>
-    implements _$$CrenauImplCopyWith<$Res> {
-  __$$CrenauImplCopyWithImpl(
-      _$CrenauImpl _value, $Res Function(_$CrenauImpl) _then)
+class __$$CreneauImplCopyWithImpl<$Res>
+    extends _$CreneauCopyWithImpl<$Res, _$CreneauImpl>
+    implements _$$CreneauImplCopyWith<$Res> {
+  __$$CreneauImplCopyWithImpl(
+      _$CreneauImpl _value, $Res Function(_$CreneauImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Crenau
+  /// Create a copy of Creneau
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -294,7 +294,7 @@ class __$$CrenauImplCopyWithImpl<$Res>
     Object? startTimeAvailable = null,
     Object? endTimeAvailable = null,
   }) {
-    return _then(_$CrenauImpl(
+    return _then(_$CreneauImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -313,14 +313,14 @@ class __$$CrenauImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CrenauImpl implements _Crenau {
-  const _$CrenauImpl(
+class _$CreneauImpl implements _Creneau {
+  const _$CreneauImpl(
       {required this.id,
       required this.startTimeAvailable,
       required this.endTimeAvailable});
 
-  factory _$CrenauImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CrenauImplFromJson(json);
+  factory _$CreneauImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreneauImplFromJson(json);
 
   @override
   final String id;
@@ -331,14 +331,14 @@ class _$CrenauImpl implements _Crenau {
 
   @override
   String toString() {
-    return 'Crenau(id: $id, startTimeAvailable: $startTimeAvailable, endTimeAvailable: $endTimeAvailable)';
+    return 'Creneau(id: $id, startTimeAvailable: $startTimeAvailable, endTimeAvailable: $endTimeAvailable)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CrenauImpl &&
+            other is _$CreneauImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.startTimeAvailable, startTimeAvailable) ||
                 other.startTimeAvailable == startTimeAvailable) &&
@@ -351,29 +351,29 @@ class _$CrenauImpl implements _Crenau {
   int get hashCode =>
       Object.hash(runtimeType, id, startTimeAvailable, endTimeAvailable);
 
-  /// Create a copy of Crenau
+  /// Create a copy of Creneau
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CrenauImplCopyWith<_$CrenauImpl> get copyWith =>
-      __$$CrenauImplCopyWithImpl<_$CrenauImpl>(this, _$identity);
+  _$$CreneauImplCopyWith<_$CreneauImpl> get copyWith =>
+      __$$CreneauImplCopyWithImpl<_$CreneauImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CrenauImplToJson(
+    return _$$CreneauImplToJson(
       this,
     );
   }
 }
 
-abstract class _Crenau implements Crenau {
-  const factory _Crenau(
+abstract class _Creneau implements Creneau {
+  const factory _Creneau(
       {required final String id,
       required final String startTimeAvailable,
-      required final String endTimeAvailable}) = _$CrenauImpl;
+      required final String endTimeAvailable}) = _$CreneauImpl;
 
-  factory _Crenau.fromJson(Map<String, dynamic> json) = _$CrenauImpl.fromJson;
+  factory _Creneau.fromJson(Map<String, dynamic> json) = _$CreneauImpl.fromJson;
 
   @override
   String get id;
@@ -382,10 +382,10 @@ abstract class _Crenau implements Crenau {
   @override
   String get endTimeAvailable;
 
-  /// Create a copy of Crenau
+  /// Create a copy of Creneau
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CrenauImplCopyWith<_$CrenauImpl> get copyWith =>
+  _$$CreneauImplCopyWith<_$CreneauImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

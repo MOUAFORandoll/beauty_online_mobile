@@ -84,11 +84,11 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
 
   Future<void> addAgenda({
     required String date,
-    required List<File> crenaux,
+    required List<File> creneaux,
   }) async {
     final stateBefore = state;
 
-    var data = {'dates': date, 'crenaux': crenaux};
+    var data = {'dates': date, 'creneaux': creneaux};
     emit(const AddAgendaLoadingState());
 
     try {
@@ -133,24 +133,24 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     }
   }
 
-  Future<void> addCrenau({
+  Future<void> addCreneau({
     required idAgenda,
     required String date,
-    required List<File> crenaux,
+    required List<File> creneaux,
   }) async {
     final stateBefore = state;
 
-    var data = {'crenaux': crenaux};
-    emit(const AddCrenauLoadingState());
+    var data = {'creneaux': creneaux};
+    emit(const AddCreneauLoadingState());
 
     try {
       await professionalService
-          .addCrenau(
+          .addCreneau(
         idAgenda: idAgenda,
         data: data,
       )
           .then((onValue) {
-        emit(AddCrenauSuccessState());
+        emit(AddCreneauSuccessState());
       }).catchError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));
         emit(stateBefore);
@@ -161,19 +161,19 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     }
   }
 
-  Future<void> deleteCrenau({
-    required idCrenau,
+  Future<void> deleteCreneau({
+    required idCreneau,
   }) async {
     final stateBefore = state;
 
-    emit(const DeletingCrenauLoadingState());
+    emit(const DeletingCreneauLoadingState());
     try {
       await professionalService
-          .deleteCrenau(
-        idCrenau: idCrenau,
+          .deleteCreneau(
+        idCreneau: idCreneau,
       )
           .then((onValue) {
-        emit(DeletedCrenauSuccessState());
+        emit(DeletedCreneauSuccessState());
         emit(stateBefore);
       }).onError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));

@@ -106,37 +106,33 @@ class DeletedAgendaSuccessState extends CubitSuccessState
   List<Object?> get props => [];
 }
 
-
-
-
-
-class AddCrenauLoadingState extends CubitLoadingState
+class AddCreneauLoadingState extends CubitLoadingState
     implements GestionProfessionalState {
-  const AddCrenauLoadingState() : super();
+  const AddCreneauLoadingState() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class AddCrenauSuccessState extends CubitSuccessState
+class AddCreneauSuccessState extends CubitSuccessState
     implements GestionProfessionalState {
-  const AddCrenauSuccessState() : super();
+  const AddCreneauSuccessState() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class DeletingCrenauLoadingState extends CubitLoadingState
+class DeletingCreneauLoadingState extends CubitLoadingState
     implements GestionProfessionalState {
-  const DeletingCrenauLoadingState() : super();
+  const DeletingCreneauLoadingState() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class DeletedCrenauSuccessState extends CubitSuccessState
+class DeletedCreneauSuccessState extends CubitSuccessState
     implements GestionProfessionalState {
-  const DeletedCrenauSuccessState() : super();
+  const DeletedCreneauSuccessState() : super();
 
   @override
   List<Object?> get props => [];
