@@ -54,6 +54,7 @@ class AvailabilitySummaryScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                
               ],
             ),
             floatingActionButton: dayAvailability == null

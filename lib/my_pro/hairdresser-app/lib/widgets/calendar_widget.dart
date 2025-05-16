@@ -6,7 +6,7 @@ class CalendarWidget extends StatefulWidget {
   final DateTime selectedDate;
   final List<DayAvailability> availabilities;
   final Function(DateTime) onDateSelected;
-  
+
   const CalendarWidget({
     Key? key,
     required this.selectedDate,
@@ -21,7 +21,7 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   late DateTime _displayedMonth;
   final DateFormat _monthFormat = DateFormat('MMMM yyyy', 'fr_FR');
-  
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       1,
     );
   }
-  
+
   @override
   void didUpdateWidget(CalendarWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -44,26 +44,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       );
     }
   }
-  
+
   List<DateTime> _getDaysInMonth(DateTime date) {
     final firstDayOfMonth = DateTime(date.year, date.month, 1);
     final lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
-    
+
     List<DateTime> days = [];
     for (int i = 1; i <= lastDayOfMonth.day; i++) {
       days.add(DateTime(date.year, date.month, i));
     }
     return days;
   }
-  
+
   bool _hasAvailability(DateTime date) {
-    return widget.availabilities.any((dayAvail) => 
-      dayAvail.date.year == date.year && 
-      dayAvail.date.month == date.month && 
-      dayAvail.date.day == date.day
-    );
+    return widget.availabilities.any((dayAvail) =>
+        dayAvail.date.year == date.year &&
+        dayAvail.date.month == date.month &&
+        dayAvail.date.day == date.day);
   }
-  
+
   void _previousMonth() {
     setState(() {
       _displayedMonth = DateTime(
@@ -73,7 +72,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       );
     });
   }
-  
+
   void _nextMonth() {
     setState(() {
       _displayedMonth = DateTime(
@@ -83,11 +82,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       );
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final daysInMonth = _getDaysInMonth(_displayedMonth);
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
@@ -113,8 +112,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          // Jours de la semaine
+          const SizedBox(height: 8),
+          // Jours de la semaine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: const [
@@ -136,24 +135,32 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               crossAxisCount: 7,
               childAspectRatio: 1,
             ),
-            itemCount: daysInMonth.length + DateTime(daysInMonth[0].year, daysInMonth[0].month, 1).weekday - 1,
+            itemCount: daysInMonth.length +
+                DateTime(daysInMonth[0].year, daysInMonth[0].month, 1).weekday -
+                1,
             itemBuilder: (context, index) {
               // Espaces vides pour les jours avant le 1er du mois
-              if (index < DateTime(daysInMonth[0].year, daysInMonth[0].month, 1).weekday - 1) {
+              if (index <
+                  DateTime(daysInMonth[0].year, daysInMonth[0].month, 1)
+                          .weekday -
+                      1) {
                 return const SizedBox();
               }
-              
-              final dayIndex = index - (DateTime(daysInMonth[0].year, daysInMonth[0].month, 1).weekday - 1);
+
+              final dayIndex = index -
+                  (DateTime(daysInMonth[0].year, daysInMonth[0].month, 1)
+                          .weekday -
+                      1);
               if (dayIndex >= daysInMonth.length) {
                 return const SizedBox();
               }
-              
+
               final day = daysInMonth[dayIndex];
-              final isSelected = day.day == widget.selectedDate.day && 
-                                day.month == widget.selectedDate.month && 
-                                day.year == widget.selectedDate.year;
+              final isSelected = day.day == widget.selectedDate.day &&
+                  day.month == widget.selectedDate.month &&
+                  day.year == widget.selectedDate.year;
               final hasAvailability = _hasAvailability(day);
-              
+
               return GestureDetector(
                 onTap: () {
                   widget.onDateSelected(day);
@@ -161,10 +168,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: isSelected 
-                        ? Theme.of(context).colorScheme.primary 
-                        : hasAvailability 
-                            ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.primary
+                        : hasAvailability
+                            ? Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(0.3)
                             : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),

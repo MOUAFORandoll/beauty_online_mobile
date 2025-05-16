@@ -8,7 +8,7 @@ import '../widgets/period_editor_widget.dart';
 class AddAvailabilityScreen extends StatelessWidget {
   final DateTime initialDate;
   final List<AvailabilityPeriod>? initialPeriods;
-  
+
   const AddAvailabilityScreen({
     Key? key,
     required this.initialDate,
@@ -38,9 +38,9 @@ class AddAvailabilityScreen extends StatelessWidget {
                   children: [
                     // Sélection de date
                     _buildDateSelector(context, state),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // Titre des périodes
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,9 +62,9 @@ class AddAvailabilityScreen extends StatelessWidget {
                           ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 8),
-                    
+
                     // Liste des périodes
                     Expanded(
                       child: ListView.builder(
@@ -75,13 +75,19 @@ class AddAvailabilityScreen extends StatelessWidget {
                             period: state.periods[index],
                             canDelete: state.periods.length > 1,
                             onStartTimeChanged: (time) {
-                              context.read<AddAvailabilityCubit>().updateStartTime(index, time);
+                              context
+                                  .read<AddAvailabilityCubit>()
+                                  .updateStartTime(index, time);
                             },
                             onEndTimeChanged: (time) {
-                              context.read<AddAvailabilityCubit>().updateEndTime(index, time);
+                              context
+                                  .read<AddAvailabilityCubit>()
+                                  .updateEndTime(index, time);
                             },
                             onDelete: () {
-                              context.read<AddAvailabilityCubit>().removePeriod(index);
+                              context
+                                  .read<AddAvailabilityCubit>()
+                                  .removePeriod(index);
                             },
                           );
                         },
@@ -92,7 +98,8 @@ class AddAvailabilityScreen extends StatelessWidget {
               ),
               bottomNavigationBar: BottomAppBar(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -103,7 +110,9 @@ class AddAvailabilityScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: state.isValid
                             ? () {
-                                final availability = context.read<AddAvailabilityCubit>().getAvailability();
+                                final availability = context
+                                    .read<AddAvailabilityCubit>()
+                                    .getAvailability();
                                 if (availability != null) {
                                   Navigator.pop(context, availability);
                                 }
@@ -117,7 +126,7 @@ class AddAvailabilityScreen extends StatelessWidget {
               ),
             );
           }
-          
+
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
@@ -127,10 +136,11 @@ class AddAvailabilityScreen extends StatelessWidget {
       ),
     );
   }
-  
-  Widget _buildDateSelector(BuildContext context, AddAvailabilityEditing state) {
+
+  Widget _buildDateSelector(
+      BuildContext context, AddAvailabilityEditing state) {
     final dateFormat = DateFormat('EEEE d MMMM yyyy', 'fr_FR');
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -148,7 +158,8 @@ class AddAvailabilityScreen extends StatelessWidget {
             InkWell(
               onTap: () => _selectDate(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(8),
@@ -170,11 +181,11 @@ class AddAvailabilityScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   Future<void> _selectDate(BuildContext context) async {
     final cubit = context.read<AddAvailabilityCubit>();
     final state = cubit.state;
-    
+
     if (state is AddAvailabilityEditing) {
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -183,13 +194,13 @@ class AddAvailabilityScreen extends StatelessWidget {
         lastDate: DateTime.now().add(const Duration(days: 365)),
         locale: const Locale('fr', 'FR'),
       );
-      
+
       if (picked != null && picked != state.selectedDate) {
         cubit.selectDate(picked);
       }
     }
   }
-  
+
   String _capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
