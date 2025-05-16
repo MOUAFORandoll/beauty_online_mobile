@@ -34,86 +34,59 @@ class ScheduleListScreen extends StatelessWidget {
       );
     }
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: schedules.length,
-            itemBuilder: (context, index) {
-              final schedule = schedules[index];
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                elevation: 2,
-                child: ListTile(
-                  title: Text(
-                    schedule.formattedDate,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      ...schedule.timeSlots.map((slot) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 6,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.purple[100],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              '${slot.startTime.formaTime()} - ${slot.endTime.formaTime()}',
-                              style: TextStyle(
-                                color: Colors.purple[800],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      _showDeleteConfirmation(context, schedule);
-                    },
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, -2),
+    return ListView.builder(
+      itemCount: schedules.length,
+      itemBuilder: (context, index) {
+        final schedule = schedules[index];
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          elevation: 2,
+          child: ListTile(
+            title: Text(
+              schedule.formattedDate,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
-            ],
-          ),
-          child: const Text(
-            'Horaires de disponibilité',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.center,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                ...schedule.timeSlots.map((slot) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.purple[100],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '${slot.startTime.formaTime()} - ${slot.endTime.formaTime()}',
+                        style: TextStyle(
+                          color: Colors.purple[800],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                const SizedBox(height: 8),
+              ],
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: () {
+                _showDeleteConfirmation(context, schedule);
+              },
+            ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 

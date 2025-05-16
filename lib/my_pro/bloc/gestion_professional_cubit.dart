@@ -81,4 +81,108 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
       emit(stateBefore);
     }
   }
+
+  Future<void> addAgenda({
+    required String date,
+    required List<File> crenaux,
+  }) async {
+    final stateBefore = state;
+
+    var data = {'dates': date, 'crenaux': crenaux};
+    emit(const AddAgendaLoadingState());
+
+    try {
+      await professionalService
+          .addAgenda(
+        data: data,
+      )
+          .then((onValue) {
+        emit(AddAgendaSuccessState());
+      }).catchError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> deleteAgenda({
+    required id,
+  }) async {
+    final stateBefore = state;
+
+    emit(const DeletingAgendaLoadingState());
+    try {
+      await professionalService
+          .deleteAgenda(
+        id: id,
+      )
+          .then((onValue) {
+        emit(DeletedAgendaSuccessState());
+        emit(stateBefore);
+      }).onError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> addCrenau({
+    required idAgenda,
+    required String date,
+    required List<File> crenaux,
+  }) async {
+    final stateBefore = state;
+
+    var data = {'crenaux': crenaux};
+    emit(const AddCrenauLoadingState());
+
+    try {
+      await professionalService
+          .addCrenau(
+        idAgenda: idAgenda,
+        data: data,
+      )
+          .then((onValue) {
+        emit(AddCrenauSuccessState());
+      }).catchError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> deleteCrenau({
+    required idCrenau,
+  }) async {
+    final stateBefore = state;
+
+    emit(const DeletingCrenauLoadingState());
+    try {
+      await professionalService
+          .deleteCrenau(
+        idCrenau: idCrenau,
+      )
+          .then((onValue) {
+        emit(DeletedCrenauSuccessState());
+        emit(stateBefore);
+      }).onError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
 }

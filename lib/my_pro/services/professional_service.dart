@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beauty/common/models/agenda.dart';
 import 'package:beauty/common/models/catalogue.dart';
 
 import 'package:beauty/common/models/professional.dart';
@@ -24,7 +25,7 @@ class ProfessionalService extends ApiService {
       '/profile-professionnels/{id}/update-position';
 
   static const String _catalogue = '/realisations';
-  static const String _stories = '/realisations';
+  static const String _agendas = '/agendas';
 
   const ProfessionalService(super._dio);
 
@@ -142,6 +143,59 @@ class ProfessionalService extends ApiService {
               'size': 12,
             }),
         mapper: (result) => toPaginatedList(result, Catalogue.fromJson));
+  }
+
+  Future<Agenda> addAgenda({
+    required data,
+  }) async {
+    return compute(
+        dio.post(_agendas, options: Options(headers: withAuth()), data: data),
+        mapper: Agenda.fromJson);
+  }
+
+  Future deleteAgenda({
+    required id,
+  }) async {
+    return compute(
+      dio.delete(
+        _agendas + '/${id}',
+        options: Options(headers: withAuth()),
+      ),
+    );
+  }
+
+  Future<Agenda> addCrenau({
+    required idAgenda,
+    required data,
+  }) async {
+    return compute(
+        dio.post(_agendas + '/${idAgenda}/crenau',
+            options: Options(headers: withAuth()), data: data),
+        mapper: Agenda.fromJson);
+  }
+
+  Future deleteCrenau({
+    required idCrenau,
+  }) async {
+    return compute(
+      dio.delete(
+        _agendas + '/crenau/${idCrenau}',
+        options: Options(headers: withAuth()),
+      ),
+    );
+  }
+
+  Future<PaginatedList<Agenda>> meAgenda({
+    int page = 1,
+  }) async {
+    return compute(
+        dio.get(_agendas,
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, Agenda.fromJson));
   }
 
   Future<PaginatedList<Catalogue>> professionalCatalogue({
