@@ -1,3 +1,4 @@
+import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   @override
   void initState() {
     super.initState();
+    context.read<SelectRealisationCubit>().change('');
   }
 
   @override
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
     return PopScope(
       canPop: navigationCubit.state.isInInitialPosition,
       onPopInvokedWithResult: (bool didPop, dynamic result) {
-        if (!didPop) navigationCubit.goToPage();
+        if (!didPop) navigationCubit.goToPage(index: 0);
       },
       child: BlocListener<UserCubit, UserState>(
         listener: onUserEventReceived,

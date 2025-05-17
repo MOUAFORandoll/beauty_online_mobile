@@ -1,5 +1,9 @@
-import 'package:beauty/agenda/cubit/schedule_cubit.dart' show ScheduleCubit;
+import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/my_pro/bloc/add_schedule_cubit.dart';
+import 'package:beauty/my_pro/bloc/load_me_pro_rendez_vous_cubit.dart';
+import 'package:beauty/my_pro/bloc/schedule_cubit.dart' show ScheduleCubit;
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
+import 'package:beauty/my_pro/bloc/load_me_agenda_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/Professional/bloc/professional_cubit.dart';
 import 'package:beauty/account/bloc/cubit/account_view_manage_cubit.dart';
@@ -12,9 +16,10 @@ import 'package:beauty/home/bloc/load_actu_cubit.dart';
 import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/new_professional_cubit.dart';
-import 'package:beauty/my_pro/hairdresser-app/lib/cubits/availability_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
+import 'package:beauty/professional/bloc/action_professional_cubit.dart';
+import 'package:beauty/professional/bloc/load_me_rendez_vous_cubit.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -141,10 +146,24 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(context.read(), context.read())),
           BlocProvider(
               create: (context) => LoadMeCatalogueCubit(context.read())),
+          BlocProvider(create: (context) => LoadMeAgendaCubit(context.read())),
+          BlocProvider(create: (context) => AddScheduleCubit()),
           BlocProvider(
               create: (context) =>
                   LoadActuCubit(context.read(), context.read())),
           BlocProvider(create: (context) => ScheduleCubit()),
+          BlocProvider(create: (context) => SelectRealisationCubit()),
+          BlocProvider(
+              create: (context) =>
+                  ActionProfessionalCubit(context.read(), context.read())),
+          BlocProvider(
+              create: (context) => LoadMeRendezVousCubit(
+                    context.read(),
+                  )),
+          BlocProvider(
+              create: (context) => LoadMeProRendezVousCubit(
+                    context.read(),
+                  )),
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(

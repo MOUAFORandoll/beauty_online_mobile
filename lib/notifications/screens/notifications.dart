@@ -1,14 +1,7 @@
-import 'package:beauty/common/widgets/filter_buttons.dart';
-import 'package:beauty/common/widgets/horizontal_service_list.dart';
-import 'package:beauty/common/widgets/location_selector.dart';
-import 'package:beauty/common/widgets/post_list.dart';
-import 'package:beauty/common/widgets/salon_card_list.dart';
-import 'package:beauty/common/widgets/search_bar.dart';
-import 'package:beauty/common/widgets/section_title.dart';
+import 'package:beauty/my_pro/screens/sub/rendez_vous_pro.dart';
 import 'package:beauty/notifications/screens/sub/generales.dart';
-import 'package:beauty/notifications/screens/sub/news.dart';
-import 'package:beauty/notifications/screens/sub/rendez_vous.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:beauty/professional/screens/sub/rendez_vous_user.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 
 class NotificationsScreen extends StatefulWidget {
@@ -19,29 +12,34 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  List<String> items = ['Générales', 'Mes Rendez-vous', 'Nouveautés'];
+  List<String> items = [
+    'Générales',
+    'Mes Rendez-vous',
+    'Rendez-vous Pro',
+  ];
   int _selected = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        minimum: EdgeInsets.symmetric(horizontal: 16),
+        minimum: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(children: [
+          SizedBox(
+            height: 16,
+          ),
           // _TabBarGap(controller: _scrollController),
-          Container(
-            height: 32.0,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => Container(
-                      width: 12,
-                    ),
-                itemCount: items.length,
-                itemBuilder: (ctx, i) => ItemHome(
-                      label: items[i],
-                      isSelected: _selected == i,
-                      onTap: () => setState(() {
-                        _selected = i;
-                      }),
-                    )),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: items
+                  .map((item) => ItemHome(
+                        label: item,
+                        isSelected: _selected == items.indexOf(item),
+                        onTap: () => setState(() {
+                          _selected = items.indexOf(item);
+                        }),
+                      ))
+                  .toList(),
+            ),
           ),
           const SizedBox(height: 8.0),
 
@@ -59,11 +57,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       case 0:
         return Generales();
       case 1:
-        return RendezVous();
+        return RendezVousUser();
       case 2:
-        return News();
+        return RendezVousPro();
       default:
-        return Container();
+        return Generales();
     }
   }
 }
@@ -82,7 +80,7 @@ class ItemHome extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: isSelected
             ? BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,

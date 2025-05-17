@@ -39,7 +39,10 @@ void showSuccessToast({
   required String content,
 }) {
   _showToast(
-      textColor: null, bgColor: null, content: content, context: context);
+      textColor: Colors.white,
+      bgColor: Theme.of(context).colorScheme.primary,
+      content: content,
+      context: context);
 }
 
 void showBlackErrorToast(
@@ -69,6 +72,7 @@ void _showToast({
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+        behavior: SnackBarBehavior.floating,
         backgroundColor: bgColor,
         margin: const EdgeInsets.symmetric(horizontal: 32)
             .add(const EdgeInsets.only(bottom: 12)),

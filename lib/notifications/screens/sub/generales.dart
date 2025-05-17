@@ -31,6 +31,7 @@ class _GeneralesState extends State<Generales> {
   @override
   Widget build(BuildContext context) {
     return AutoListView.get<Notification>(
+      autoManage: false,
       cubit: loadNotificationsCubit,
       shrinkWrap: true,
       emptyBuilder: (context) => EmptyBuilder(),

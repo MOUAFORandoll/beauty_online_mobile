@@ -1,4 +1,3 @@
-
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
@@ -18,17 +17,18 @@ import 'package:potatoes/auto_list.dart';
 import 'package:potatoes/libs.dart';
 
 class CatalogueProView extends StatefulWidget {
- 
-static Widget get({
+  static Widget get({
     required BuildContext context,
     required Professional professional,
   }) {
     return BlocProvider(
-     create: (context) =>LoadProCatalogueCubit(context.read<ProfessionalService>(), professional.id),
-                   child: CatalogueProView._(),
+      create: (context) => LoadProCatalogueCubit(
+          context.read<ProfessionalService>(), professional.id),
+      child: CatalogueProView._(),
     );
   }
-    const CatalogueProView._();
+
+  const CatalogueProView._();
   @override
   State<CatalogueProView> createState() => _CatalogueProViewState();
 }
@@ -41,6 +41,7 @@ class _CatalogueProViewState extends State<CatalogueProView> {
     return AutoListView.get<Catalogue>(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
+        autoManage: false,
         cubit: cubit,
         viewType: ViewType.grid,
         itemBuilder: (context, catalogue) => CatalogueItem(catalogue),

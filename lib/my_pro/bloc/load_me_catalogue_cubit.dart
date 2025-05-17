@@ -11,7 +11,26 @@ class LoadMeCatalogueCubit extends AutoListCubit<Catalogue> {
             provider: ({page = 1}) => professionalService.meCatalogue(
                   page: page,
                 ));
+
+  void putFirst(Catalogue catalogue) {
+    if (state is LoadCatalogueReadyState) {
+      final stateBefore = state as LoadCatalogueReadyState;
+      emit(stateBefore
+          .prependAll([catalogue], total: stateBefore.items.total + 1));
+    }
+  }
+
+  // remove this item from lists
+  void removeCatalogue(Catalogue catalogue) {
+    if (state is LoadCatalogueReadyState) {
+      final list = (state as LoadCatalogueReadyState).items;
+      emit(AutoListReadyState(
+        list.remove(catalogue, update: true),
+      ));
+    }
+  }
 }
 
-
-
+typedef LoadCatalogueState = AutoListState<Catalogue>;
+typedef LoadingCatalogueState = AutoListLoadingState<Catalogue>;
+typedef LoadCatalogueReadyState = AutoListReadyState<Catalogue>;

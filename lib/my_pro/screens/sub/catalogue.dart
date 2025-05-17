@@ -14,7 +14,16 @@ import 'package:potatoes/auto_list.dart';
 import 'package:potatoes/libs.dart';
 
 class CatalogueView extends StatefulWidget {
-  const CatalogueView({super.key});
+  // static Widget get({
+  //   required BuildContext context,
+  // }) {
+  //   return BlocProvider(
+  //     create: (context) => LoadMeCatalogueCubit(context.read()),
+  //     child: CatalogueView._(),
+  //   );
+  // }
+
+  const CatalogueView();
 
   @override
   State<CatalogueView> createState() => _CatalogueViewState();
@@ -25,20 +34,33 @@ class _CatalogueViewState extends State<CatalogueView> {
 
   @override
   Widget build(BuildContext context) {
-    return AutoListView.get<Catalogue>(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
-        cubit: cubit,
-        viewType: ViewType.grid,
-        itemBuilder: (context, catalogue) => MyCatalogueItem(catalogue),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 2.0,
-            mainAxisSpacing: 2.0,
-            childAspectRatio: .65),
-        emptyBuilder: (ctx) => const EmptyBuilder(),
-        errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
-        loadingBuilder: (_) => const CatalogueLoaderBuilder(count: 12),
-        loadingMoreBuilder: (_) => const CatalogueLoaderBuilder(padding: true));
+    return BlocListener<LoadMeCatalogueCubit, LoadCatalogueState>(
+        listenWhen: (previous, current) =>
+            previous is LoadingCatalogueState &&
+            current is LoadCatalogueReadyState,
+        listener: (context, state) {
+          // scrollController.animateTo(
+          //   scrollController.position.maxScrollExtent,
+          //   duration: Duration(milliseconds: 300),
+          //   curve: Curves.easeInOut
+          // );
+        },
+        child: AutoListView.get<Catalogue>(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewPadding.bottom),
+            autoManage: false,
+             cubit: cubit,
+            viewType: ViewType.grid,
+            itemBuilder: (context, catalogue) => MyCatalogueItem(catalogue),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 2.0,
+                mainAxisSpacing: 2.0,
+                childAspectRatio: .65),
+            emptyBuilder: (ctx) => const EmptyBuilder(),
+            errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
+            loadingBuilder: (_) => const CatalogueLoaderBuilder(count: 12),
+            loadingMoreBuilder: (_) =>
+                const CatalogueLoaderBuilder(padding: true)));
   }
 }

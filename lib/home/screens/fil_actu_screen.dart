@@ -41,8 +41,9 @@ class _FilActuScreenState extends State<FilActuScreen> {
 
             Expanded(
                 child: AutoListView.get<Actu>(
-              padding: EdgeInsets.only(
+               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewPadding.bottom),
+              autoManage: false,
               cubit: cubit,
               viewType: ViewType.custom,
               customBuilder: (context, actus) => Padding(
@@ -66,7 +67,6 @@ class _FilActuScreenState extends State<FilActuScreen> {
                           child: ActuItem(actus[index]));
                     },
                   )),
-             
               emptyBuilder: (ctx) => const EmptyBuilder(),
               errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
               loadingBuilder: (_) => ActuLoaderBuilder(count: 12),

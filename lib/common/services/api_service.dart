@@ -12,24 +12,24 @@ class ApiLinks extends potatoes.Links {
   const ApiLinks();
 
 //Box
-  // @override
-  // String get devUrl => "http://192.168.1.129:8080/api";
+  @override
+  String get devUrl => "http://192.168.1.129:8080/api";
 
-  // @override
-  // String get stagingUrl => "http://192.168.1.129:8080/api";
+  @override
+  String get stagingUrl => "http://192.168.1.129:8080/api";
 
-  // @override
-  // String get productionUrl => "http://192.168.1.129:8080/api";
+  @override
+  String get productionUrl => "http://192.168.1.129:8080/api";
 
 //Online
-  @override
-  String get devUrl => "https://api.beauty.petite-monnaie.com";
+  // @override
+  // String get devUrl => "https://api.beauty.petite-monnaie.com";
 
-  @override
-  String get stagingUrl => "https://api.beauty.petite-monnaie.com";
+  // @override
+  // String get stagingUrl => "https://api.beauty.petite-monnaie.com";
 
-  @override
-  String get productionUrl => "https://api.beauty.petite-monnaie.com";
+  // @override
+  // String get productionUrl => "https://api.beauty.petite-monnaie.com";
 
   static const privacy = 'https://www.beauty.app/privacy-policy';
 }

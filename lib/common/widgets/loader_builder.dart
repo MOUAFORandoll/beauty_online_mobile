@@ -70,10 +70,10 @@ class ActivityLoaderBuilder extends StatelessWidget {
   }
 }
 
-class SocialLoaderBuilder extends StatelessWidget {
+class AgendaLoaderBuilder extends StatelessWidget {
   final int count;
 
-  const SocialLoaderBuilder({super.key, this.count = 8});
+  const AgendaLoaderBuilder({super.key, this.count = 8});
 
   @override
   Widget build(BuildContext context) {
@@ -805,42 +805,4 @@ class ProfessionalBoardLoaderBuilder extends StatelessWidget {
 }
 
 
-
-
-// AutoListView.manual<Quiz>(
-//               cubit: widget.cubit,
-//               autoManage: false,
-//               itemBuilder: (context, quiz) =>
-//                   ItemQuiz.get(context: context, quiz: quiz),
-//               physics: const NeverScrollableScrollPhysics(),
-//               shrinkWrap: true,
-//               emptyBuilder: (ctx) => EmptyBuilder(height: errorBuilderHeight),
-//               errorBuilder: (context, retry) => ErrorBuilder(
-//                 retry: retry,
-//                 height: errorBuilderHeight,
-//               ),
-//               loadingBuilder: widgetBuilder,
-//               manualLoadMoreBuilder: (ctx, loadMore) => Container(
-//                 margin: const EdgeInsets.only(right: 16.0),
-//                 alignment: Alignment.bottomRight,
-//                 child: TextButton.icon(
-//                   iconAlignment: IconAlignment.end,
-//                   style: TextButton.styleFrom(
-//                     padding: EdgeInsets.zero,
-//                     textStyle: Theme.of(context).textTheme.labelMedium,
-//                   ),
-//                   onPressed: loadMore,
-//                   icon: toSvgIcon(icon: Assets.iconsDirectionDown, size: 12.0),
-//                   label: const Text("Voir plus"),
-//                 ),
-//               ),
-//               loadingMoreBuilder: (context) => Container(
-//                   padding: const EdgeInsets.only(top: 16, bottom: 28)
-//                       .add(const EdgeInsets.symmetric(horizontal: 16)),
-//                   child: LinearProgressIndicator(
-//                     color: Theme.of(context).colorScheme.onTertiaryContainer,
-//                     backgroundColor:
-//                         Theme.of(context).colorScheme.tertiaryContainer,
-//                     borderRadius: BorderRadius.circular(30),
-//                   )),
-//             ),
+ 

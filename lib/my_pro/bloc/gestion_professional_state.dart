@@ -84,10 +84,12 @@ class AddAgendaLoadingState extends CubitLoadingState
 
 class AddAgendaSuccessState extends CubitSuccessState
     implements GestionProfessionalState {
-  const AddAgendaSuccessState() : super();
+  Agenda agenda;
+
+  AddAgendaSuccessState({required this.agenda}) : super();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [agenda];
 }
 
 class DeletingAgendaLoadingState extends CubitLoadingState
@@ -100,10 +102,11 @@ class DeletingAgendaLoadingState extends CubitLoadingState
 
 class DeletedAgendaSuccessState extends CubitSuccessState
     implements GestionProfessionalState {
-  const DeletedAgendaSuccessState() : super();
+  Agenda agenda;
+  DeletedAgendaSuccessState({required this.agenda}) : super();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [agenda];
 }
 
 class AddCreneauLoadingState extends CubitLoadingState
@@ -141,4 +144,39 @@ class DeletedCreneauSuccessState extends CubitSuccessState
 class GestionProfessionalErrorState extends CubitErrorState
     implements GestionProfessionalState {
   GestionProfessionalErrorState(super.error, [super.stackTrace]);
+}
+
+class AcceptRendezVousLoadingState extends CubitLoadingState
+    implements GestionProfessionalState {
+  const AcceptRendezVousLoadingState() : super();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AcceptRendezVousSuccessState extends CubitSuccessState
+    implements GestionProfessionalState {
+  RendezVous rendezVous;
+
+  AcceptRendezVousSuccessState({required this.rendezVous}) : super();
+
+  @override
+  List<Object?> get props => [rendezVous];
+}
+
+class DeclineRendezVousLoadingState extends CubitLoadingState
+    implements GestionProfessionalState {
+  const DeclineRendezVousLoadingState() : super();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class DeclineRendezVousSuccessState extends CubitSuccessState
+    implements GestionProfessionalState {
+  RendezVous rendezVous;
+
+  DeclineRendezVousSuccessState({required this.rendezVous}) : super();
+  @override
+  List<Object?> get props => [rendezVous];
 }

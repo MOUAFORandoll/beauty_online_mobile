@@ -5,28 +5,43 @@ import 'package:potatoes/libs.dart';
 class HomeBottomNavigationState extends CubitSuccessState {
   final List<ScrollController> scrollControllers;
   final PageController pageController;
-  final int initialIndex, currentIndex;
+  final int initialIndex;
+  final int currentIndex;
 
-  HomeBottomNavigationState(int count, this.initialIndex)
-      : scrollControllers = List.generate(count, (i) => ScrollController()),
-        pageController = PageController(initialPage: initialIndex),
-        currentIndex = initialIndex;
+  HomeBottomNavigationState._({
+    required this.scrollControllers,
+    required this.pageController,
+    required this.initialIndex,
+    required this.currentIndex,
+  });
 
-  const HomeBottomNavigationState._(this.scrollControllers, this.pageController,
-      this.initialIndex, this.currentIndex);
-
-  HomeBottomNavigationState withPage(int? index, bool animate) {
-    if (animate) pageController.jumpToPage(index ?? initialIndex);
-
+  factory HomeBottomNavigationState.create(
+      {required int count, required int initialIndex}) {
     return HomeBottomNavigationState._(
-        scrollControllers, pageController, initialIndex, index ?? currentIndex);
+      scrollControllers: List.generate(count, (_) => ScrollController()),
+      pageController: PageController(initialPage: initialIndex),
+      initialIndex: initialIndex,
+      currentIndex: initialIndex,
+    );
   }
 
-  bool get isInInitialPosition => initialIndex == currentIndex;
+  HomeBottomNavigationState copyWith({
+    int? currentIndex,
+    bool animate = true,
+  }) {
+    if (animate && currentIndex != null) {
+      pageController.jumpToPage(currentIndex);
+    }
 
-  @override
-  List<Object?> get props =>
-      [scrollControllers, pageController, initialIndex, currentIndex];
+    return HomeBottomNavigationState._(
+      scrollControllers: scrollControllers,
+      pageController: pageController,
+      initialIndex: initialIndex,
+      currentIndex: currentIndex ?? this.currentIndex,
+    );
+  }
+
+  bool get isInInitialPosition => currentIndex == initialIndex;
 
   void dispose() {
     for (final controller in scrollControllers) {
@@ -34,20 +49,49 @@ class HomeBottomNavigationState extends CubitSuccessState {
     }
     pageController.dispose();
   }
+
+  @override
+  List<Object?> get props => [initialIndex, currentIndex];
 }
 
 class HomeBottomNavigationCubit extends Cubit<HomeBottomNavigationState> {
-  HomeBottomNavigationCubit() : super(HomeBottomNavigationState(4, 0));
-
-  void goToPage({int? index, bool animate = true}) {
-    if (index != null && index == state.currentIndex) {
-      // on clique sur un onglet déjà sélectionné
-      state.scrollControllers[index].animateTo(0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.fastOutSlowIn);
+  HomeBottomNavigationCubit()
+      : super(HomeBottomNavigationState.create(count: 3, initialIndex: 0));
+  void goToPage({required int index, bool animate = true}) {
+    if (index == state.currentIndex) {
+      final controller = state.scrollControllers[index];
+      if (controller.hasClients) {
+        controller.animateTo(
+          0,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        // Attendre que le scroll view soit monté
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (controller.hasClients) {
+            controller.animateTo(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          }
+        });
+      }
     } else {
-      emit(state.withPage(index, animate));
+      if (animate) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (state.pageController.hasClients) {
+            state.pageController.jumpToPage(index);
+          }
+        });
+      }
+      emit(state.copyWith(currentIndex: index, animate: false));
     }
+  }
+
+  void resetToInitialPage({bool animate = true}) {
+    emit(state.copyWith(currentIndex: state.initialIndex, animate: animate));
   }
 
   @override

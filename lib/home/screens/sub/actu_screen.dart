@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/item_pro.dart';
 import 'package:beauty/home/models/actu.dart';
+import 'package:beauty/professional/screens/sub/agenda_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -200,7 +205,20 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
               context: context, professional: widget.actu.profileProfessionnel),
           const SizedBox(height: 16),
           BeautyButton.primary(
-            onPressed: () {},
+            onPressed: () {
+              log(widget.actu.profileProfessionnel.toJson().toString());
+              context.read<SelectRealisationCubit>().change(widget.actu.id);
+
+              showAppBottomSheet(
+                  context: context,
+                  maxHeight: MediaQuery.of(context).size.height * .8,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return AgendaProView.get(
+                        context: context,
+                        professional: widget.actu.profileProfessionnel);
+                  });
+            },
             text: "Prendre Rendez-vous",
           ),
         ],

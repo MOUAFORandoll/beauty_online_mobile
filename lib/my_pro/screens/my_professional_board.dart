@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:beauty/agenda/screens/add_schedule_screen.dart';
+import 'package:beauty/my_pro/screens/sub/add_schedule_screen.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
-import 'package:beauty/my_pro/hairdresser-app/lib/screens/availability_summary_screen.dart';
 import 'package:beauty/my_pro/screens/create_profil_pro.dart.dart';
 import 'package:beauty/my_pro/screens/sub/add_catalogue.dart';
 import 'package:beauty/my_pro/screens/sub/catalogue.dart';
@@ -108,6 +107,8 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
                   CatalogueView(),
                   Stories(),
                   MonAgenda(),
+
+                  // .get(context: context),
                 ],
               ),
             )

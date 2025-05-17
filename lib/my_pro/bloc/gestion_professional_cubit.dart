@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:beauty/common/models/rendez_vous.dart';
+import 'package:beauty/my_pro/models/schedule.dart';
+import 'package:beauty/common/models/agenda.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:geolocator/geolocator.dart';
@@ -83,21 +86,30 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
   }
 
   Future<void> addAgenda({
-    required String date,
-    required List<File> creneaux,
+    required Schedule schedule,
   }) async {
     final stateBefore = state;
-
-    var data = {'dates': date, 'creneaux': creneaux};
     emit(const AddAgendaLoadingState());
 
     try {
+      var data = {
+        'day': schedule.date.toString().split(' ')[0],
+        'creneaux': schedule.timeSlots
+            .map((e) => {
+                  'startTimeAvailable': e.startTime.formaTime(),
+                  'endTimeAvailable': e.endTime.formaTime()
+                })
+            .toList(),
+      };
+      print(data);
+      log('========${data}');
+
       await professionalService
           .addAgenda(
         data: data,
       )
-          .then((onValue) {
-        emit(AddAgendaSuccessState());
+          .then((agenda) {
+        emit(AddAgendaSuccessState(agenda: agenda));
       }).catchError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));
         emit(stateBefore);
@@ -109,7 +121,7 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
   }
 
   Future<void> deleteAgenda({
-    required id,
+    required Agenda agenda,
   }) async {
     final stateBefore = state;
 
@@ -117,10 +129,10 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     try {
       await professionalService
           .deleteAgenda(
-        id: id,
+        idAgenda: agenda.id,
       )
           .then((onValue) {
-        emit(DeletedAgendaSuccessState());
+        emit(DeletedAgendaSuccessState(agenda: agenda));
         emit(stateBefore);
       }).onError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));
@@ -162,7 +174,7 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
   }
 
   Future<void> deleteCreneau({
-    required idCreneau,
+    required creneau,
   }) async {
     final stateBefore = state;
 
@@ -170,7 +182,7 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     try {
       await professionalService
           .deleteCreneau(
-        idCreneau: idCreneau,
+        idCreneau: creneau.id,
       )
           .then((onValue) {
         emit(DeletedCreneauSuccessState());
@@ -178,6 +190,56 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
       }).onError((handleError, _) {
         emit(GestionProfessionalErrorState(handleError, null));
 
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> acceptRendezVous({
+    required String idRendezVous,
+  }) async {
+    final stateBefore = state;
+    emit(const AcceptRendezVousLoadingState());
+
+    try {
+     await professionalService
+          .acceptRendezVous(
+        idRendezVous: idRendezVous,
+      )
+          .then((rendezVous) {
+        emit(AcceptRendezVousSuccessState(rendezVous: rendezVous));
+      }).catchError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> declineRendezVous({
+    required String idRendezVous,
+  }) async {
+    final stateBefore = state;
+    emit(const DeclineRendezVousLoadingState());
+
+    try {
+      var data = {};
+      print(data);
+      log('========${data}');
+
+      await professionalService
+          .declineRendezVous(
+        idRendezVous: idRendezVous,
+      )
+          .then((rendezVous) {
+        emit(DeclineRendezVousSuccessState(rendezVous: rendezVous));
+      }).catchError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
         emit(stateBefore);
       });
     } catch (error, stackTrace) {

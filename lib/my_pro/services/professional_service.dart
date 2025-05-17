@@ -3,6 +3,7 @@ import 'package:beauty/common/models/agenda.dart';
 import 'package:beauty/common/models/catalogue.dart';
 
 import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/services/api_service.dart';
@@ -26,6 +27,7 @@ class ProfessionalService extends ApiService {
 
   static const String _catalogue = '/realisations';
   static const String _agendas = '/agendas';
+  static const String _rendez_vous = '/rendez-vous';
 
   const ProfessionalService(super._dio);
 
@@ -154,11 +156,11 @@ class ProfessionalService extends ApiService {
   }
 
   Future deleteAgenda({
-    required id,
+    required idAgenda,
   }) async {
     return compute(
       dio.delete(
-        _agendas + '/${id}',
+        _agendas + '/${idAgenda}',
         options: Options(headers: withAuth()),
       ),
     );
@@ -189,7 +191,21 @@ class ProfessionalService extends ApiService {
     int page = 1,
   }) async {
     return compute(
-        dio.get(_agendas,
+        dio.get(_agendas + '/me',
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, Agenda.fromJson));
+  }
+
+  Future<PaginatedList<Agenda>> professionalAgenda({
+    int page = 1,
+    required String id,
+  }) async {
+    return compute(
+        dio.get(_agendas + '/professional/${id}',
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,
@@ -215,5 +231,73 @@ class ProfessionalService extends ApiService {
   Future<void> deleteCatalogue({required String id}) {
     return compute(dio.delete(_catalogue + '/${id}',
         options: Options(headers: withAuth())));
+  }
+
+  Future<RendezVous> newRendezVous({
+    required data,
+  }) async {
+    return compute(
+        dio.post(_rendez_vous,
+            options: Options(headers: withAuth()), data: data),
+        mapper: RendezVous.fromJson);
+  }
+
+  Future deleteRendezVous({
+    required idRendezVous,
+  }) async {
+    return compute(
+      dio.delete(
+        _rendez_vous + '/${idRendezVous}',
+        options: Options(headers: withAuth()),
+      ),
+    );
+  }
+
+  Future<PaginatedList<RendezVous>> meRendezVous({
+    int page = 1,
+  }) async {
+    return compute(
+        dio.get(_rendez_vous + '/me',
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, RendezVous.fromJson));
+  }
+
+  Future<RendezVous> acceptRendezVous({
+    required idRendezVous,
+  }) async {
+    return compute(
+        dio.patch(
+          _rendez_vous + '/${idRendezVous}/accept',
+          options: Options(headers: withAuth()),
+        ),
+        mapper: RendezVous.fromJson);
+  }
+
+  Future<RendezVous> declineRendezVous({
+    required idRendezVous,
+  }) async {
+    return compute(
+        dio.patch(
+          _rendez_vous + '/${idRendezVous}/decline',
+          options: Options(headers: withAuth()),
+        ),
+        mapper: RendezVous.fromJson);
+  }
+
+  Future<PaginatedList<RendezVous>> proRendezVous({
+    int page = 1,
+  }) async {
+    return compute(
+        dio.get(_rendez_vous + '/professionnel',
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'size': 12,
+            }),
+        mapper: (result) => toPaginatedList(result, RendezVous.fromJson));
   }
 }

@@ -21,7 +21,8 @@ Map<String, dynamic> _$$AgendaImplToJson(_$AgendaImpl instance) =>
       'creneaux': instance.creneaux,
     };
 
-_$CreneauImpl _$$CreneauImplFromJson(Map<String, dynamic> json) => _$CreneauImpl(
+_$CreneauImpl _$$CreneauImplFromJson(Map<String, dynamic> json) =>
+    _$CreneauImpl(
       id: json['id'] as String,
       startTimeAvailable: json['startTimeAvailable'] as String,
       endTimeAvailable: json['endTimeAvailable'] as String,

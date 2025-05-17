@@ -23,7 +23,8 @@
 //           physics: ClampingScrollPhysics(),
 //           autoManage: false,
 //           scrollDirection: Axis.horizontal,
-//           cubit: loadStoryCubit,
+//           autoManage: false,
+                    // cubit:loadStoryCubit,
 //           itemBuilder: (context, story) =>
 //               ItemStory.get(context: context, story: story),
 //           separatorBuilder: (_, __) => const SizedBox(width: 8.0),

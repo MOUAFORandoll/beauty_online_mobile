@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:beauty/common/utils/loadPicture.dart';
+import 'package:beauty/my_pro/bloc/load_me_agenda_cubit.dart';
+import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/screens/my_pro_setting.dart';
 import 'package:beauty/my_pro/screens/my_professional_board.dart';
@@ -48,7 +50,10 @@ class _AccountScreenState extends State<AccountScreen>
     return RefreshIndicator(
         onRefresh: () async {
           userCubit.reset(true);
-          professionalCubit.getInitialState();
+          professionalCubit.getInitialStateOnline();
+          context.read<LoadMeCatalogueCubit>().reset();
+          context.read<LoadMeAgendaCubit>().reset();
+          print('000000');
         },
         child: BlocConsumer<MyProfessionalCubit, MyProfessionalState>(
           listener: onEventReceived,
