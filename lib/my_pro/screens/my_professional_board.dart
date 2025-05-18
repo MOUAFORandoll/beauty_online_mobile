@@ -36,7 +36,9 @@ import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
 
 class MyProfessionalBoard extends StatefulWidget {
-  const MyProfessionalBoard({super.key});
+  final ScrollController scrollController;
+
+  const MyProfessionalBoard({super.key, required this.scrollController});
 
   @override
   State<MyProfessionalBoard> createState() => _MyProfessionalBoardState();
@@ -45,6 +47,7 @@ class MyProfessionalBoard extends StatefulWidget {
 class _MyProfessionalBoardState extends State<MyProfessionalBoard>
     with SingleTickerProviderStateMixin, CompletableMixin {
   late TabController _tabController;
+
   @override
   @override
   void initState() {
@@ -63,7 +66,6 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
   }
 
   late final professionalCubit = context.read<MyProfessionalCubit>();
-  late final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
       body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Column(children: [
-            _TabBarGap(controller: _scrollController),
+            _TabBarGap(controller: widget.scrollController),
             TabBar(
               isScrollable: false,
               controller: _tabController,
@@ -95,7 +97,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
               splashBorderRadius: BorderRadius.circular(64.0),
               tabs: const [
                 Tab(text: "Catalogues"),
-                Tab(text: "Stories"),
+                // Tab(text: "Stories"),
                 Tab(text: "Mon Agenda"),
               ],
             ),
@@ -105,7 +107,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
                 controller: _tabController,
                 children: [
                   CatalogueView(),
-                  Stories(),
+                  // Stories(),
                   MonAgenda(),
 
                   // .get(context: context),
@@ -120,7 +122,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
                   builder: (context) => _tabController.index == 0
                       ? AddProductScreen()
                       : _tabController.index == 1
-                          ? AddProductScreen()
+                          ? AddScheduleScreen()
                           : AddScheduleScreen(),
                 ),
               ),
@@ -243,12 +245,6 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
     // } else if (state is CatalogueManipErrorState) {
     //   showErrorToast(content: state.error, context: context);
     // }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 }
 

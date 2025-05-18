@@ -224,8 +224,8 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                                           BorderRadius.circular(64.0),
                                       tabs: const [
                                         Tab(text: "Catalogues"),
-                                        Tab(text: "Stories"),
-                                        Tab(text: "Reservations"),
+                                        // Tab(text: "Stories"),
+                                        // Tab(text: "Reservations"),
                                       ],
                                     ),
                                     const SizedBox(height: 8.0),
@@ -237,8 +237,8 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                                               context: context,
                                               professional: professionalCubit
                                                   .professional),
-                                          Stories(),
-                                          Stories(),
+                                          // Stories(),
+                                          // Stories(),
                                         ],
                                       ),
                                     )

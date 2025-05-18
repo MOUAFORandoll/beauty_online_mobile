@@ -200,12 +200,15 @@ class _AccountScreenState extends State<AccountScreen>
                 child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: BlocBuilder<AccountViewManageCubit, bool>(
-                        builder: (ctx, state) => state
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, right: 16.0),
-                                child: MyAccount())
-                            : MyProfessionalBoard())),
+                      builder: (ctx, state) => state
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, right: 16.0),
+                              child: MyAccount())
+                          : MyProfessionalBoard(
+                              scrollController: _scrollController,
+                            ),
+                    )),
               ),
             );
           },

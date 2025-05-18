@@ -13,13 +13,13 @@ class ApiLinks extends potatoes.Links {
 
 //Box
   @override
-  String get devUrl => "http://192.168.103.155:8080/api";
+  String get devUrl => "http://192.168.1.129:8080/api";
 
   @override
-  String get stagingUrl => "http://192.168.103.155:8080/api";
+  String get stagingUrl => "http://192.168.1.129:8080/api";
 
   @override
-  String get productionUrl => "http://192.168.103.155:8080/api";
+  String get productionUrl => "http://192.168.1.129:8080/api";
 
 //Online
   // @override

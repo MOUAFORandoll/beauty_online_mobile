@@ -33,6 +33,7 @@ class CatalogueForProDialog extends StatelessWidget {
       listener: (ctx, state) {
         if (state is DeletedCatalogueSuccessState) {
           context.read<LoadMeCatalogueCubit>().reset();
+          Navigator.pop(context);
           showSuccessToast(
               context: context, content: 'Produit supprimé avec succès!');
         }

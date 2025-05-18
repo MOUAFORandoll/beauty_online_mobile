@@ -115,9 +115,8 @@ class __$$NotificationImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NotificationImpl extends _Notification {
-  const _$NotificationImpl({required this.type, required this.rdvId})
-      : super._();
+class _$NotificationImpl implements _Notification {
+  const _$NotificationImpl({required this.type, required this.rdvId});
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationImplFromJson(json);
@@ -161,11 +160,10 @@ class _$NotificationImpl extends _Notification {
   }
 }
 
-abstract class _Notification extends Notification {
+abstract class _Notification implements Notification {
   const factory _Notification(
       {required final String type,
       required final String rdvId}) = _$NotificationImpl;
-  const _Notification._() : super._();
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
       _$NotificationImpl.fromJson;
