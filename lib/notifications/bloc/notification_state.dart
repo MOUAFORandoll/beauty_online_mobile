@@ -15,21 +15,27 @@ class NotificationLoadingState extends CubitLoadingState
   const NotificationLoadingState();
 }
 
-class PostNotificationLoadingState extends CubitLoadingState
+class RdvNotificationLoadingState extends CubitLoadingState
     with NotificationState {}
 
-class AnimeNotificationLoadingState extends CubitLoadingState
-    with NotificationState {}
+class RdvNotificationSuccessLoadState extends CubitSuccessState
+    with NotificationState {
+  final RendezVous rendezVous;
+  RdvNotificationSuccessLoadState(this.rendezVous);
 
-class EpisodeNotificationLoadingState extends CubitLoadingState
-    with NotificationState {}
+  @override
+  List<Object?> get props => [rendezVous];
+}
 
-class QuizNotificationLoadingState extends CubitLoadingState
-    with NotificationState {}
+class RdvProNotificationSuccessLoadState extends CubitSuccessState
+    with NotificationState {
+  final RendezVous rendezVous;
+  RdvProNotificationSuccessLoadState(this.rendezVous);
 
-class UserNotificationLoadingState extends CubitLoadingState
-    with NotificationState {}
- 
+  @override
+  List<Object?> get props => [rendezVous];
+}
+
 class NotificationErrorState extends CubitErrorState with NotificationState {
   NotificationErrorState(super.error, [super.trace]);
 }

@@ -1,22 +1,20 @@
+import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/common/services/preferences_service.dart';
 import 'package:beauty/common/services/user_service.dart';
+import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:beauty/notifications/models/notification.dart';
 import 'package:beauty/notifications/services/notification_service.dart';
 import 'package:potatoes/libs.dart';
-import 'package:potatoes/potatoes.dart' hide PreferencesService; 
+import 'package:potatoes/potatoes.dart' hide PreferencesService;
 part 'notification_state.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {
-   
   final PreferencesService preferencesService;
-  final NotificationService notificationService; 
+  final NotificationService notificationService;
   final UserService userService;
-  NotificationCubit(
-      this.preferencesService, 
-     
-      this.notificationService,
-      this.userService,
-     )
+  final ProfessionalService professionalService;
+  NotificationCubit(this.preferencesService, this.notificationService,
+      this.userService, this.professionalService)
       : super(const NotificationInitialState());
 
   Future<void> requestNotificationPermission() {
@@ -31,74 +29,39 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   Future<void> onNotification({required Notification notification}) async {
-    final id = notification.target;
-    // switch (notification.type) {
-    //   case NotificationType.follows:
-    //     if (id.isNotEmpty) {
-    //       await fetchUserById(id: id);
-    //     } else {
-    //       emit(NotificationErrorState("ID manquant pour l'utilisateur"));
-    //     }
-    //     break;
-    //   case NotificationType.participations:
-    //     if (id.isNotEmpty) {
-    //       await fetchQuiz(id: id);
-    //     } else {
-    //       emit(NotificationErrorState("ID manquant pour le quiz"));
-    //     }
-    //     break;
-    //   case NotificationType.postLikes:
-    //   case NotificationType.postComments:
-    //   case NotificationType.postCommentLikes:
-    //   case NotificationType.inactivityPost:
-    //     if (id.isNotEmpty) {
-    //       await fetchPost(id: id);
-    //     } else {
-    //       emit(NotificationErrorState("ID manquant pour le post"));
-    //     }
-    //     break;
-    //   case NotificationType.episodeComments:
-    //   case NotificationType.episodeCommentLikes:
-    //   case NotificationType.newEpisode:
-    //   case NotificationType.inactivityEpisode:
-    //     if (id.isNotEmpty) {
-    //       await fetchEpisode(id: id);
-    //     } else {
-    //       emit(NotificationErrorState("ID manquant pour l'épisode"));
-    //     }
-    //     break;
-    //   case NotificationType.inactivityAnime:
-    //     if (id.isNotEmpty) {
-    //       await fetchAnime(id: id);
-    //     } else {
-    //       emit(NotificationErrorState("ID manquant pour l'anime"));
-    //     }
-    //     break;
+    final id = notification.rdvId;
 
-    //   default:
-    //     emit(const NotificationInitialState());
-    // }
+    switch (notification.type) {
+      case NotificationType.newRdv:
+      case NotificationType.rdvAccepted:
+      case NotificationType.rdvRefused:
+        if (id.isNotEmpty) {
+          await findRendezVous(id: id, type: notification.type);
+        } else {
+          emit(NotificationErrorState("ID manquant pour l'utilisateur"));
+        }
+        break;
+
+      default:
+        emit(const NotificationInitialState());
+    }
   }
 
-  // fetchUserById({required String id}) async {
-  //   final stateBefore = state;
+  findRendezVous({required String id, required String type}) async {
+    final stateBefore = state;
+    emit(RdvNotificationLoadingState());
 
-  //   try {
-  //     final cubit = personCubitManager.getById(id);
-  //     emit(UserNotificationLoadedState(cubit.user));
-  //   } on UnsupportedError catch (_) {
-  //     // on n'a pas trouvé de cubit en mémoire, on fetch l'objet
-  //     emit(UserNotificationLoadingState());
-  //     try {
-  //       final user = await linkService.getUserById(id: id);
-  //       personCubitManager.add(user);
-  //       emit(UserNotificationLoadedState(user));
-  //     } catch (error, trace) {
-  //       emit(NotificationErrorState(error, trace));
-  //     }
-  //   } catch (error, trace) {
-  //     emit(NotificationErrorState(error, trace));
-  //   }
+    try {
+      final rdv = await professionalService.findRendezVous(id);
+      if (type == NotificationType.newRdv) {
+        emit(RdvProNotificationSuccessLoadState(rdv));
+      } else {
+        emit(RdvNotificationSuccessLoadState(rdv));
+      }
+    } catch (error, trace) {
+      emit(NotificationErrorState(error, trace));
+    }
+  }
 
   //   emit(stateBefore);
   // }
@@ -194,6 +157,4 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   //   emit(stateBefore);
   // }
-
-
 }

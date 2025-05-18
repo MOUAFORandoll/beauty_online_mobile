@@ -300,4 +300,15 @@ class ProfessionalService extends ApiService {
             }),
         mapper: (result) => toPaginatedList(result, RendezVous.fromJson));
   }
+
+  Future<RendezVous> findRendezVous(
+    idRendezVous,
+  ) async {
+    return compute(
+        dio.get(
+          _rendez_vous + '/${idRendezVous}/accept',
+          options: Options(headers: withAuth()),
+        ),
+        mapper: RendezVous.fromJson);
+  }
 }

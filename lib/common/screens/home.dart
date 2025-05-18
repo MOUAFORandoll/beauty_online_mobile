@@ -1,4 +1,5 @@
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/common/screens/await_load.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
@@ -53,58 +54,71 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
       },
       child: BlocListener<UserCubit, UserState>(
         listener: onUserEventReceived,
-        child:
-            BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
-          builder: (context, state) => Scaffold(
-            body: PageView(
-              controller: navigationCubit.state.pageController,
-              onPageChanged: (index) =>
-                  navigationCubit.goToPage(index: index, animate: false),
-              children: pages.map((page) => page['page'] as Widget).toList(),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: (index) => navigationCubit.goToPage(index: index),
-              currentIndex: state.currentIndex,
-              useLegacyColorScheme: false,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: _buildIconWithDecoration(
-                        icon: Assets.iconsNotification,
-                        selected: state.currentIndex == 0),
-                    label: pages[0]['title'] as String,
-                    backgroundColor: Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .backgroundColor),
-                BottomNavigationBarItem(
-                    icon: _buildIconWithDecoration(
-                        icon: Assets.iconsbeauty,
-                        selected: state.currentIndex == 1),
-                    label: pages[1]['title'] as String,
-                    backgroundColor: Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .backgroundColor),
-                BottomNavigationBarItem(
-                    icon: _buildIconWithDecoration(
-                        icon: Assets.iconsTrending,
-                        selected: state.currentIndex == 2),
-                    label: pages[2]['title'] as String,
-                    backgroundColor: Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .backgroundColor),
-                BottomNavigationBarItem(
-                    icon: _buildIconWithDecoration(
-                        icon: Assets.iconsQuiz,
-                        selected: state.currentIndex == 3),
-                    label: pages[3]['title'] as String,
-                    backgroundColor: Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .backgroundColor),
-              ],
-            ),
-          ),
+        child: BlocListener<NotificationCubit, NotificationState>(
+          listener: onNotificationReceived,
+          child:
+              BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
+                  builder: (context, state) => Scaffold(
+                        body: PageView(
+                          controller: navigationCubit.state.pageController,
+                          onPageChanged: (index) => navigationCubit.goToPage(
+                              index: index, animate: false),
+                          children: pages
+                              .map((page) => page['page'] as Widget)
+                              .toList(),
+                        ),
+                        bottomNavigationBar: BottomNavigationBar(
+                          onTap: (index) =>
+                              navigationCubit.goToPage(index: index),
+                          currentIndex: state.currentIndex,
+                          useLegacyColorScheme: false,
+                          items: <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                                icon: _buildIconWithDecoration(
+                                    icon: Assets.iconsNotification,
+                                    selected: state.currentIndex == 0),
+                                label: pages[0]['title'] as String,
+                                backgroundColor: Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .backgroundColor),
+                            BottomNavigationBarItem(
+                                icon: _buildIconWithDecoration(
+                                    icon: Assets.iconsbeauty,
+                                    selected: state.currentIndex == 1),
+                                label: pages[1]['title'] as String,
+                                backgroundColor: Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .backgroundColor),
+                            BottomNavigationBarItem(
+                                icon: _buildIconWithDecoration(
+                                    icon: Assets.iconsTrending,
+                                    selected: state.currentIndex == 2),
+                                label: pages[2]['title'] as String,
+                                backgroundColor: Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .backgroundColor),
+                            BottomNavigationBarItem(
+                                icon: _buildIconWithDecoration(
+                                    icon: Assets.iconsQuiz,
+                                    selected: state.currentIndex == 3),
+                                label: pages[3]['title'] as String,
+                                backgroundColor: Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .backgroundColor),
+                          ],
+                        ),
+                      )),
         ),
       ),
     );
+  }
+
+  void onNotificationReceived(
+      BuildContext context, NotificationState state) async {
+    if (state is RdvNotificationLoadingState) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AwaitLoadScreen()));
+    }
   }
 
   void onUserEventReceived(BuildContext context, UserState state) {

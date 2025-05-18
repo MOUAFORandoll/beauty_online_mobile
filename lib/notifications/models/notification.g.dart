@@ -8,12 +8,12 @@ part of 'notification.dart';
 
 _$NotificationImpl _$$NotificationImplFromJson(Map<String, dynamic> json) =>
     _$NotificationImpl(
-      target: json['target'] as String,
       type: json['type'] as String,
+      rdvId: json['rdvId'] as String,
     );
 
 Map<String, dynamic> _$$NotificationImplToJson(_$NotificationImpl instance) =>
     <String, dynamic>{
-      'target': instance.target,
       'type': instance.type,
+      'rdvId': instance.rdvId,
     };

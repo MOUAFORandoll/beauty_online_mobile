@@ -20,8 +20,8 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Notification {
-  String get target => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  String get rdvId => throw _privateConstructorUsedError;
 
   /// Serializes this Notification to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $NotificationCopyWith<$Res> {
           Notification value, $Res Function(Notification) then) =
       _$NotificationCopyWithImpl<$Res, Notification>;
   @useResult
-  $Res call({String target, String type});
+  $Res call({String type, String rdvId});
 }
 
 /// @nodoc
@@ -57,17 +57,17 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? target = null,
     Object? type = null,
+    Object? rdvId = null,
   }) {
     return _then(_value.copyWith(
-      target: null == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      rdvId: null == rdvId
+          ? _value.rdvId
+          : rdvId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -81,7 +81,7 @@ abstract class _$$NotificationImplCopyWith<$Res>
       __$$NotificationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String target, String type});
+  $Res call({String type, String rdvId});
 }
 
 /// @nodoc
@@ -97,17 +97,17 @@ class __$$NotificationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? target = null,
     Object? type = null,
+    Object? rdvId = null,
   }) {
     return _then(_$NotificationImpl(
-      target: null == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      rdvId: null == rdvId
+          ? _value.rdvId
+          : rdvId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -116,20 +116,20 @@ class __$$NotificationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NotificationImpl extends _Notification {
-  const _$NotificationImpl({required this.target, required this.type})
+  const _$NotificationImpl({required this.type, required this.rdvId})
       : super._();
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationImplFromJson(json);
 
   @override
-  final String target;
-  @override
   final String type;
+  @override
+  final String rdvId;
 
   @override
   String toString() {
-    return 'Notification(target: $target, type: $type)';
+    return 'Notification(type: $type, rdvId: $rdvId)';
   }
 
   @override
@@ -137,13 +137,13 @@ class _$NotificationImpl extends _Notification {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationImpl &&
-            (identical(other.target, target) || other.target == target) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.rdvId, rdvId) || other.rdvId == rdvId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, target, type);
+  int get hashCode => Object.hash(runtimeType, type, rdvId);
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.
@@ -163,17 +163,17 @@ class _$NotificationImpl extends _Notification {
 
 abstract class _Notification extends Notification {
   const factory _Notification(
-      {required final String target,
-      required final String type}) = _$NotificationImpl;
+      {required final String type,
+      required final String rdvId}) = _$NotificationImpl;
   const _Notification._() : super._();
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
       _$NotificationImpl.fromJson;
 
   @override
-  String get target;
-  @override
   String get type;
+  @override
+  String get rdvId;
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.

@@ -172,6 +172,7 @@ class MyApp extends StatelessWidget {
               preferencesService,
               context.read(),
               context.read(),
+              context.read(),
             ),
           ),
         ],
