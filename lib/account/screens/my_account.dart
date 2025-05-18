@@ -1,9 +1,21 @@
+import 'dart:io';
+
+import 'package:beauty/account/bloc/theme_mode_cubit.dart';
 import 'package:beauty/account/screens/my_user_info.dart';
+import 'package:beauty/common/bloc/user_cubit.dart';
+import 'package:beauty/common/utils/assets.dart';
+import 'package:beauty/common/utils/svg_utils.dart';
+import 'package:beauty/common/utils/themes.dart';
+import 'package:beauty/common/widgets/bottom_sheet.dart';
+import 'package:beauty/common/widgets/profile_picture.dart';
+import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:open_settings/open_settings.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-
-import 'package:beauty/common/bloc/user_cubit.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -13,150 +25,255 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount>
-    with SingleTickerProviderStateMixin, CompletableMixin {
+    with
+        SingleTickerProviderStateMixin,
+        CompletableMixin,
+        WidgetsBindingObserver {
   late final userCubit = context.read<UserCubit>();
-  late final user = userCubit.user;
+  late final notificationCubit = context.read<NotificationCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _fetchNotificationSettings();
+  }
+
+  Future<void> _fetchNotificationSettings() async {
+    await FirebaseMessaging.instance.getNotificationSettings();
+    setState(() {});
+  }
+
+  Future<NotificationSettings> _getNotificationSettings() {
+    return FirebaseMessaging.instance.getNotificationSettings();
+  }
+
+  void _openNotificationSettings() {
+    if (Platform.isAndroid) {
+      OpenSettings.openNotificationSetting();
+    } else if (Platform.isIOS) {
+      OpenSettings.openAppNotificationSetting();
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed && mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 16),
       children: [
-        // Second section
+        BlocBuilder<ThemeModeCubit, ThemeMode>(
+          builder: (context, mode) {
+            return SettingsItem(
+              icon: mode == ThemeMode.dark
+                  ? Icons.dark_mode
+                  : mode == ThemeMode.light
+                      ? Icons.light_mode
+                      : Icons.auto_awesome_mosaic,
+              title: 'Thème',
+              subtitle: mode.settingsName,
+              onTap: _onThemeTap,
+            );
+          },
+        ),
+        const SizedBox(height: 16),
         SettingsSection(
+          title: 'Compte',
           items: [
             SettingsItem(
-              icon: Icons.key,
-              title: 'Compte',
+              icon: Icons.person,
+              title: 'Informations personnelles',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const MyUserInfo()),
+              ),
+            ),
+            SettingsItem(
+                icon: Icons.lock, title: 'Confidentialité', onTap: () {}),
+            SettingsItem(
+                icon: Icons.notifications_none,
+                title: 'Notifications',
+                onTap: _onNotificationTap),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SettingsSection(
+          title: 'Support',
+          items: [
+            SettingsItem(
+              icon: Icons.support_agent,
+              title: 'Service client',
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MyUserInfo()),
+                final Uri uri = Uri(
+                  scheme: 'https',
+                  host: 'wa.me',
+                  path: '/237690863838',
+                  queryParameters: {
+                    'text':
+                        'Bonjour, j\'ai une question concernant beauty online.'
+                  },
                 );
+                launchUrl(uri);
               },
             ),
             SettingsItem(
-              icon: Icons.lock,
-              title: 'Confidentialité',
-              onTap: () {},
-            ),
+                icon: Icons.help_outline,
+                title: 'Aide',
+                onTap: () {
+                  final Uri uri = Uri(
+                    scheme: 'https',
+                    host: 'www.beauty-online.fr',
+                    path: '/help',
+                  );
+                  launchUrl(uri);
+                }),
             SettingsItem(
-              icon: Icons.chat_bubble_outline,
-              title: 'Discussions',
-              badge: '1',
-              onTap: () {},
-            ),
-            SettingsItem(
-              icon: Icons.notifications_none,
-              title: 'Notifications',
-              onTap: () {},
-            ),
-            SettingsItem(
-              icon: Icons.swap_vert,
-              title: 'Stockage et données',
-              onTap: () {},
-            ),
+                icon: Icons.group_add_outlined,
+                title: 'Inviter un proche',
+                onTap: () {
+                  final Uri shareUri = Uri(
+                    scheme: 'https',
+                    host: 'www.beauty-online.fr',
+                    path: '/invite',
+                  );
+                  final String shareMessage =
+                      'Partagez ce lien avec vos amis et votre famille pour leur faire découvrir Beauty Online : ${shareUri.toString()}';
+                  Share.share(shareMessage);
+                }),
           ],
         ),
-
-        SizedBox(
-          height: 16,
-        ),
-        // Third section
-        SettingsSection(
-          items: [
-            SettingsItem(
-              icon: Icons.info_outline,
-              title: 'Aide',
-              onTap: () {},
-            ),
-            SettingsItem(
-              icon: Icons.people_outline,
-              title: 'Inviter un proche',
-              onTap: () {},
-            ),
-          ],
-        ),
-
-        // Meta products section
-        const Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 16.0, bottom: 8.0),
-          child: Text(
-            'Mes Sociaux',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        SettingsSection(
-          items: [
-            SettingsItem(
-              icon: Icons.camera_alt,
-              title: 'Mon Instagram',
-              onTap: () {},
-            ),
-            SettingsItem(
-              icon: Icons.camera_alt,
-              title: 'Mon Tiktok',
-              onTap: () {},
-            ),
-            SettingsItem(
-              icon: Icons.camera_alt,
-              title: 'Mon Snap',
-              onTap: () {},
-            ),
-          ],
-        ),
-
-        // Add some space at the bottom
-        const SizedBox(height: 80),
       ],
+    );
+  }
+
+  void _onThemeTap() {
+    final themeModeCubit = context.read<ThemeModeCubit>();
+    showAppBottomSheet(
+      context: context,
+      horizontalPadding: 16.0,
+      builder: (_) => ListView.separated(
+        itemCount: ThemeMode.values.length,
+        shrinkWrap: true,
+        padding: const EdgeInsets.only(top: 24.0),
+        separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+        itemBuilder: (_, i) {
+          final mode = ThemeMode.values[i];
+          final selected = themeModeCubit.state == mode;
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundColor: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : AppTheme.lightGrey,
+              child: Icon(
+                [
+                  Icons.auto_awesome_mosaic,
+                  Icons.light_mode,
+                  Icons.dark_mode
+                ][i],
+                color: Colors.black,
+                size: 20,
+              ),
+            ),
+            title: Text(
+              mode.settingsName,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: selected ? FontWeight.bold : null,
+                  ),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              themeModeCubit.set(mode);
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  void _onNotificationTap() {
+    showAppBottomSheet(
+      context: context,
+      horizontalPadding: 16.0,
+      builder: (_) => FutureBuilder<NotificationSettings>(
+        future: _getNotificationSettings(),
+        builder: (context, snapshot) {
+          final settings = snapshot.data;
+          final isAuthorized =
+              settings?.authorizationStatus == AuthorizationStatus.authorized;
+          return SwitchListTile(
+            title: const Text('Notifications'),
+            subtitle: Text(isAuthorized ? 'Activées' : 'Désactivées'),
+            value: isAuthorized,
+            onChanged: (_) async {
+              if (settings?.authorizationStatus ==
+                  AuthorizationStatus.notDetermined) {
+                await notificationCubit.requestNotificationPermission();
+                setState(() {});
+              } else {
+                _openNotificationSettings();
+              }
+              Navigator.pop(context);
+            },
+          );
+        },
+      ),
     );
   }
 }
 
 class SettingsSection extends StatelessWidget {
+  final String? title;
   final List<SettingsItem> items;
 
-  const SettingsSection({
-    Key? key,
-    required this.items,
-  }) : super(key: key);
+  const SettingsSection({Key? key, this.title, required this.items})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.2),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
+            child: Text(
+              title!,
+              style: const TextStyle(color: Colors.grey, fontSize: 16),
+            ),
           ),
-        ],
-      ),
-      child: Column(
-        children: items.asMap().entries.map((entry) {
-          final index = entry.key;
-          final item = entry.value;
-
-          return Column(
-            children: [
-              item,
-              // Add divider except for the last item
-              if (index < items.length - 1)
-                Divider(
-                  color: Colors.grey.shade800,
-                  height: 1,
-                  indent: 56,
-                  endIndent: 0,
-                ),
-            ],
-          );
-        }).toList(),
-      ),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(.2),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            children: items.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+              return Column(
+                children: [
+                  item,
+                  if (index < items.length - 1)
+                    Divider(color: Colors.grey.shade800, height: 1, indent: 56),
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -165,14 +282,16 @@ class SettingsItem extends StatelessWidget {
   final IconData? icon;
   final Widget? customIcon;
   final String title;
+  final String? subtitle;
   final String? badge;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const SettingsItem({
     Key? key,
     this.icon,
     this.customIcon,
     required this.title,
+    this.subtitle,
     this.badge,
     required this.onTap,
   }) : super(key: key);
@@ -185,60 +304,29 @@ class SettingsItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [
-            // Icon
-            if (icon != null)
-              Container(
-                width: 24,
-                height: 24,
-                alignment: Alignment.center,
-                child: Icon(
-                  icon,
-                  // color: Colors.white,
-                  size: 24,
-                ),
-              ),
+            if (icon != null) Icon(icon, size: 24),
             if (customIcon != null && icon == null)
               Container(
                 width: 24,
                 height: 24,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF833AB4),
-                      Color(0xFFC13584),
-                      Color(0xFFE1306C),
-                      Color(0xFFFD1D1D),
-                      Color(0xFFF56040),
-                      Color(0xFFF77737),
-                      Color(0xFFFCAF45),
-                      Color(0xFFFFDC80),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(6),
-                ),
                 alignment: Alignment.center,
-                child: Icon(
-                  customIcon as IconData,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                child: customIcon,
               ),
             const SizedBox(width: 16),
-
-            // Title
             Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400)),
+                  if (subtitle != null)
+                    Text(subtitle!,
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.grey)),
+                ],
               ),
             ),
-
-            // Badge
             if (badge != null)
               Container(
                 margin: const EdgeInsets.only(right: 8),
@@ -247,69 +335,12 @@ class SettingsItem extends StatelessWidget {
                   color: Colors.grey.shade700,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
-                  badge!,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
+                child: Text(badge!,
+                    style: const TextStyle(color: Colors.white, fontSize: 12)),
               ),
-
-            // Chevron
-            Icon(
-              Icons.chevron_right,
-              color: Colors.grey.shade600,
-              size: 24,
-            ),
+            toSvgIcon(icon: Assets.iconsDirectionRight, size: 16.0),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Custom status bar for iOS style (for demonstration)
-class StatusBar extends StatelessWidget {
-  const StatusBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.black,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            '11:44',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            children: [
-              const Icon(Icons.signal_cellular_alt,
-                  size: 16, color: Colors.white),
-              const SizedBox(width: 4),
-              const Text('LTE', style: TextStyle(color: Colors.white)),
-              const SizedBox(width: 4),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text(
-                  '72%',
-                  style: TextStyle(fontSize: 12, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

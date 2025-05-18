@@ -3,7 +3,9 @@ import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
 import 'package:beauty/map/screens/map_screen.dart';
+import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/screens/notifications.dart';
+import 'package:beauty/notifications/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
@@ -37,6 +39,9 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   void initState() {
     super.initState();
     context.read<SelectRealisationCubit>().change('');
+
+    context.read<NotificationService>().context = context;
+    context.read<NotificationCubit>().requestNotificationPermission();
   }
 
   @override

@@ -7,16 +7,10 @@ import 'package:potatoes/libs.dart';
 import 'package:beauty/common/models/user.dart';
 import 'package:beauty/common/services/api_service.dart';
 
-class NotificationsService extends ApiService {
-  static const String _sendFCMToken = '/users/notification';
+class NotificationsService extends ApiService { 
   static const String _userNotifications = '/users/notifications';
   const NotificationsService(super._dio);
-
-  Future<void> sendFCMToken({required String token}) {
-    return compute(dio.patch(_sendFCMToken,
-        options: Options(headers: withAuth()), data: {"token": token}));
-  }
-
+ 
 
   Future<PaginatedList<Notification>> getNotifications(
       {int page = 1, required String type}) async {

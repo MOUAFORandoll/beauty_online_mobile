@@ -1,8 +1,10 @@
+import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/screens/sub/rendez_vous_pro.dart';
 import 'package:beauty/notifications/screens/sub/generales.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/professional/screens/sub/rendez_vous_user.dart';
 import 'package:flutter/material.dart' hide SearchBar;
+import 'package:potatoes/libs.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -12,11 +14,24 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  List<String> items = [
-    'Générales',
-    'Mes Rendez-vous',
-    'Rendez-vous Pro',
-  ];
+  late final myProCubit = context.read<MyProfessionalCubit>();
+
+  List<String> items = [];
+  @override
+  void initState() {
+    items = myProCubit.professional == null
+        ? [
+            // 'Générales',
+            'Mes Rendez-vous',
+          ]
+        : [
+            // 'Générales',
+            'Mes Rendez-vous',
+            'Rendez-vous Pro',
+          ];
+    super.initState();
+  }
+
   int _selected = 0;
   @override
   Widget build(BuildContext context) {
@@ -54,11 +69,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   Widget _bodyBuilder() {
     switch (_selected) {
+      // case 0:
+      //   return Generales();
       case 0:
-        return Generales();
-      case 1:
         return RendezVousUser();
-      case 2:
+      case 1:
         return RendezVousPro();
       default:
         return Generales();

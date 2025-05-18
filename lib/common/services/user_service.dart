@@ -32,7 +32,8 @@ class UserService extends ApiService {
 
   Future<void> sendFCMToken({required String token}) {
     return compute(dio.patch(_sendFCMToken,
-        options: Options(headers: withAuth()), data: {"token": token}));
+        options: Options(headers: withAuth()),
+        data: {"notification_token": token}));
   }
 
   Future<User> getMe() {

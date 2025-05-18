@@ -17,6 +17,8 @@ import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/new_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
+import 'package:beauty/notifications/bloc/notification_cubit.dart';
+import 'package:beauty/notifications/services/notification_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:beauty/professional/bloc/action_professional_cubit.dart';
 import 'package:beauty/professional/bloc/load_me_rendez_vous_cubit.dart';
@@ -114,6 +116,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => NotificationsService(dio)),
         RepositoryProvider(create: (_) => GeolocationService()),
         RepositoryProvider(create: (_) => ActuService(dio)),
+        RepositoryProvider(create: (_) => NotificationService()),
         RepositoryProvider(
             create: (context) =>
                 ProfessionalCubitManager(context.read(), preferencesService)),
@@ -164,6 +167,13 @@ class MyApp extends StatelessWidget {
               create: (context) => LoadMeProRendezVousCubit(
                     context.read(),
                   )),
+          BlocProvider(
+            create: (context) => NotificationCubit(
+              preferencesService,
+              context.read(),
+              context.read(),
+            ),
+          ),
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(
