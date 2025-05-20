@@ -15,6 +15,7 @@ class PreferencesService extends SecuredPreferencesService {
   static const String _keyUserUID = 'user_id';
   static const String _keyDeviceToken = 'device-token';
   static const String _keyAuthToken = 'auth_token';
+  static const String _keyFirstEnter = 'first_enter';
   static const String _keyThemeMode = 'theme_mode';
   PreferencesService(
     super.preferences,
@@ -35,6 +36,14 @@ class PreferencesService extends SecuredPreferencesService {
       preferences.setString(_keyUserUID, user.id),
       preferences.setString(_keyUser, jsonEncode(user)),
     ]);
+  }
+
+  Future<void> enterFirstEnter() {
+    return preferences.setBool(_keyFirstEnter, true);
+  }
+
+  bool? isFirstEnter() {
+    return preferences.getBool(_keyFirstEnter);
   }
 
   Professional? get professional {

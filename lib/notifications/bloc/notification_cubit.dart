@@ -20,6 +20,9 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> requestNotificationPermission() {
     return notificationService.requestPermission((token) {
       preferencesService.deviceToken.then((oldToken) {
+        print('new token ${token}');
+        print('oldToken  ${oldToken}');
+        print('status  ${oldToken == token}');
         if (oldToken == token) return;
         userService.sendFCMToken(token: token).then((_) {
           preferencesService.saveDeviceToken(token);

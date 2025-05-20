@@ -1,3 +1,4 @@
+import 'package:beauty/auth/screens/splash_page.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/my_pro/bloc/add_schedule_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_pro_rendez_vous_cubit.dart';
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (_) => ServerTimeService(dio)),
         RepositoryProvider(create: (_) => AppCacheManager()),
+        RepositoryProvider(create: (_) => preferencesService),
         RepositoryProvider(create: (_) => AuthService(dio)),
         RepositoryProvider(create: (_) => UserService(dio)),
         RepositoryProvider(create: (_) => ProfessionalService(dio)),
@@ -178,60 +180,62 @@ class MyApp extends StatelessWidget {
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'beauty!',
-            theme: AppTheme.lightTheme(context),
-            darkTheme: AppTheme.darkTheme(context),
-            themeMode: mode,
-            locale: const Locale.fromSubtags(languageCode: 'fr'),
-            supportedLocales: const [Locale.fromSubtags(languageCode: 'fr')],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            builder: (context, child) => BlocListener<UserCubit, UserState>(
-              listenWhen: (previous, state) {
-                return (previous is UserLoggingOut ||
-                        previous is UserDeleting) &&
-                    state is UserNotLoggedState;
-              },
-              listener: (_, state) {
-                // recharge l'app quelque soit l'étape dans l'appli
-                if (state is UserNotLoggedState) {
-                  Future.delayed(
-                      const Duration(milliseconds: 100),
-                      // ignore: use_build_context_synchronously
-                      () => Phoenix.rebirth(context));
-                }
-              },
-              child: ReadMoreTheme(
-                themeData: AppTheme.readMoreThemeData(context),
-                child: child ?? SizedBox(),
-              ),
-            ),
-            home: Builder(builder: (context) {
-              // return const HomeScreen();
-              // return const OnboardingScreen();
-              return BlocBuilder<UserCubit, UserState>(
-                buildWhen: (previous, _) => previous is InitializingUserState,
-                builder: (context, state) {
-                  if (state is InitializingUserState) {
-                    return const SizedBox();
-                  }
+              debugShowCheckedModeBanner: false,
+              title: 'beauty!',
+              theme: AppTheme.lightTheme(context),
+              darkTheme: AppTheme.darkTheme(context),
+              themeMode: mode,
+              locale: const Locale.fromSubtags(languageCode: 'fr'),
+              supportedLocales: const [Locale.fromSubtags(languageCode: 'fr')],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              builder: (context, child) => BlocListener<UserCubit, UserState>(
+                    listenWhen: (previous, state) {
+                      return (previous is UserLoggingOut ||
+                              previous is UserDeleting) &&
+                          state is UserNotLoggedState;
+                    },
+                    listener: (_, state) {
+                      // recharge l'app quelque soit l'étape dans l'appli
+                      if (state is UserNotLoggedState) {
+                        Future.delayed(
+                            const Duration(milliseconds: 100),
+                            // ignore: use_build_context_synchronously
+                            () => Phoenix.rebirth(context));
+                      }
+                    },
+                    child: ReadMoreTheme(
+                      themeData: AppTheme.readMoreThemeData(context),
+                      child: child ?? SizedBox(),
+                    ),
+                  ),
+              home: SplashPage()
 
-                  if (state is UserNotLoggedState) {
-                    return const OnboardingScreen();
-                  }
-                  if (state is CompleteUserProfileState) {
-                    return const CompleteInfoPage();
-                  }
-                  if (state is UserLoggedState) return const HomeScreen();
-                  return const OnboardingScreen();
-                },
-              );
-            }),
-          ),
+              //  Builder(builder: (context) {
+              //   // return const HomeScreen();
+              //   // return const OnboardingScreen();
+              //   return BlocBuilder<UserCubit, UserState>(
+              //     buildWhen: (previous, _) => previous is InitializingUserState,
+              //     builder: (context, state) {
+              //       if (state is InitializingUserState) {
+              //         return const SizedBox();
+              //       }
+
+              //       if (state is UserNotLoggedState) {
+              //         return const OnboardingScreen();
+              //       }
+              //       if (state is CompleteUserProfileState) {
+              //         return const CompleteInfoPage();
+              //       }
+              //       if (state is UserLoggedState) return const HomeScreen();
+              //       return const OnboardingScreen();
+              //     },
+              //   );
+              // }),
+              ),
         ),
       ),
     );

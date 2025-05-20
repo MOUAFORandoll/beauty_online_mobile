@@ -37,11 +37,11 @@ class _FilActuScreenState extends State<FilActuScreen> {
             SizedBox(
               height: kToolbarHeight,
             ),
-            SizedBox(height: 80, child: StoriesLoaderBuilder()),
+            // SizedBox(height: 80, child: StoriesLoaderBuilder()),
 
             Expanded(
                 child: AutoListView.get<Actu>(
-               padding: EdgeInsets.only(
+              padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewPadding.bottom),
               autoManage: false,
               cubit: cubit,

@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   late final navigationCubit = context.read<HomeBottomNavigationCubit>();
   late final pages = [
     {'title': 'Social', 'page': FilActuScreen()},
-    {'title': 'Find', 'page': MapScreen()},
+    // {'title': 'Find', 'page': MapScreen()},
     {'title': 'Notifications', 'page': NotificationsScreen()},
     {'title': 'Compte', 'page': AccountScreen()},
   ];
@@ -97,14 +97,14 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                 backgroundColor: Theme.of(context)
                                     .bottomNavigationBarTheme
                                     .backgroundColor),
-                            BottomNavigationBarItem(
-                                icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsQuiz,
-                                    selected: state.currentIndex == 3),
-                                label: pages[3]['title'] as String,
-                                backgroundColor: Theme.of(context)
-                                    .bottomNavigationBarTheme
-                                    .backgroundColor),
+                            // BottomNavigationBarItem(
+                            //     icon: _buildIconWithDecoration(
+                            //         icon: Assets.iconsQuiz,
+                            //         selected: state.currentIndex == 3),
+                            //     label: pages[3]['title'] as String,
+                            //     backgroundColor: Theme.of(context)
+                            //         .bottomNavigationBarTheme
+                            //         .backgroundColor),
                           ],
                         ),
                       )),
