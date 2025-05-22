@@ -3,7 +3,7 @@ import 'package:beauty/common/screens/await_load.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
-import 'package:beauty/map/screens/map_screen.dart';
+
 import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/screens/notifications.dart';
 import 'package:beauty/notifications/services/notification_service.dart';
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                           items: <BottomNavigationBarItem>[
                             BottomNavigationBarItem(
                                 icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsNotification,
+                                    icon: Assets.iconsQuiz,
                                     selected: state.currentIndex == 0),
                                 label: pages[0]['title'] as String,
                                 backgroundColor: Theme.of(context)
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                     .backgroundColor),
                             BottomNavigationBarItem(
                                 icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsbeauty,
+                                    icon: Assets.iconsNotification,
                                     selected: state.currentIndex == 1),
                                 label: pages[1]['title'] as String,
                                 backgroundColor: Theme.of(context)
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                     .backgroundColor),
                             BottomNavigationBarItem(
                                 icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsTrending,
+                                    icon: Assets.iconsSetting,
                                     selected: state.currentIndex == 2),
                                 label: pages[2]['title'] as String,
                                 backgroundColor: Theme.of(context)

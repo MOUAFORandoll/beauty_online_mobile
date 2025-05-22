@@ -14,98 +14,108 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  late final myProCubit = context.read<MyProfessionalCubit>();
-
-  List<String> items = [];
-  @override
-  void initState() {
-    items = myProCubit.professional == null
-        ? [
-            // 'Générales',
-            'Mes Rendez-vous',
-          ]
-        : [
-            // 'Générales',
-            'Mes Rendez-vous',
-            'Rendez-vous Pro',
-          ];
-    super.initState();
-  }
+  final List<String> items = [
+    'Mes Rendez-vous',
+    'Rendez-vous Pro',
+  ];
 
   int _selected = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        minimum: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Column(children: [
-          SizedBox(
-            height: 16,
-          ),
-          // _TabBarGap(controller: _scrollController),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: items
-                  .map((item) => ItemHome(
-                        label: item,
-                        isSelected: _selected == items.indexOf(item),
-                        onTap: () => setState(() {
-                          _selected = items.indexOf(item);
-                        }),
-                      ))
-                  .toList(),
-            ),
-          ),
-          const SizedBox(height: 8.0),
-
-          Divider(),
-
-          const SizedBox(height: 8.0),
-          Expanded(
-            child: _bodyBuilder(),
-          )
-        ]));
+      minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: BlocBuilder<MyProfessionalCubit, MyProfessionalState>(
+        builder: (ctx, state) {
+          final isPro = state is MyProfessionalLoggedState;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 16),
+              _buildTabBar(isPro),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              Expanded(child: _buildTabContent(isPro)),
+            ],
+          );
+        },
+      ),
+    );
   }
 
-  Widget _bodyBuilder() {
-    switch (_selected) {
-      // case 0:
-      //   return Generales();
-      case 0:
-        return RendezVousUser();
-      case 1:
-        return RendezVousPro();
-      default:
-        return Generales();
+  Widget _buildTabBar(bool isPro) {
+    if (!isPro) {
+      return NotificationTabItem(
+        label: 'Mes Rendez-vous',
+        isSelected: true,
+        onTap: () => setState(() => _selected = 0),
+      );
     }
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(items.length, (index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: NotificationTabItem(
+              label: items[index],
+              isSelected: _selected == index,
+              onTap: () => setState(() => _selected = index),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildTabContent(bool isPro) {
+    if (!isPro || _selected == 0) {
+      return const RendezVousUser();
+    } else if (_selected == 1) {
+      return const RendezVousPro();
+    }
+    return const SizedBox.shrink();
   }
 }
 
-class ItemHome extends StatelessWidget {
+class NotificationTabItem extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
-  ItemHome(
-      {required this.label, required this.isSelected, required this.onTap});
+
+  const NotificationTabItem({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: isSelected
-            ? BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(16.0))
-            : null,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? theme.colorScheme.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected
+                ? Colors.transparent
+                : theme.colorScheme.onSurface.withOpacity(0.2),
+          ),
+        ),
         child: Text(
           label,
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: isSelected ? AppTheme.black : AppTheme.disabledText,
-              ),
+          style: theme.textTheme.labelLarge!.copyWith(
+            color: isSelected
+                ? Colors.white
+                : theme.textTheme.labelLarge!.color?.withOpacity(0.6),
+          ),
         ),
       ),
     );

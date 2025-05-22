@@ -95,8 +95,7 @@ class _SplashPageState extends State<SplashPage>
 
   Future<void> _initialize() async {
     final prefs = context.read<PreferencesService>();
-    final isFirst =
-        await prefs.isFirstEnter() == null || await prefs.isFirstEnter()!;
+    final isFirst = await prefs.isFirstEnter() == null;
     print('isFirst');
     print(isFirst);
     final userState = context.read<UserCubit>().state;

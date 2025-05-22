@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "69380599834-v0d1b6lf7k4qjv5ld6qfg4oe7pkfarpo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beauty.online",
+            "certificate_hash": "53d84739bc9e1f54ead534d84f2e1628dbbae8d1"
+          }
+        },
+        {
           "client_id": "69380599834-ct16gr5ee6uu3j7jjeniajo51vo2h9an.apps.googleusercontent.com",
           "client_type": 3
         }
