@@ -15,6 +15,8 @@ class Actu with _$Actu {
     @JsonKey(name: 'realisation_files')
     required List<RealisationFile> realisationFiles,
     @JsonKey(name: 'nombre_vues') required int nombreVues,
+    @JsonKey(name: 'nombre_likes') required int nombreLikes,
+    @JsonKey(name: 'has_liked') required bool hasLiked,
     @JsonKey(name: 'nombre_partages') required int nombrePartages,
   }) = _Actu;
 

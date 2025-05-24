@@ -30,6 +30,10 @@ mixin _$Actu {
       throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_vues')
   int get nombreVues => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nombre_likes')
+  int get nombreLikes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'has_liked')
+  bool get hasLiked => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_partages')
   int get nombrePartages => throw _privateConstructorUsedError;
 
@@ -55,6 +59,8 @@ abstract class $ActuCopyWith<$Res> {
       @JsonKey(name: 'realisation_files')
       List<RealisationFile> realisationFiles,
       @JsonKey(name: 'nombre_vues') int nombreVues,
+      @JsonKey(name: 'nombre_likes') int nombreLikes,
+      @JsonKey(name: 'has_liked') bool hasLiked,
       @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
@@ -81,6 +87,8 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
     Object? nombreVues = null,
+    Object? nombreLikes = null,
+    Object? hasLiked = null,
     Object? nombrePartages = null,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +116,14 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
           ? _value.nombreVues
           : nombreVues // ignore: cast_nullable_to_non_nullable
               as int,
+      nombreLikes: null == nombreLikes
+          ? _value.nombreLikes
+          : nombreLikes // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasLiked: null == hasLiked
+          ? _value.hasLiked
+          : hasLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
       nombrePartages: null == nombrePartages
           ? _value.nombrePartages
           : nombrePartages // ignore: cast_nullable_to_non_nullable
@@ -141,6 +157,8 @@ abstract class _$$ActuImplCopyWith<$Res> implements $ActuCopyWith<$Res> {
       @JsonKey(name: 'realisation_files')
       List<RealisationFile> realisationFiles,
       @JsonKey(name: 'nombre_vues') int nombreVues,
+      @JsonKey(name: 'nombre_likes') int nombreLikes,
+      @JsonKey(name: 'has_liked') bool hasLiked,
       @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   @override
@@ -165,6 +183,8 @@ class __$$ActuImplCopyWithImpl<$Res>
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
     Object? nombreVues = null,
+    Object? nombreLikes = null,
+    Object? hasLiked = null,
     Object? nombrePartages = null,
   }) {
     return _then(_$ActuImpl(
@@ -192,6 +212,14 @@ class __$$ActuImplCopyWithImpl<$Res>
           ? _value.nombreVues
           : nombreVues // ignore: cast_nullable_to_non_nullable
               as int,
+      nombreLikes: null == nombreLikes
+          ? _value.nombreLikes
+          : nombreLikes // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasLiked: null == hasLiked
+          ? _value.hasLiked
+          : hasLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
       nombrePartages: null == nombrePartages
           ? _value.nombrePartages
           : nombrePartages // ignore: cast_nullable_to_non_nullable
@@ -212,6 +240,8 @@ class _$ActuImpl implements _Actu {
       @JsonKey(name: 'realisation_files')
       required final List<RealisationFile> realisationFiles,
       @JsonKey(name: 'nombre_vues') required this.nombreVues,
+      @JsonKey(name: 'nombre_likes') required this.nombreLikes,
+      @JsonKey(name: 'has_liked') required this.hasLiked,
       @JsonKey(name: 'nombre_partages') required this.nombrePartages})
       : _realisationFiles = realisationFiles;
 
@@ -241,12 +271,18 @@ class _$ActuImpl implements _Actu {
   @JsonKey(name: 'nombre_vues')
   final int nombreVues;
   @override
+  @JsonKey(name: 'nombre_likes')
+  final int nombreLikes;
+  @override
+  @JsonKey(name: 'has_liked')
+  final bool hasLiked;
+  @override
   @JsonKey(name: 'nombre_partages')
   final int nombrePartages;
 
   @override
   String toString() {
-    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles, nombreVues: $nombreVues, nombrePartages: $nombrePartages)';
+    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles, nombreVues: $nombreVues, nombreLikes: $nombreLikes, hasLiked: $hasLiked, nombrePartages: $nombrePartages)';
   }
 
   @override
@@ -263,6 +299,10 @@ class _$ActuImpl implements _Actu {
                 .equals(other._realisationFiles, _realisationFiles) &&
             (identical(other.nombreVues, nombreVues) ||
                 other.nombreVues == nombreVues) &&
+            (identical(other.nombreLikes, nombreLikes) ||
+                other.nombreLikes == nombreLikes) &&
+            (identical(other.hasLiked, hasLiked) ||
+                other.hasLiked == hasLiked) &&
             (identical(other.nombrePartages, nombrePartages) ||
                 other.nombrePartages == nombrePartages));
   }
@@ -277,6 +317,8 @@ class _$ActuImpl implements _Actu {
       profileProfessionnel,
       const DeepCollectionEquality().hash(_realisationFiles),
       nombreVues,
+      nombreLikes,
+      hasLiked,
       nombrePartages);
 
   /// Create a copy of Actu
@@ -305,6 +347,8 @@ abstract class _Actu implements Actu {
       @JsonKey(name: 'realisation_files')
       required final List<RealisationFile> realisationFiles,
       @JsonKey(name: 'nombre_vues') required final int nombreVues,
+      @JsonKey(name: 'nombre_likes') required final int nombreLikes,
+      @JsonKey(name: 'has_liked') required final bool hasLiked,
       @JsonKey(name: 'nombre_partages')
       required final int nombrePartages}) = _$ActuImpl;
 
@@ -325,6 +369,12 @@ abstract class _Actu implements Actu {
   @override
   @JsonKey(name: 'nombre_vues')
   int get nombreVues;
+  @override
+  @JsonKey(name: 'nombre_likes')
+  int get nombreLikes;
+  @override
+  @JsonKey(name: 'has_liked')
+  bool get hasLiked;
   @override
   @JsonKey(name: 'nombre_partages')
   int get nombrePartages;

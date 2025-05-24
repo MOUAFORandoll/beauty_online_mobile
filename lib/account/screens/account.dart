@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:beauty/common/utils/loadPicture.dart';
+import 'package:beauty/common/utils/photo_full.dart';
 import 'package:beauty/my_pro/bloc/load_me_agenda_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
@@ -94,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen>
                               //       .onTertiaryContainer,
                               //   size: 32,
                               // ),
-                              ),
+                              ).fullScreen(context),
                         if (state is MyProfessionalUpdatingState)
                           Positioned.fill(
                             child: Container(

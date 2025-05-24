@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/utils/photo_full.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
@@ -129,7 +130,7 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
                                 ),
                               );
                             },
-                          ),
+                          ).fullScreen(context),
                         ),
                       );
                     },
@@ -315,10 +316,13 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
                       ),
                       const SizedBox(width: 8),
                       _squareButton(
-                        title: 10,
+                        title: actu.nombreLikes,
                         isLoading: false,
+                        color: actu.hasLiked
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
                         icon: Icons.favorite,
-                        onTap: () => Navigator.of(context).pop(),
+                        onTap: () => actuCubit.likeActu(),
                       ),
                       const SizedBox(width: 8),
                       _squareButton(
@@ -346,7 +350,7 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
   Widget _squareButton(
       {required int title,
       required IconData icon,
-      Color color = Colors.white,
+      Color? color,
       VoidCallback? onTap,
       required bool isLoading}) {
     print(isLoading);
@@ -368,12 +372,12 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
                 Icon(
                   icon,
                   size: 24,
-                  color: Colors.white,
+                  color: color ?? Colors.white,
                 ),
                 const SizedBox(width: 2),
                 Text(title.toString(),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.white,
+                          color: color ?? Colors.white,
                         )),
               ]),
       ),

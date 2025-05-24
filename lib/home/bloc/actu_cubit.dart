@@ -59,8 +59,30 @@ class ActuCubit extends ObjectCubit<Actu, ActuState> {
     }
   }
 
+  void likeActu() {
+    if (state is ActuLoadedState) {
+      final stateBefore = state;
+      emit(const LikeActuLoadingState());
+
+      final newItem = actu.copyWith(
+          hasLiked: !actu.hasLiked,
+          nombreLikes:
+              !actu.hasLiked ? actu.nombreLikes + 1 : actu.nombreLikes + 1);
+      update(newItem);
+      actuService
+          .likeUnlikeActu(
+        id: actu.id,
+      )
+          .then((link) {}, onError: (error, trace) {
+        emit(ActuErrorState(error, trace));
+        emit(stateBefore);
+      });
+    }
+  }
+
   void vueActu() {
     if (state is ActuLoadedState) {
+      emit(const VueActuLoadingState());
       final newItem = actu.copyWith(nombreVues: actu.nombreVues + 1);
       print(newItem.toJson());
       update(newItem);

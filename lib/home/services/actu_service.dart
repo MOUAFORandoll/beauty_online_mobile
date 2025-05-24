@@ -12,6 +12,7 @@ class ActuService extends ApiService {
   static const String _findActu = '/actus';
   static const String _shareActu = '/actus/:id/share';
   static const String _vueActu = '/actus/:id/vue';
+  static const String _likeActu = '/actus/:id/like';
 
   const ActuService(super._dio);
 
@@ -41,6 +42,15 @@ class ActuService extends ApiService {
     return compute(
       dio.get(
         _vueActu.replaceAll(':id', id),
+        options: Options(headers: withAuth()),
+      ),
+    );
+  }
+
+  Future<void> likeUnlikeActu({required String id}) {
+    return compute(
+      dio.post(
+        _likeActu.replaceAll(':id', id),
         options: Options(headers: withAuth()),
       ),
     );

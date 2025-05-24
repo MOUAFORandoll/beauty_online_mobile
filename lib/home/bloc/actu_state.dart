@@ -29,6 +29,9 @@ class ShareActuLoadingState extends CubitLoadingState with ActuState {
   const ShareActuLoadingState() : super();
 }
 
+
+
+
 class ShareActuSuccessState extends CubitInformationState with ActuState {
   final String shareLink;
 
@@ -36,4 +39,13 @@ class ShareActuSuccessState extends CubitInformationState with ActuState {
 
   @override
   List<Object?> get props => [shareLink];
+}
+
+
+class LikeActuLoadingState extends CubitLoadingState with ActuState {
+  const LikeActuLoadingState() : super();
+}
+
+class VueActuLoadingState extends CubitLoadingState with ActuState {
+  const VueActuLoadingState() : super();
 }

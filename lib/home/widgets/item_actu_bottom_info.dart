@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 
 class ActuItemBottomInfo extends StatefulWidget {
+  
   @override
   State<ActuItemBottomInfo> createState() => _ActuItemBottomInfoState();
 }
@@ -32,7 +33,12 @@ class _ActuItemBottomInfoState extends State<ActuItemBottomInfo> {
                 ProfilePicture(
                     image: actu.profileProfessionnel.cover, size: 24),
                 buildInfo(title: actu.nombreVues, icon: Icons.remove_red_eye),
-                buildInfo(title: 10, icon: Icons.favorite),
+                buildInfo(
+                    title: actu.nombreLikes,
+                    icon: Icons.favorite,
+                    color: actu.hasLiked
+                        ? Theme.of(context).colorScheme.primary
+                        : null),
                 buildInfo(title: actu.nombrePartages, icon: Icons.share)
               ],
             ),
@@ -40,15 +46,13 @@ class _ActuItemBottomInfoState extends State<ActuItemBottomInfo> {
         });
   }
 
-  Widget buildInfo({
-    required int title,
-    required IconData icon,
-  }) =>
+  Widget buildInfo(
+          {required int title, required IconData icon, Color? color}) =>
       Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Icon(
           icon,
           size: 16,
-          color: Colors.white,
+          color: color ?? Colors.white,
         ),
         const SizedBox(width: 2),
         Text(title.toString(),

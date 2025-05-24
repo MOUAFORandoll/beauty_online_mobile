@@ -86,11 +86,12 @@ class PreferencesService extends SecuredPreferencesService {
   FutureOr<Map<String, String>> getAuthHeaders() async {
     final String userId = user!.id;
     final String? authToken = await secureStorage.read(key: _keyAuthToken);
-    final DateTime dateTime = DateTime.now();
+    print({'uid': userId});
+    print({'uid': user!.id});
+    // if (authToken == null) {
+    //   throw InvalidAuthenticationHeadersException();
+    // }
 
-    if (authToken == null) {
-      throw InvalidAuthenticationHeadersException();
-    }
     return {'uid': user!.id};
     // return {"authorization": 'Bearer ' + authToken};
   }

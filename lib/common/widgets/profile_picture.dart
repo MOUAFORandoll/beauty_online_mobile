@@ -1,3 +1,4 @@
+import 'package:beauty/common/utils/photo_full.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
@@ -31,7 +32,7 @@ class ProfilePicture extends StatelessWidget {
         fit: BoxFit.cover,
         image: context.read<AppCacheManager>().getImage(image!),
         errorBuilder: (context, url, error) => defaultImage,
-      ),
+      ).fullScreen(context),
     );
   }
 }
@@ -62,7 +63,7 @@ class ProfileSquarePicture extends StatelessWidget {
         fit: BoxFit.cover,
         image: context.read<AppCacheManager>().getImage(image!),
         errorBuilder: (context, url, error) => defaultImage,
-      ),
+      ).fullScreen(context),
     );
   }
 }
