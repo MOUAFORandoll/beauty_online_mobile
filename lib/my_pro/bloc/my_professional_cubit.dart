@@ -137,6 +137,25 @@ class MyProfessionalCubit
         'cannot retrieve professional when not logged: Current state is ${state.runtimeType}');
   }
 
+  void shareItem() {
+    if (state is MyProfessionalLoggedState) {
+      final stateBefore = state;
+
+      emit(const ShareMyProfessionalLoadingState());
+      professionalService
+          .shareProfile(
+        id: professional!.id,
+      )
+          .then((link) {
+        emit(ShareMyProfessionalSuccessState(link));
+        emit(MyProfessionalLoggedState(professional));
+      }, onError: (error, trace) {
+        emit(MyProfessionalErrorState(error, trace));
+        emit(stateBefore);
+      });
+    }
+  }
+
   @override
   void update(Professional object) {
     // TODO: implement update

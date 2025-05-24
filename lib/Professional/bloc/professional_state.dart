@@ -24,3 +24,16 @@ class ProfessionalLoadingState extends CubitLoadingState
 class ProfessionalErrorState extends CubitErrorState with ProfessionalState {
   ProfessionalErrorState(super.error, [super.trace]);
 }
+
+class ShareProfessionalLoadingState extends CubitLoadingState with ProfessionalState {
+  const ShareProfessionalLoadingState() : super();
+}
+
+class ShareProfessionalSuccessState extends CubitInformationState with ProfessionalState {
+  final String shareLink;
+
+  const ShareProfessionalSuccessState(this.shareLink);
+
+  @override
+  List<Object?> get props => [shareLink];
+}

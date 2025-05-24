@@ -35,38 +35,48 @@ class _FilActuScreenState extends State<FilActuScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: kToolbarHeight,
+              height: kToolbarHeight / 5,
             ),
             // SizedBox(height: 80, child: StoriesLoaderBuilder()),
 
             Expanded(
                 child: AutoListView.get<Actu>(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewPadding.bottom),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               autoManage: false,
               cubit: cubit,
-              viewType: ViewType.custom,
-              customBuilder: (context, actus) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: MasonryGridView.count(
-                    crossAxisCount: 2, // 📌 Deux colonnes
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                    shrinkWrap: true,
-                    physics: PageScrollPhysics(),
-                    itemCount: actus.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                          decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.tertiaryContainer,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          alignment: Alignment.center,
-                          height: 150 + Random().nextInt(250).toDouble(),
-                          child: ActuItem(actus[index]));
-                    },
-                  )),
+              viewType: ViewType.grid,
+              itemBuilder: (context, actu) =>
+                  ActuItem.get(context: context, actu: actu),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12.0,
+                  mainAxisSpacing: 12.0,
+                  childAspectRatio: .65),
+              // customBuilder: (context, actus) => Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //     child: MasonryGridView.count(
+              //       crossAxisCount: 2, // 📌 Deux colonnes
+              //       mainAxisSpacing: 8,
+              //       crossAxisSpacing: 8,
+              //       shrinkWrap: true,
+              //       physics: PageScrollPhysics(),
+              //       itemCount: actus.length,
+              //       itemBuilder: (context, index) {
+              //         return Container(
+              //             decoration: BoxDecoration(
+              //               color:
+              //                   Theme.of(context).colorScheme.tertiaryContainer,
+              //               borderRadius: BorderRadius.circular(16),
+              //             ),
+              //             alignment: Alignment.center,
+              //             height: 150 + Random().nextInt(250).toDouble(),
+              //             child: ActuItem.get(
+              //                 context: context, actu: actus[index]));
+              //       },
+              //     ),
+
+              // ),
+
               emptyBuilder: (ctx) => const EmptyBuilder(),
               errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
               loadingBuilder: (_) => ActuLoaderBuilder(count: 12),

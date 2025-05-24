@@ -1,6 +1,6 @@
-
 import 'package:beauty/common/services/professional_cubit_manager.dart';
 import 'package:beauty/home/models/actu.dart';
+import 'package:beauty/home/services/actu_cubit_manager.dart';
 import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/notifications/models/notification.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
@@ -11,9 +11,10 @@ import 'package:potatoes/libs.dart';
 
 class LoadActuCubit extends AutoListCubit<Actu> {
   final ActuService actuService;
-  final ProfessionalCubitManager cubitManager;
+  final ProfessionalCubitManager proCubitManager;
+  final ActuCubitManager actuCubitManager;
 
-  LoadActuCubit(this.actuService, this.cubitManager)
+  LoadActuCubit(this.actuService, this.proCubitManager, this.actuCubitManager)
       : super(
             provider: ({page = 1}) => actuService.findActu(
                   page: page,
@@ -25,7 +26,11 @@ class LoadActuCubit extends AutoListCubit<Actu> {
       (change.nextState as AutoListReadyState<Actu>)
           .items
           .items
-          .forEach((item) => cubitManager.add(item.profileProfessionnel));
+          .forEach((item) => proCubitManager.add(item.profileProfessionnel));
+      (change.nextState as AutoListReadyState<Actu>)
+          .items
+          .items
+          .forEach((item) => actuCubitManager.add(item));
     }
   }
 }

@@ -14,6 +14,8 @@ class Actu with _$Actu {
     required Professional profileProfessionnel,
     @JsonKey(name: 'realisation_files')
     required List<RealisationFile> realisationFiles,
+    @JsonKey(name: 'nombre_vues') required int nombreVues,
+    @JsonKey(name: 'nombre_partages') required int nombrePartages,
   }) = _Actu;
 
   factory Actu.fromJson(Map<String, dynamic> json) => _$ActuFromJson(json);

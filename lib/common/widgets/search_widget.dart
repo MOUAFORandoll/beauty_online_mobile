@@ -21,11 +21,11 @@ class SearchWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).colorScheme.tertiary),
+              color: Theme.of(context).colorScheme.primary),
           child: toSvgIcon(
             icon: Assets.iconsSearch,
             size: 24,
-            color: Theme.of(context).colorScheme.onTertiary,
+            color: Colors.white,
           ),
         ));
   }

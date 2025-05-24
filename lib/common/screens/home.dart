@@ -1,3 +1,4 @@
+import 'package:beauty/common/bloc/link_cubit.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/screens/await_load.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   late final navigationCubit = context.read<HomeBottomNavigationCubit>();
   late final pages = [
-    {'title': 'Social', 'page': FilActuScreen()},
+    {'title': 'Beauty', 'page': FilActuScreen()},
     // {'title': 'Find', 'page': MapScreen()},
     {'title': 'Notifications', 'page': NotificationsScreen()},
     {'title': 'Compte', 'page': AccountScreen()},
@@ -54,60 +55,123 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
       },
       child: BlocListener<UserCubit, UserState>(
         listener: onUserEventReceived,
-        child: BlocListener<NotificationCubit, NotificationState>(
-          listener: onNotificationReceived,
-          child:
-              BlocBuilder<HomeBottomNavigationCubit, HomeBottomNavigationState>(
-                  builder: (context, state) => Scaffold(
-                        body: PageView(
-                          controller: navigationCubit.state.pageController,
-                          onPageChanged: (index) => navigationCubit.goToPage(
-                              index: index, animate: false),
-                          children: pages
-                              .map((page) => page['page'] as Widget)
-                              .toList(),
-                        ),
-                        bottomNavigationBar: BottomNavigationBar(
-                          onTap: (index) =>
-                              navigationCubit.goToPage(index: index),
-                          currentIndex: state.currentIndex,
-                          useLegacyColorScheme: false,
-                          items: <BottomNavigationBarItem>[
-                            BottomNavigationBarItem(
-                                icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsQuiz,
-                                    selected: state.currentIndex == 0),
-                                label: pages[0]['title'] as String,
-                                backgroundColor: Theme.of(context)
-                                    .bottomNavigationBarTheme
-                                    .backgroundColor),
-                            BottomNavigationBarItem(
-                                icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsNotification,
-                                    selected: state.currentIndex == 1),
-                                label: pages[1]['title'] as String,
-                                backgroundColor: Theme.of(context)
-                                    .bottomNavigationBarTheme
-                                    .backgroundColor),
-                            BottomNavigationBarItem(
-                                icon: _buildIconWithDecoration(
-                                    icon: Assets.iconsSetting,
-                                    selected: state.currentIndex == 2),
-                                label: pages[2]['title'] as String,
-                                backgroundColor: Theme.of(context)
-                                    .bottomNavigationBarTheme
-                                    .backgroundColor),
-                            // BottomNavigationBarItem(
-                            //     icon: _buildIconWithDecoration(
-                            //         icon: Assets.iconsQuiz,
-                            //         selected: state.currentIndex == 3),
-                            //     label: pages[3]['title'] as String,
-                            //     backgroundColor: Theme.of(context)
-                            //         .bottomNavigationBarTheme
-                            //         .backgroundColor),
-                          ],
-                        ),
-                      )),
+        child: BlocListener<LinkCubit, LinkState>(
+          listener: onEventReceived,
+          child: BlocListener<NotificationCubit, NotificationState>(
+            listener: onNotificationReceived,
+            child: BlocBuilder<HomeBottomNavigationCubit,
+                    HomeBottomNavigationState>(
+                builder: (context, state) => Scaffold(
+                      appBar: state.currentIndex == 0
+                          ? AppBar(
+                              forceMaterialTransparency: true,
+                              title: BlocBuilder<HomeBottomNavigationCubit,
+                                  HomeBottomNavigationState>(
+                                builder: (_, state) => Text(
+                                    pages[state.currentIndex]['title']
+                                        as String),
+                              ),
+                              centerTitle: true,
+                              systemOverlayStyle: Theme.of(context)
+                                  .appBarTheme
+                                  .systemOverlayStyle
+                                  ?.copyWith(
+                                    systemNavigationBarColor: Theme.of(context)
+                                        .bottomNavigationBarTheme
+                                        .backgroundColor,
+                                    systemNavigationBarDividerColor:
+                                        Theme.of(context)
+                                            .bottomNavigationBarTheme
+                                            .backgroundColor,
+                                  ),
+                              leading: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // Navigator.of(context).push(MaterialPageRoute(
+                                    //     builder: (context) => const AccountScreen()));
+                                  },
+                                  child: const Center(
+                                      child: UserProfilePicture(size: 40.0)),
+                                ),
+                              ),
+                              actions: [const SearchWidget()],
+                            )
+                          : state.currentIndex == 0
+                              ? AppBar(
+                                  forceMaterialTransparency: true,
+                                  title: BlocBuilder<HomeBottomNavigationCubit,
+                                      HomeBottomNavigationState>(
+                                    builder: (_, state) => Text(
+                                        pages[state.currentIndex]['title']
+                                            as String),
+                                  ),
+                                  centerTitle: true,
+                                  systemOverlayStyle: Theme.of(context)
+                                      .appBarTheme
+                                      .systemOverlayStyle
+                                      ?.copyWith(
+                                        systemNavigationBarColor:
+                                            Theme.of(context)
+                                                .bottomNavigationBarTheme
+                                                .backgroundColor,
+                                        systemNavigationBarDividerColor:
+                                            Theme.of(context)
+                                                .bottomNavigationBarTheme
+                                                .backgroundColor,
+                                      ),
+                                )
+                              : null,
+                      body: PageView(
+                        controller: navigationCubit.state.pageController,
+                        onPageChanged: (index) => navigationCubit.goToPage(
+                            index: index, animate: false),
+                        children: pages
+                            .map((page) => page['page'] as Widget)
+                            .toList(),
+                      ),
+                      bottomNavigationBar: BottomNavigationBar(
+                        onTap: (index) =>
+                            navigationCubit.goToPage(index: index),
+                        currentIndex: state.currentIndex,
+                        useLegacyColorScheme: false,
+                        items: <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                              icon: _buildIconWithDecoration(
+                                  icon: Assets.iconsQuiz,
+                                  selected: state.currentIndex == 0),
+                              label: pages[0]['title'] as String,
+                              backgroundColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor),
+                          BottomNavigationBarItem(
+                              icon: _buildIconWithDecoration(
+                                  icon: Assets.iconsNotification,
+                                  selected: state.currentIndex == 1),
+                              label: pages[1]['title'] as String,
+                              backgroundColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor),
+                          BottomNavigationBarItem(
+                              icon: _buildIconWithDecoration(
+                                  icon: Assets.iconsSetting,
+                                  selected: state.currentIndex == 2),
+                              label: pages[2]['title'] as String,
+                              backgroundColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor),
+                          // BottomNavigationBarItem(
+                          //     icon: _buildIconWithDecoration(
+                          //         icon: Assets.iconsQuiz,
+                          //         selected: state.currentIndex == 3),
+                          //     label: pages[3]['title'] as String,
+                          //     backgroundColor: Theme.of(context)
+                          //         .bottomNavigationBarTheme
+                          //         .backgroundColor),
+                        ],
+                      ),
+                    )),
+          ),
         ),
       ),
     );
@@ -116,6 +180,13 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
   void onNotificationReceived(
       BuildContext context, NotificationState state) async {
     if (state is RdvNotificationLoadingState) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AwaitLoadScreen()));
+    }
+  }
+
+  void onEventReceived(BuildContext context, LinkState state) async {
+    if (state is ActuLinkLoading || state is ProfessionalLinkLoading) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AwaitLoadScreen()));
     }

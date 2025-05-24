@@ -2,37 +2,54 @@ import 'dart:developer';
 
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/services/cache_manager.dart';
+import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/item_pro.dart';
+import 'package:beauty/home/bloc/actu_cubit.dart';
 import 'package:beauty/home/models/actu.dart';
+import 'package:beauty/home/services/actu_cubit_manager.dart';
 import 'package:beauty/professional/screens/sub/agenda_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:share_plus/share_plus.dart';
 
-class PinterestViewScreen extends StatefulWidget {
-  final Actu actu;
-
-  const PinterestViewScreen(this.actu, {Key? key}) : super(key: key);
+class ActuScreen extends StatefulWidget {
+  const ActuScreen._();
+  static Widget get({required BuildContext context, required Actu actu}) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: context.read<ActuCubitManager>().get(actu)),
+      ],
+      child: ActuScreen._(),
+    );
+  }
 
   @override
-  State<PinterestViewScreen> createState() => _PinterestViewScreenState();
+  State<ActuScreen> createState() => _ActuScreenState();
 }
 
-class _PinterestViewScreenState extends State<PinterestViewScreen> {
+class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
   int _currentCarouselIndex = 0;
   final CarouselSliderController _carouselController =
       CarouselSliderController();
+  late final actuCubit = context.read<ActuCubit>();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar:
           true, // Important pour que l'image commence en haut
+      floatingActionButton: _buildFloatingListButtons(),
       body: Stack(
         children: [
           // Image principale qui commence en haut
@@ -57,10 +74,12 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
   }
 
   Widget _buildImageCarousel() {
+    final actu = actuCubit.actu;
+
     return Stack(
       children: [
         // Carousel d'images
-        widget.actu.realisationFiles.isNotEmpty
+        actu.realisationFiles.isNotEmpty
             ? CarouselSlider(
                 carouselController: _carouselController,
                 options: CarouselOptions(
@@ -68,14 +87,14 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
                   autoPlay: true,
-                  enableInfiniteScroll: widget.actu.realisationFiles.length > 1,
+                  enableInfiniteScroll: actu.realisationFiles.length > 1,
                   onPageChanged: (index, reason) {
                     setState(() {
                       _currentCarouselIndex = index;
                     });
                   },
                 ),
-                items: widget.actu.realisationFiles.map((file) {
+                items: actu.realisationFiles.map((file) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
@@ -136,15 +155,14 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
               ),
 
         // Indicateurs de carrousel
-        if (widget.actu.realisationFiles.length > 1)
+        if (actu.realisationFiles.length > 1)
           Positioned(
             bottom: 20,
             left: 0,
             right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children:
-                  widget.actu.realisationFiles.asMap().entries.map((entry) {
+              children: actu.realisationFiles.asMap().entries.map((entry) {
                 return GestureDetector(
                   onTap: () => _carouselController.animateToPage(entry.key),
                   child: Container(
@@ -167,6 +185,8 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
   }
 
   Widget _buildInfoSection() {
+    final actu = actuCubit.actu;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
@@ -182,13 +202,13 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.actu.title + widget.actu.title ?? '',
+                      actu.title + actu.title ?? '',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${widget.actu.price} €',
+                      '${actu.price} €',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -202,12 +222,12 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
           ),
           const SizedBox(height: 16),
           ProfessionalItem.get(
-              context: context, professional: widget.actu.profileProfessionnel),
+              context: context, professional: actu.profileProfessionnel),
           const SizedBox(height: 16),
           BeautyButton.primary(
             onPressed: () {
-              log(widget.actu.profileProfessionnel.toJson().toString());
-              context.read<SelectRealisationCubit>().change(widget.actu.id);
+              log(actu.profileProfessionnel.toJson().toString());
+              context.read<SelectRealisationCubit>().change(actu.id);
 
               showAppBottomSheet(
                   context: context,
@@ -216,7 +236,7 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
                   builder: (BuildContext context) {
                     return AgendaProView.get(
                         context: context,
-                        professional: widget.actu.profileProfessionnel);
+                        professional: actu.profileProfessionnel);
                   });
             },
             text: "Prendre Rendez-vous",
@@ -268,6 +288,94 @@ class _PinterestViewScreenState extends State<PinterestViewScreen> {
         ),
         padding: const EdgeInsets.all(12),
         child: Icon(icon, color: color, size: 20),
+      ),
+    );
+  }
+
+  Widget _buildFloatingListButtons() {
+    return BlocProvider.value(
+        value: actuCubit,
+        child: BlocConsumer<ActuCubit, ActuState>(
+            buildWhen: (_, state) => state is ActuLoadedState,
+            listener: onEventReceived,
+            builder: (context, state) {
+              print(state);
+              final actu = actuCubit.actu;
+              return SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _squareButton(
+                        title: actu.nombreVues,
+                        icon: Icons.remove_red_eye,
+                        isLoading: false,
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                      const SizedBox(width: 8),
+                      _squareButton(
+                        title: 10,
+                        isLoading: false,
+                        icon: Icons.favorite,
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                      const SizedBox(width: 8),
+                      _squareButton(
+                        title: actu.nombrePartages,
+                        icon: Icons.share,
+                        isLoading: state is ShareActuLoadingState,
+                        onTap: () => actuCubit.shareActu(),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }));
+  }
+
+  void onEventReceived(BuildContext context, ActuState state) async {
+    if (state is ShareActuLoadingState) {
+    } else if (state is ShareActuSuccessState) {
+      await Share.share(state.shareLink);
+    } else if (state is ActuErrorState) {
+      showErrorToast(content: state.error, context: context);
+    }
+  }
+
+  Widget _squareButton(
+      {required int title,
+      required IconData icon,
+      Color color = Colors.white,
+      VoidCallback? onTap,
+      required bool isLoading}) {
+    print(isLoading);
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: isLoading
+            ? Container(
+                padding: const EdgeInsets.all(2),
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator())
+            : Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Icon(
+                  icon,
+                  size: 24,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 2),
+                Text(title.toString(),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.white,
+                        )),
+              ]),
       ),
     );
   }

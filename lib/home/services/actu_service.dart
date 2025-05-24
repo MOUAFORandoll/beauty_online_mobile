@@ -10,6 +10,9 @@ import 'package:share_plus/share_plus.dart';
 
 class ActuService extends ApiService {
   static const String _findActu = '/actus';
+  static const String _shareActu = '/actus/:id/share';
+  static const String _vueActu = '/actus/:id/vue';
+
   const ActuService(super._dio);
 
   Future<PaginatedList<Actu>> findActu({
@@ -23,5 +26,23 @@ class ActuService extends ApiService {
               'size': 12,
             }),
         mapper: (result) => toPaginatedList(result, Actu.fromJson));
+  }
+
+  Future<String> shareActu({required String id}) {
+    return compute(
+        dio.get(
+          _shareActu.replaceAll(':id', id),
+          options: Options(headers: withAuth()),
+        ),
+        mapperKey: 'shareLink');
+  }
+
+  Future<void> vueActu({required String id}) {
+    return compute(
+      dio.get(
+        _vueActu.replaceAll(':id', id),
+        options: Options(headers: withAuth()),
+      ),
+    );
   }
 }

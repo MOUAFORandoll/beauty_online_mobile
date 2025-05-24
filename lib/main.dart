@@ -1,5 +1,7 @@
 import 'package:beauty/auth/screens/splash_page.dart';
+import 'package:beauty/common/bloc/link_cubit.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/home/services/actu_cubit_manager.dart';
 import 'package:beauty/my_pro/bloc/add_schedule_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_pro_rendez_vous_cubit.dart';
 import 'package:beauty/my_pro/bloc/schedule_cubit.dart' show ScheduleCubit;
@@ -109,7 +111,7 @@ class MyApp extends StatelessWidget {
     // preferencesService.clear();
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (_) => ServerTimeService(dio)),
+        // RepositoryProvider(create: (_) => ServerTimeService(dio)),
         RepositoryProvider(create: (_) => AppCacheManager()),
         RepositoryProvider(create: (_) => preferencesService),
         RepositoryProvider(create: (_) => AuthService(dio)),
@@ -122,11 +124,16 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
             create: (context) =>
                 ProfessionalCubitManager(context.read(), preferencesService)),
+        RepositoryProvider(
+            create: (context) => ActuCubitManager(context.read())),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => ServerTimeCubit(context.read())),
+          // BlocProvider(create: (context) => ServerTimeCubit(context.read())),
           BlocProvider(create: (_) => HomeBottomNavigationCubit()),
+          BlocProvider(
+            create: (context) => LinkCubit(context.read()),
+          ),
           BlocProvider(
               create: (context) => UserCubit(
                     context.read(),
@@ -154,8 +161,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => LoadMeAgendaCubit(context.read())),
           BlocProvider(create: (context) => AddScheduleCubit()),
           BlocProvider(
-              create: (context) =>
-                  LoadActuCubit(context.read(), context.read())),
+              create: (context) => LoadActuCubit(
+                  context.read(), context.read(), context.read())),
           BlocProvider(create: (context) => ScheduleCubit()),
           BlocProvider(create: (context) => SelectRealisationCubit()),
           BlocProvider(

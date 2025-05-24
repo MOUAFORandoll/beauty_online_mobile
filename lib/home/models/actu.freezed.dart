@@ -28,6 +28,10 @@ mixin _$Actu {
   @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: 'nombre_vues')
+  int get nombreVues => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nombre_partages')
+  int get nombrePartages => throw _privateConstructorUsedError;
 
   /// Serializes this Actu to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +53,9 @@ abstract class $ActuCopyWith<$Res> {
       String? price,
       @JsonKey(name: 'profile_professionnel') Professional profileProfessionnel,
       @JsonKey(name: 'realisation_files')
-      List<RealisationFile> realisationFiles});
+      List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'nombre_vues') int nombreVues,
+      @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
 }
@@ -74,6 +80,8 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
     Object? price = freezed,
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
+    Object? nombreVues = null,
+    Object? nombrePartages = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -96,6 +104,14 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
           ? _value.realisationFiles
           : realisationFiles // ignore: cast_nullable_to_non_nullable
               as List<RealisationFile>,
+      nombreVues: null == nombreVues
+          ? _value.nombreVues
+          : nombreVues // ignore: cast_nullable_to_non_nullable
+              as int,
+      nombrePartages: null == nombrePartages
+          ? _value.nombrePartages
+          : nombrePartages // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -123,7 +139,9 @@ abstract class _$$ActuImplCopyWith<$Res> implements $ActuCopyWith<$Res> {
       String? price,
       @JsonKey(name: 'profile_professionnel') Professional profileProfessionnel,
       @JsonKey(name: 'realisation_files')
-      List<RealisationFile> realisationFiles});
+      List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'nombre_vues') int nombreVues,
+      @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   @override
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
@@ -146,6 +164,8 @@ class __$$ActuImplCopyWithImpl<$Res>
     Object? price = freezed,
     Object? profileProfessionnel = null,
     Object? realisationFiles = null,
+    Object? nombreVues = null,
+    Object? nombrePartages = null,
   }) {
     return _then(_$ActuImpl(
       id: null == id
@@ -168,6 +188,14 @@ class __$$ActuImplCopyWithImpl<$Res>
           ? _value._realisationFiles
           : realisationFiles // ignore: cast_nullable_to_non_nullable
               as List<RealisationFile>,
+      nombreVues: null == nombreVues
+          ? _value.nombreVues
+          : nombreVues // ignore: cast_nullable_to_non_nullable
+              as int,
+      nombrePartages: null == nombrePartages
+          ? _value.nombrePartages
+          : nombrePartages // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -182,7 +210,9 @@ class _$ActuImpl implements _Actu {
       @JsonKey(name: 'profile_professionnel')
       required this.profileProfessionnel,
       @JsonKey(name: 'realisation_files')
-      required final List<RealisationFile> realisationFiles})
+      required final List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'nombre_vues') required this.nombreVues,
+      @JsonKey(name: 'nombre_partages') required this.nombrePartages})
       : _realisationFiles = realisationFiles;
 
   factory _$ActuImpl.fromJson(Map<String, dynamic> json) =>
@@ -208,8 +238,15 @@ class _$ActuImpl implements _Actu {
   }
 
   @override
+  @JsonKey(name: 'nombre_vues')
+  final int nombreVues;
+  @override
+  @JsonKey(name: 'nombre_partages')
+  final int nombrePartages;
+
+  @override
   String toString() {
-    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles)';
+    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles, nombreVues: $nombreVues, nombrePartages: $nombrePartages)';
   }
 
   @override
@@ -223,7 +260,11 @@ class _$ActuImpl implements _Actu {
             (identical(other.profileProfessionnel, profileProfessionnel) ||
                 other.profileProfessionnel == profileProfessionnel) &&
             const DeepCollectionEquality()
-                .equals(other._realisationFiles, _realisationFiles));
+                .equals(other._realisationFiles, _realisationFiles) &&
+            (identical(other.nombreVues, nombreVues) ||
+                other.nombreVues == nombreVues) &&
+            (identical(other.nombrePartages, nombrePartages) ||
+                other.nombrePartages == nombrePartages));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -234,7 +275,9 @@ class _$ActuImpl implements _Actu {
       title,
       price,
       profileProfessionnel,
-      const DeepCollectionEquality().hash(_realisationFiles));
+      const DeepCollectionEquality().hash(_realisationFiles),
+      nombreVues,
+      nombrePartages);
 
   /// Create a copy of Actu
   /// with the given fields replaced by the non-null parameter values.
@@ -260,7 +303,10 @@ abstract class _Actu implements Actu {
       @JsonKey(name: 'profile_professionnel')
       required final Professional profileProfessionnel,
       @JsonKey(name: 'realisation_files')
-      required final List<RealisationFile> realisationFiles}) = _$ActuImpl;
+      required final List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'nombre_vues') required final int nombreVues,
+      @JsonKey(name: 'nombre_partages')
+      required final int nombrePartages}) = _$ActuImpl;
 
   factory _Actu.fromJson(Map<String, dynamic> json) = _$ActuImpl.fromJson;
 
@@ -276,6 +322,12 @@ abstract class _Actu implements Actu {
   @override
   @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles;
+  @override
+  @JsonKey(name: 'nombre_vues')
+  int get nombreVues;
+  @override
+  @JsonKey(name: 'nombre_partages')
+  int get nombrePartages;
 
   /// Create a copy of Actu
   /// with the given fields replaced by the non-null parameter values.

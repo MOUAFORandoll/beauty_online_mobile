@@ -42,3 +42,18 @@ class MyProfessionalUpdatedState extends CubitInformationState with MyProfession
 class UpdateMyProfessionalErrorState extends CubitErrorState with MyProfessionalState {
   UpdateMyProfessionalErrorState(super.error, [super.trace]);
 }
+
+class ShareMyProfessionalLoadingState extends CubitLoadingState
+    with MyProfessionalState {
+  const ShareMyProfessionalLoadingState() : super();
+}
+
+class ShareMyProfessionalSuccessState extends CubitInformationState
+    with MyProfessionalState {
+  final String shareLink;
+
+  const ShareMyProfessionalSuccessState(this.shareLink);
+
+  @override
+  List<Object?> get props => [shareLink];
+}

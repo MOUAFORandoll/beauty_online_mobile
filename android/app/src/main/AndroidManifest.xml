@@ -45,7 +45,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="share.beauty.com"/>
+                <data android:scheme="https" android:host="share.beauty.petite-monnaie.com"/>
             </intent-filter>
         </activity>
         <activity android:name="com.android.camera.CropImage"/>

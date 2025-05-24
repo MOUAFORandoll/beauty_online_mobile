@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:beauty/common/models/professional.dart'; 
+import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, OAuthProvider;
@@ -23,7 +23,6 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
       Professional professional)
       : super(const InitializingProfessionalState()) {
     emit(ProfessionalLoadedState(professional));
-   
   }
 
   @override
@@ -33,13 +32,32 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
     }
     return null;
   }
- 
-   Professional get professional {
+
+  Professional get professional {
     final professional = getObject(state) ?? object;
 
     if (professional != null) return professional;
     throw UnsupportedError(
         'cannot retrieve professional when not logged: Current state is ${state.runtimeType}');
+  }
+
+  void shareItem() {
+    if (state is ProfessionalLoadedState) {
+      final stateBefore = state;
+
+      emit(const ShareProfessionalLoadingState());
+      professionalService
+          .shareProfile(
+        id: professional!.id,
+      )
+          .then((link) {
+        emit(ShareProfessionalSuccessState(link));
+        emit(ProfessionalLoadedState(professional));
+      }, onError: (error, trace) {
+        emit(ProfessionalErrorState(error, trace));
+        emit(stateBefore);
+      });
+    }
   }
 
   @override

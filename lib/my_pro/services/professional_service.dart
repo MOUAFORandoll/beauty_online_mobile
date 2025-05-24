@@ -18,6 +18,7 @@ class ProfessionalService extends ApiService {
   static const String _findProfileById = '/profile-professionnels/{id}';
   static const String _updateUserProfile = '/profile-professionnels';
   static const String _updaterProfileCover = '/profile-professionnels/cover';
+  static const String _shareProfile = '/profile-professionnels/:id/share';
 
   static const String _deleteProfile = '/profile-professionnels/{id}';
   static const String _findProfilesByProximity =
@@ -31,6 +32,15 @@ class ProfessionalService extends ApiService {
 
   const ProfessionalService(super._dio);
 
+  @override
+  Future<String> shareProfile({required String id}) {
+    return compute(
+        dio.get(
+          _shareProfile.replaceAll(':id', id),
+          options: Options(headers: withAuth()),
+        ),
+        mapperKey: 'shareLink');
+  }
   Future<Professional> createUserProfile(
       {required Map<String, dynamic> data, required XFile? cover}) async {
     final FormData formData = FormData.fromMap(data);

@@ -51,7 +51,7 @@ class _MyProfessionalBoardState extends State<MyProfessionalBoard>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       print(
           '_tabController.indexIsChanging    ===${_tabController.indexIsChanging}');
