@@ -26,12 +26,25 @@ class FullScreenMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.close, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          SizedBox(
+            width: 24,
+          )
+        ],
+      ),
       body: Center(
         child: Hero(
           tag: image.hashCode,
           child: PhotoView(
             minScale: PhotoViewComputedScale.contained,
-            maxScale: PhotoViewComputedScale.covered * 2,
+            maxScale: PhotoViewComputedScale.covered * 3,
             imageProvider: image,
           ),
         ),
