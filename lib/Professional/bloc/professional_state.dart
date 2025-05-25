@@ -30,10 +30,10 @@ class ShareProfessionalLoadingState extends CubitLoadingState with ProfessionalS
 }
 
 class ShareProfessionalSuccessState extends CubitInformationState with ProfessionalState {
-  final String shareLink;
+  final String link;
 
-  const ShareProfessionalSuccessState(this.shareLink);
+  const ShareProfessionalSuccessState(this.link);
 
   @override
-  List<Object?> get props => [shareLink];
+  List<Object?> get props => [link];
 }

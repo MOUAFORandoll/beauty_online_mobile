@@ -137,7 +137,7 @@ class MyProfessionalCubit
         'cannot retrieve professional when not logged: Current state is ${state.runtimeType}');
   }
 
-  void shareItem() {
+  void shareProfile() {
     if (state is MyProfessionalLoggedState) {
       final stateBefore = state;
 

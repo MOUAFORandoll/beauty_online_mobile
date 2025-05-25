@@ -1,3 +1,4 @@
+import 'package:beauty/common/utils/photo_full.dart';
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
@@ -111,7 +112,7 @@ class CatalogueForProDialog extends StatelessWidget {
                                     ),
                                   );
                                 },
-                              ),
+                              ).fullScreen(context),
                             );
                           },
                         );

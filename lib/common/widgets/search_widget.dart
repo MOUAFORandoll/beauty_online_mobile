@@ -1,3 +1,4 @@
+import 'package:beauty/home/screens/sub/my_search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/bloc/home_bottom_navigation_cubit.dart';
@@ -12,8 +13,12 @@ class SearchWidget extends StatelessWidget {
     final navigationCubit = context.read<HomeBottomNavigationCubit>();
 
     return GestureDetector(
-        onTap: () =>
-            onTap(context: context, index: navigationCubit.state.currentIndex),
+        onTap: () => 
+           showSearch(
+        context: context,
+        delegate: MySearchDelegate(context),
+      )
+    ,
         child: Container(
           height: 40,
           width: 40,

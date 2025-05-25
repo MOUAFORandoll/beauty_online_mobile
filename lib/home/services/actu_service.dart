@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:beauty/home/models/actu.dart';
+import 'package:beauty/home/models/search_result.dart';
 import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
@@ -13,8 +14,23 @@ class ActuService extends ApiService {
   static const String _shareActu = '/actus/:id/share';
   static const String _vueActu = '/actus/:id/vue';
   static const String _likeActu = '/actus/:id/like';
+  static const String _search = '/actus/search';
 
   const ActuService(super._dio);
+
+  Future<PaginatedList<SearchResult>> search({
+    required String search,
+    int page = 1,
+  }) {
+    return compute(
+        dio.get(_search,
+            options: Options(headers: withAuth()),
+            queryParameters: {
+              'page': page,
+              'search': search,
+            }),
+        mapper: (result) => toPaginatedList(result, SearchResult.fromJson));
+  }
 
   Future<PaginatedList<Actu>> findActu({
     int page = 1,

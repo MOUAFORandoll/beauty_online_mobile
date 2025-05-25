@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:beauty/common/utils/dialogs.dart';
+import 'package:beauty/common/widgets/action_widget.dart';
+import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/professional/screens/sub/primary_info_pro_client.dart';
@@ -13,6 +16,7 @@ import 'package:potatoes/libs.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../professional/screens/sub/catalogue_pro.dart';
 
@@ -40,7 +44,7 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
     _tabController.addListener(() {
       print(
           '_tabController.indexIsChanging    ===${_tabController.indexIsChanging}');
@@ -59,15 +63,15 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
   void onEventReceived(BuildContext context, ProfessionalState state) async {
     await waitForDialog();
 
-    // if (state is ShareCatalogueLoadingState) {
-    //   loadingDialogCompleter = showLoadingBarrier(
-    //     context: context,
-    //   );
-    // } else if (state is ShareCatalogueSuccesState) {
-    //   await Share.share(state.link);
-    // } else if (state is CatalogueManipErrorState) {
-    //   showErrorToast(content: state.error, context: context);
-    // }
+    if (state is ShareProfessionalLoadingState) {
+      loadingDialogCompleter = showLoadingBarrier(
+        context: context,
+      );
+    } else if (state is ShareProfessionalSuccessState) {
+      await Share.share(state.link);
+    } else if (state is ProfessionalErrorState) {
+      showErrorToast(content: state.error, context: context);
+    }
   }
 
   @override
@@ -88,7 +92,7 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                           pinned: true,
                           actions: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: onActionsPressed,
                               icon: toSvgIcon(
                                 icon: Assets.iconsOptions,
                                 color: AppTheme.white,
@@ -247,6 +251,26 @@ class _ClientProfessionalBoardState extends State<ClientProfessionalBoard>
                               )))));
             }));
   }
+
+  void onActionsPressed() => showAppBottomSheet(
+      context: context,
+      builder: (innerContext) => Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ActionWidget(
+                  title: 'Partager…',
+                  icon: Assets.iconsShare,
+                  onTap: () {
+                    professionalCubit.shareProfile();
+                    Navigator.of(innerContext).pop();
+                  },
+                ),
+              ],
+            ),
+          ));
 
   @override
   void dispose() {

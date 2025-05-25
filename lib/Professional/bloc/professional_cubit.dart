@@ -41,7 +41,7 @@ class ProfessionalCubit extends ObjectCubit<Professional, ProfessionalState> {
         'cannot retrieve professional when not logged: Current state is ${state.runtimeType}');
   }
 
-  void shareItem() {
+  void shareProfile() {
     if (state is ProfessionalLoadedState) {
       final stateBefore = state;
 

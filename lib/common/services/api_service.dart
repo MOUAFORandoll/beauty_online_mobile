@@ -10,26 +10,17 @@ import 'api_error.dart';
 
 class ApiLinks extends potatoes.Links {
   const ApiLinks();
+  // static const String url = 'http://192.168.1.129:8080/api';
+  static const String url = 'https://api.beauty.petite-monnaie.com';
 
-//Box
-  // @override
-  // String get devUrl => "http://172.20.10.8:8080/api";
+  @override
+  String get devUrl => url;
 
-  // @override
-  // String get stagingUrl => "http://172.20.10.8:8080/api";
+  @override
+  String get stagingUrl => url;
 
-  // @override
-  // String get productionUrl => "http://172.20.10.8:8080/api";
-
-//Online
-  // // @override
-  String get devUrl => "https://api.beauty.petite-monnaie.com";
-
-  // @override
-  String get stagingUrl => "https://api.beauty.petite-monnaie.com";
-
-  // @override
-  String get productionUrl => "https://api.beauty.petite-monnaie.com";
+  @override
+  String get productionUrl => url;
 
   static const privacy = 'https://www.beauty.app/privacy-policy';
 }

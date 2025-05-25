@@ -34,7 +34,7 @@ class LinkCubit extends Cubit<LinkState> {
   Future<void> _handleUri(Uri uri) async {
     final id = uri.pathSegments.isNotEmpty ? uri.pathSegments.last : '';
     switch (uri.pathSegments.first) {
-      case 'pro':
+      case 'professionnel':
         if (id.isNotEmpty) {
           await fetchPro(id: id);
         } else {

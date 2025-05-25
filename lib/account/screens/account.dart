@@ -25,6 +25,7 @@ import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -254,7 +255,7 @@ class _AccountScreenState extends State<AccountScreen>
                   title: 'Partager…',
                   icon: Assets.iconsShare,
                   onTap: () {
-                    userCubit.shareUser();
+                    professionalCubit.shareProfile();
                     Navigator.of(innerContext).pop();
                   },
                 ),
@@ -314,6 +315,11 @@ class _AccountScreenState extends State<AccountScreen>
   void onEventReceived(BuildContext context, MyProfessionalState state) async {
     await waitForDialog();
     if (state is UpdateMyProfessionalErrorState) {
+      showErrorToast(content: state.error, context: context);
+    } else if (state is ShareMyProfessionalLoadingState) {
+    } else if (state is ShareMyProfessionalSuccessState) {
+      await Share.share(state.shareLink);
+    } else if (state is MyProfessionalErrorState) {
       showErrorToast(content: state.error, context: context);
     }
   }
