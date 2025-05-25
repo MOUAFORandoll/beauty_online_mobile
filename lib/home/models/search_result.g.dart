@@ -10,6 +10,7 @@ _$SearchResultImpl _$$SearchResultImplFromJson(Map<String, dynamic> json) =>
     _$SearchResultImpl(
       type: json['type'] as String,
       title: json['title'] as String,
+      description: json['description'] as String,
       url: json['url'] as String,
       data: json['data'],
     );
@@ -18,6 +19,7 @@ Map<String, dynamic> _$$SearchResultImplToJson(_$SearchResultImpl instance) =>
     <String, dynamic>{
       'type': instance.type,
       'title': instance.title,
+      'description': instance.description,
       'url': instance.url,
       'data': instance.data,
     };

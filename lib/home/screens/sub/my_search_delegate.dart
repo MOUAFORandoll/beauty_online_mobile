@@ -10,15 +10,13 @@ import 'package:potatoes/auto_list/widgets/auto_list_view.dart';
 
 class MySearchDelegate extends SearchDelegate<String> {
   late final AutoListCubit<SearchResult> _cubit;
-  final ActuService _actuService;
 
-  MySearchDelegate(BuildContext context)
-      : _actuService = context.read<ActuService>() {
+  MySearchDelegate(BuildContext context) : super() {
     _cubit = AutoListCubit(
-      provider: ({page = 1}) => _actuService.search(
-        search: query,
-        page: page,
-      ),
+      provider: ({page = 1}) => context.read<ActuService>().search(
+            search: query,
+            page: page,
+          ),
     );
   }
 
@@ -82,7 +80,7 @@ class MySearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.length < 3) {
+    if (query.length < 2) {
       return Container();
     }
     _cubit.reset();
@@ -91,9 +89,10 @@ class MySearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.length < 3) {
+    if (query.length < 2) {
       return Container();
     }
+    print('isi========');
     _cubit.reset();
     return _buildListView(context);
   }
@@ -107,7 +106,7 @@ class MySearchDelegate extends SearchDelegate<String> {
       itemBuilder: (context, searchResult) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: InkWell(
-          onTap: () {},
+          onTap: () => searchResult.navigateTo(context),
           child: Row(
             children: [
               Container(
@@ -119,8 +118,9 @@ class MySearchDelegate extends SearchDelegate<String> {
                 ),
                 child: Image(
                   fit: BoxFit.cover,
-                  image:
-                      context.read<AppCacheManager>().getImage(searchResult.url),
+                  image: context
+                      .read<AppCacheManager>()
+                      .getImage(searchResult.url),
                   frameBuilder:
                       (context, child, frame, wasSynchronouslyLoaded) {
                     if (frame != null) return child;
@@ -156,13 +156,20 @@ class MySearchDelegate extends SearchDelegate<String> {
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    Text(
+                      searchResult.description,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
+      ), 
       emptyBuilder: (ctx) => const EmptyBuilder(),
       errorBuilder: (context, retry) => Center(
         child: Column(

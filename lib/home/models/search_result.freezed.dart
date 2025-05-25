@@ -22,6 +22,7 @@ SearchResult _$SearchResultFromJson(Map<String, dynamic> json) {
 mixin _$SearchResult {
   String get type => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   dynamic get data => throw _privateConstructorUsedError;
 
@@ -41,7 +42,12 @@ abstract class $SearchResultCopyWith<$Res> {
           SearchResult value, $Res Function(SearchResult) then) =
       _$SearchResultCopyWithImpl<$Res, SearchResult>;
   @useResult
-  $Res call({String type, String title, String url, dynamic data});
+  $Res call(
+      {String type,
+      String title,
+      String description,
+      String url,
+      dynamic data});
 }
 
 /// @nodoc
@@ -61,6 +67,7 @@ class _$SearchResultCopyWithImpl<$Res, $Val extends SearchResult>
   $Res call({
     Object? type = null,
     Object? title = null,
+    Object? description = null,
     Object? url = null,
     Object? data = freezed,
   }) {
@@ -72,6 +79,10 @@ class _$SearchResultCopyWithImpl<$Res, $Val extends SearchResult>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       url: null == url
           ? _value.url
@@ -93,7 +104,12 @@ abstract class _$$SearchResultImplCopyWith<$Res>
       __$$SearchResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String type, String title, String url, dynamic data});
+  $Res call(
+      {String type,
+      String title,
+      String description,
+      String url,
+      dynamic data});
 }
 
 /// @nodoc
@@ -111,6 +127,7 @@ class __$$SearchResultImplCopyWithImpl<$Res>
   $Res call({
     Object? type = null,
     Object? title = null,
+    Object? description = null,
     Object? url = null,
     Object? data = freezed,
   }) {
@@ -122,6 +139,10 @@ class __$$SearchResultImplCopyWithImpl<$Res>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       url: null == url
           ? _value.url
@@ -141,6 +162,7 @@ class _$SearchResultImpl implements _SearchResult {
   const _$SearchResultImpl(
       {required this.type,
       required this.title,
+      required this.description,
       required this.url,
       required this.data});
 
@@ -152,13 +174,15 @@ class _$SearchResultImpl implements _SearchResult {
   @override
   final String title;
   @override
+  final String description;
+  @override
   final String url;
   @override
   final dynamic data;
 
   @override
   String toString() {
-    return 'SearchResult(type: $type, title: $title, url: $url, data: $data)';
+    return 'SearchResult(type: $type, title: $title, description: $description, url: $url, data: $data)';
   }
 
   @override
@@ -168,14 +192,16 @@ class _$SearchResultImpl implements _SearchResult {
             other is _$SearchResultImpl &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, type, title, url, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(runtimeType, type, title, description, url,
+      const DeepCollectionEquality().hash(data));
 
   /// Create a copy of SearchResult
   /// with the given fields replaced by the non-null parameter values.
@@ -197,6 +223,7 @@ abstract class _SearchResult implements SearchResult {
   const factory _SearchResult(
       {required final String type,
       required final String title,
+      required final String description,
       required final String url,
       required final dynamic data}) = _$SearchResultImpl;
 
@@ -207,6 +234,8 @@ abstract class _SearchResult implements SearchResult {
   String get type;
   @override
   String get title;
+  @override
+  String get description;
   @override
   String get url;
   @override
