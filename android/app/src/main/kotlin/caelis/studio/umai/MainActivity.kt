@@ -1,4 +1,4 @@
-package com.beauty.online
+package app.beauty.online
 
 import io.flutter.embedding.android.FlutterActivity
 

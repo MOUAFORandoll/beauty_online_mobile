@@ -7,34 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:69380599834:android:46f8cd000e35273092a1a3",
+        "mobilesdk_app_id": "1:69380599834:android:9bb408ee5a5d093592a1a3",
         "android_client_info": {
-          "package_name": "com.beauty.online"
+          "package_name": "app.beauty.online"
         }
       },
       "oauth_client": [
         {
-          "client_id": "69380599834-4uc0qv5eq8dtvi2cljfq3pr4g6ndv9eq.apps.googleusercontent.com",
+          "client_id": "69380599834-30dms2lkucthg1kbla8009gvlnpdss0n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beauty.online",
+            "package_name": "app.beauty.online",
             "certificate_hash": "207bfe8da7cab67c27556ccb37c7d515624d4f74"
           }
         },
         {
-          "client_id": "69380599834-8maf2j5gm9uq2jptg1nca57gro8qfn9j.apps.googleusercontent.com",
+          "client_id": "69380599834-a4o22tblqnoq3ded3c46tt2avq0rnau4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beauty.online",
-            "certificate_hash": "5ca18d2f6c7a34821cb2f801475f3dd6821cd802"
+            "package_name": "app.beauty.online",
+            "certificate_hash": "3d9ab69ba01c3f9f8aac11516e5b0702e4fb32dd"
           }
         },
         {
-          "client_id": "69380599834-v0d1b6lf7k4qjv5ld6qfg4oe7pkfarpo.apps.googleusercontent.com",
+          "client_id": "69380599834-uve5mcbo6nd7i67d321jbjm5k6f6qu4t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beauty.online",
-            "certificate_hash": "53d84739bc9e1f54ead534d84f2e1628dbbae8d1"
+            "package_name": "app.beauty.online",
+            "certificate_hash": "51321253e995bbfa74c06636a3e06e5e43a6d874"
           }
         },
         {

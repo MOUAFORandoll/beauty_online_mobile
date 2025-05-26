@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC-_MO4NzZ9Xqjmt-G2EwNx8RI8ei7VVws',
-    appId: '1:69380599834:android:46f8cd000e35273092a1a3',
+    appId: '1:69380599834:android:9bb408ee5a5d093592a1a3',
     messagingSenderId: '69380599834',
     projectId: 'beauty-online-f51ac',
     storageBucket: 'beauty-online-f51ac.firebasestorage.app',
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'beauty-online-f51ac',
     storageBucket: 'beauty-online-f51ac.firebasestorage.app',
     iosClientId: '69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to.apps.googleusercontent.com',
-    iosBundleId: 'com.beauty.online',
+    iosBundleId: 'app.beauty.online',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
