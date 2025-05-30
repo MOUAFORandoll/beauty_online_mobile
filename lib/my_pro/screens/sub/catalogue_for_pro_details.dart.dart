@@ -1,4 +1,5 @@
 import 'package:beauty/common/utils/photo_full.dart';
+import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
@@ -189,25 +190,13 @@ class CatalogueForProDialog extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         )
                       : // Reserve Button
-
-                      SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              context
-                                  .read<GestionProfessionalCubit>()
-                                  .deleteCatalogue(id: catalogue.id);
-                            },
-                            child: const Text(
-                              'SUPPRIMER',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
-                          ),
+                      BeautyButton.primary(
+                          onPressed: () {
+                            context
+                                .read<GestionProfessionalCubit>()
+                                .deleteCatalogue(id: catalogue.id);
+                          },
+                          text: 'SUPPRIMER',
                         ),
                 ],
               ),

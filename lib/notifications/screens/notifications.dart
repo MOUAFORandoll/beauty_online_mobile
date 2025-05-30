@@ -15,6 +15,7 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   final List<String> items = [
+    'Toutes',
     'Mes Rendez-vous',
     'Rendez-vous Pro',
   ];
@@ -31,7 +32,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 16),
+              // const SizedBox(height: 16),
               _buildTabBar(isPro),
               const SizedBox(height: 8),
               const Divider(),
@@ -49,7 +50,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       return NotificationTabItem(
         label: 'Mes Rendez-vous',
         isSelected: true,
-        onTap: () => setState(() => _selected = 0),
+        onTap: () => setState(() => _selected = 1),
       );
     }
 
@@ -71,9 +72,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget _buildTabContent(bool isPro) {
-    if (!isPro || _selected == 0) {
+    if (_selected == 0) {
+      return const Generales();
+    }
+    if (!isPro || _selected == 1) {
       return const RendezVousUser();
-    } else if (_selected == 1) {
+    } else if (_selected == 2) {
       return const RendezVousPro();
     }
     return const SizedBox.shrink();
@@ -99,7 +103,7 @@ class NotificationTabItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? theme.colorScheme.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(16),

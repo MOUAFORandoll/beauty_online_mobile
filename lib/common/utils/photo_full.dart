@@ -29,13 +29,14 @@ class FullScreenMedia extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
+        leading: null,
         actions: [
           IconButton(
             icon: Icon(Icons.close, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           SizedBox(
-            width: 24,
+            width: 16,
           )
         ],
       ),

@@ -15,14 +15,14 @@ import 'package:beauty/common/widgets/loader_builder.dart';
 import 'package:beauty/common/widgets/read_more_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:geolocator/geolocator.dart'; 
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:beauty/account/screens/settings/edit_user.dart'; 
+import 'package:beauty/account/screens/settings/edit_user.dart';
 import 'package:beauty/account/screens/settings/settings_screen.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/widgets/action_widget.dart';
@@ -230,7 +230,7 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        ElevatedButton.icon(
+                        BeautyButton.primary(
                           onPressed: _getLocation,
                           icon: (isLoadingPosition == 0)
                               ? Container(
@@ -243,7 +243,7 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
                               : (isLoadingPosition == 1)
                                   ? const Icon(Icons.check)
                                   : const Icon(Icons.location_on),
-                          label: const Text("Détecter ma position"),
+                          text: "Détecter ma position",
                         ),
                         if (isLoadingPosition == 1)
                           Container(

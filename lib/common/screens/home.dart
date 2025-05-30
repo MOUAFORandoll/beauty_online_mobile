@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                               ),
                               actions: [const SearchWidget()],
                             )
-                          : state.currentIndex == 0
+                          : state.currentIndex == 1
                               ? AppBar(
                                   forceMaterialTransparency: true,
                                   title: BlocBuilder<HomeBottomNavigationCubit,
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                         pages[state.currentIndex]['title']
                                             as String),
                                   ),
-                                  centerTitle: true,
+                                  centerTitle: false,
                                   systemOverlayStyle: Theme.of(context)
                                       .appBarTheme
                                       .systemOverlayStyle
@@ -120,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                                 .bottomNavigationBarTheme
                                                 .backgroundColor,
                                       ),
+                                  actions: [const SearchWidget()],
                                 )
                               : null,
                       body: PageView(

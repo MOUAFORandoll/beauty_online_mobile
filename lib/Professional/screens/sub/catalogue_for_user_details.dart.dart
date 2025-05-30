@@ -1,5 +1,11 @@
+import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/common/widgets/bottom_sheet.dart';
+import 'package:beauty/common/widgets/buttons.dart';
+import 'package:beauty/home/bloc/actu_cubit.dart';
 import 'package:beauty/professional/bloc/load_pro_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
+import 'package:beauty/professional/bloc/professional_cubit.dart';
+import 'package:beauty/professional/screens/sub/agenda_pro.dart';
 import 'package:beauty/professional/widgets/item_catalogue.dart';
 import 'package:beauty/common/models/service_model.dart';
 import 'package:beauty/common/widgets/empty_builder.dart';
@@ -16,11 +22,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class CatalogueForUserDialog extends StatelessWidget {
-  final Catalogue catalogue; 
+  final Catalogue catalogue;
 
   const CatalogueForUserDialog({
     Key? key,
-    required this.catalogue, 
+    required this.catalogue,
   }) : super(key: key);
 
   @override
@@ -179,28 +185,25 @@ class CatalogueForUserDialog extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Reserve Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade400,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      elevation: 2,
-                    ),
-                    child: const Text(
-                      'RÉSERVER',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
+                BeautyButton.primary(
+                  onPressed: () {
+                    context
+                        .read<SelectRealisationCubit>()
+                        .change(context.read<ActuCubit>().actu.id);
+                    late final professionalCubit =
+                        context.read<ProfessionalCubit>();
+
+                    showAppBottomSheet(
+                        context: context,
+                        maxHeight: MediaQuery.of(context).size.height * .8,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return AgendaProView.get(
+                              context: context,
+                              professional: professionalCubit.professional);
+                        });
+                  },
+                  text: 'RÉSERVER',
                 ),
               ],
             ),

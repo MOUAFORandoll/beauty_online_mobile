@@ -4,32 +4,32 @@ import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/home/models/actu.dart';
 import 'package:beauty/notifications/models/notification.dart';
+import 'package:beauty/notifications/models/notification_model.dart';
 import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/common/models/user.dart';
 import 'package:beauty/common/services/api_service.dart';
 
-class NotificationsService extends ApiService { 
-  static const String _userNotifications = '/users/notifications';
-  static const String _findProfileById = '/profile-professionnels/{id}'; 
+class NotificationsService extends ApiService {
+  static const String _userNotifications = '/notifications/me';
+  static const String _findProfileById = '/profile-professionnels/{id}';
   static const String _findActuById = '/actus/{id}';
   static const String _rendezVous = '/rendez-vous/{id}';
 
   const NotificationsService(super._dio);
- 
 
-  Future<PaginatedList<Notification>> getNotifications(
-      {int page = 1, required String type}) async {
+  Future<PaginatedList<NotificationModel>> getNotifications(
+      {int page = 1}) async {
     return compute(
         dio.get(_userNotifications,
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,
-              'type': type,
-              'size': 12,
+              'size': 24,
             }),
-        mapper: (result) => toPaginatedList(result, Notification.fromJson));
+        mapper: (result) =>
+            toPaginatedList(result, NotificationModel.fromJson));
   }
 
   Future<Professional> findProfileById({required String id}) {
@@ -46,12 +46,10 @@ class NotificationsService extends ApiService {
         mapper: Actu.fromJson);
   }
 
-
   Future<RendezVous> fetchRdv({required String id}) {
     return compute(
         dio.get(_rendezVous.replaceAll('{id}', id),
             options: Options(headers: withAuth())),
         mapper: RendezVous.fromJson);
   }
-
 }

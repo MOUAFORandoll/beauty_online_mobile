@@ -8,8 +8,11 @@ import 'package:beauty/common/widgets/salon_card_list.dart';
 import 'package:beauty/common/widgets/search_bar.dart';
 import 'package:beauty/common/widgets/section_title.dart';
 import 'package:beauty/notifications/bloc/load_notifications_cubit.dart';
+import 'package:beauty/notifications/models/notification_model.dart'
+    show NotificationModel;
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:beauty/notifications/widgets/item_notification.dart';
 import 'package:flutter/material.dart' hide SearchBar, Notification;
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/auto_list/widgets/auto_list_view.dart';
@@ -25,17 +28,18 @@ class Generales extends StatefulWidget {
 
 class _GeneralesState extends State<Generales> {
   late final loadNotificationsCubit = LoadNotificationsCubit(
-      notificationsService: context.read<NotificationsService>(),
-      type: TypeNotifications.generale);
+    notificationsService: context.read<NotificationsService>(),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return AutoListView.get<Notification>(
+    return AutoListView.get<NotificationModel>(
       autoManage: false,
       cubit: loadNotificationsCubit,
       shrinkWrap: true,
       emptyBuilder: (context) => EmptyBuilder(),
-      itemBuilder: (context, notification) => Container(),
+      itemBuilder: (context, notification) =>
+          ItemNotification(notification: notification),
       errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
     );
   }

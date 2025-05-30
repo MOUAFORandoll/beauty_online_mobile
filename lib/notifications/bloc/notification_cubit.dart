@@ -32,7 +32,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   Future<void> onNotification({required Notification notification}) async {
-    final id = notification.rdvId;
+    final id = notification.refId;
 
     switch (notification.type) {
       case NotificationType.newRdv:

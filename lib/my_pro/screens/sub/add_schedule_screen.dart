@@ -146,11 +146,11 @@ class _AddScheduleScreenState extends State<AddScheduleScreen>
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      ElevatedButton.icon(
+                                      BeautyButton.primary(
                                         onPressed: () =>
                                             _showAddTimeSlotDialog(context),
                                         icon: const Icon(Icons.add),
-                                        label: const Text('Ajouter'),
+                                        text:'Ajouter', 
                                       ),
                                     ],
                                   ),

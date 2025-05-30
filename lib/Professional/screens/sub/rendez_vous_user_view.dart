@@ -1,6 +1,7 @@
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/common/services/geolocation_service.dart';
+import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/professional/widgets/item_rendez_vous.dart';
 import 'package:flutter/material.dart' hide SearchBar, Notification;
 import 'package:flutter/material.dart';
@@ -83,25 +84,20 @@ class _RendezVousUserViewState extends State<RendezVousUserView> {
                 ),
                 const Spacer(),
                 if (widget.rendezVous.status == 'ACCEPTE')
-                  ElevatedButton.icon(
+                  BeautyButton.primary(
                     icon: const Icon(Icons.call),
-                    label: const Text('Contacter le professionnel'),
+                    text: 'Contacter le professionnel',
                     onPressed: () {
                       // Implémenter l'appel
                       launchUrl(Uri.parse("tel:${rdv.professionalPhone}"));
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                    ),
                   ),
                 if (widget.rendezVous.status == 'ACCEPTE')
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton.icon(
+                    child: BeautyButton.white(
                       icon: const Icon(Icons.navigation),
-                      label: const Text('Suivre l’itinéraire'),
+                      text: 'Suivre l’itinéraire',
                       onPressed: () => _launchMaps(rdv.professional),
                     ),
                   )

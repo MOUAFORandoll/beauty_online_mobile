@@ -9,7 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart' hide Notification;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:potatoes/common/bloc/cubit_state.dart';
-import 'package:potatoes/libs.dart'; 
+import 'package:potatoes/libs.dart';
 
 const androidChannelId = "HIGH_IMPORTANCE_CHANNEL_ID";
 const androidChannelName = "Notifications";
@@ -49,11 +49,11 @@ class NotificationService {
     }
 
     messaging.onTokenRefresh.listen((token) {
-       sendToken(token);
+      sendToken(token);
     });
     messaging.getToken().then((token) {
       if (token != null) {
-         sendToken(token);
+        sendToken(token);
       }
     });
     messaging.getInitialMessage().then((RemoteMessage? message) {
@@ -109,9 +109,7 @@ class NotificationService {
   void _fireLocalNotification({String? title, String? body, String? payload}) {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
         androidChannelId, androidChannelName,
-        priority: Priority.max,
-        color: AppTheme.primaryRed,
-        enableLights: true);
+        priority: Priority.max, color: AppTheme.primaryRed, enableLights: true);
     const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
     const platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -155,6 +153,4 @@ class NotificationService {
   }
 }
 
-Future<void> onBackgroundMessage(RemoteMessage message) async {
-
-}
+Future<void> onBackgroundMessage(RemoteMessage message) async {}
