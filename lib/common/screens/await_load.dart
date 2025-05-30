@@ -50,7 +50,8 @@ class _AwaitLoadScreenState extends State<AwaitLoadScreen>
               } else if (stateLink is ProfessionalLinkLoaded) {
                 widget = ClientProfessionalBoard.get(
                     professional: stateLink.professional, context: context);
-              } else if (stateNotification is RdvNotificationSuccessLoadState) {
+              } else if (stateNotification
+                  is RdvClientNotificationSuccessLoadState) {
                 widget = Scaffold(
                     appBar: AppBar(
                       leading: BackButton(),

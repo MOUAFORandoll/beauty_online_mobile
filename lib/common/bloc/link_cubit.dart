@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/home/models/actu.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:potatoes/libs.dart';
@@ -78,7 +79,7 @@ class LinkCubit extends Cubit<LinkState> {
       emit(stateBefore);
     });
   }
-
+ 
   @override
   Future<void> close() {
     _linkSubscription?.cancel();

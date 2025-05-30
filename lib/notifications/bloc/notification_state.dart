@@ -18,10 +18,10 @@ class NotificationLoadingState extends CubitLoadingState
 class RdvNotificationLoadingState extends CubitLoadingState
     with NotificationState {}
 
-class RdvNotificationSuccessLoadState extends CubitSuccessState
+class RdvClientNotificationSuccessLoadState extends CubitSuccessState
     with NotificationState {
   final RendezVous rendezVous;
-  RdvNotificationSuccessLoadState(this.rendezVous);
+  RdvClientNotificationSuccessLoadState(this.rendezVous);
 
   @override
   List<Object?> get props => [rendezVous];
@@ -35,6 +35,8 @@ class RdvProNotificationSuccessLoadState extends CubitSuccessState
   @override
   List<Object?> get props => [rendezVous];
 }
+
+ 
 
 class NotificationErrorState extends CubitErrorState with NotificationState {
   NotificationErrorState(super.error, [super.trace]);

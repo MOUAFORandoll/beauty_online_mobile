@@ -28,7 +28,7 @@ class ProfessionalService extends ApiService {
 
   static const String _catalogue = '/realisations';
   static const String _agendas = '/agendas';
-  static const String _rendez_vous = '/rendez-vous';
+  static const String _rendezVous = '/rendez-vous';
 
   const ProfessionalService(super._dio);
 
@@ -247,7 +247,7 @@ class ProfessionalService extends ApiService {
     required data,
   }) async {
     return compute(
-        dio.post(_rendez_vous,
+        dio.post(_rendezVous,
             options: Options(headers: withAuth()), data: data),
         mapper: RendezVous.fromJson);
   }
@@ -257,7 +257,7 @@ class ProfessionalService extends ApiService {
   }) async {
     return compute(
       dio.delete(
-        _rendez_vous + '/${idRendezVous}',
+        _rendezVous + '/${idRendezVous}',
         options: Options(headers: withAuth()),
       ),
     );
@@ -267,7 +267,7 @@ class ProfessionalService extends ApiService {
     int page = 1,
   }) async {
     return compute(
-        dio.get(_rendez_vous + '/me',
+        dio.get(_rendezVous + '/me',
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,
@@ -281,7 +281,7 @@ class ProfessionalService extends ApiService {
   }) async {
     return compute(
         dio.patch(
-          _rendez_vous + '/${idRendezVous}/accept',
+          _rendezVous + '/${idRendezVous}/accept',
           options: Options(headers: withAuth()),
         ),
         mapper: RendezVous.fromJson);
@@ -292,7 +292,7 @@ class ProfessionalService extends ApiService {
   }) async {
     return compute(
         dio.patch(
-          _rendez_vous + '/${idRendezVous}/decline',
+          _rendezVous + '/${idRendezVous}/decline',
           options: Options(headers: withAuth()),
         ),
         mapper: RendezVous.fromJson);
@@ -302,7 +302,7 @@ class ProfessionalService extends ApiService {
     int page = 1,
   }) async {
     return compute(
-        dio.get(_rendez_vous + '/professionnel',
+        dio.get(_rendezVous + '/professionnel',
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,
@@ -316,7 +316,7 @@ class ProfessionalService extends ApiService {
   ) async {
     return compute(
         dio.get(
-          _rendez_vous + '/${idRendezVous}/accept',
+          _rendezVous + '/${idRendezVous}',
           options: Options(headers: withAuth()),
         ),
         mapper: RendezVous.fromJson);

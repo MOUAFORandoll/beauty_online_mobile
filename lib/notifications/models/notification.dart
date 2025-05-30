@@ -5,6 +5,7 @@ part 'notification.g.dart';
 
 @freezed
 class Notification with _$Notification {
+  
   const factory Notification({required String type, required String rdvId}) =
       _Notification;
 
