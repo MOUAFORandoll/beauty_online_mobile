@@ -25,7 +25,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      minimum: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       child: BlocBuilder<MyProfessionalCubit, MyProfessionalState>(
         builder: (ctx, state) {
           final isPro = state is MyProfessionalLoggedState;

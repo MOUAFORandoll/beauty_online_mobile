@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                         pages[state.currentIndex]['title']
                                             as String),
                                   ),
-                                  centerTitle: false,
+                                  centerTitle: true,
                                   systemOverlayStyle: Theme.of(context)
                                       .appBarTheme
                                       .systemOverlayStyle
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
                                                 .bottomNavigationBarTheme
                                                 .backgroundColor,
                                       ),
-                                  actions: [const SearchWidget()],
+                                  // actions: [const SearchWidget()],
                                 )
                               : null,
                       body: PageView(

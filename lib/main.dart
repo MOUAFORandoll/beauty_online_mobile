@@ -1,6 +1,8 @@
 import 'package:beauty/auth/screens/splash_page.dart';
 import 'package:beauty/common/bloc/link_cubit.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/common/bloc/video_cubit.dart';
+import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:beauty/home/services/actu_cubit_manager.dart';
 import 'package:beauty/my_pro/bloc/add_schedule_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_pro_rendez_vous_cubit.dart';
@@ -20,6 +22,7 @@ import 'package:beauty/home/services/actu_service.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/new_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
+import 'package:beauty/notifications/bloc/load_notifications_cubit.dart';
 import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/services/notification_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
@@ -177,6 +180,10 @@ class MyApp extends StatelessWidget {
                     context.read(),
                   )),
           BlocProvider(
+              create: (context) => LoadNotificationsCubit(
+                    context.read(),
+                  )),
+          BlocProvider(
             create: (context) => NotificationCubit(
               preferencesService,
               context.read(),
@@ -184,6 +191,9 @@ class MyApp extends StatelessWidget {
               context.read(),
             ),
           ),
+          BlocProvider(create: (_) => VideoVolumeCubit()),
+
+          BlocProvider(create: (_) => VideoCubit())
         ],
         child: BlocBuilder<ThemeModeCubit, ThemeMode>(
           builder: (context, mode) => MaterialApp(

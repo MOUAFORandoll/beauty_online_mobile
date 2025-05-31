@@ -27,6 +27,8 @@ class ProfessionalService extends ApiService {
       '/profile-professionnels/{id}/update-position';
 
   static const String _catalogue = '/realisations';
+  static const String _realisationWithImage = '/realisations/with-image';
+  static const String _realisationWithVideo = '/realisations/with-video';
   static const String _agendas = '/agendas';
   static const String _rendezVous = '/rendez-vous';
 
@@ -41,6 +43,7 @@ class ProfessionalService extends ApiService {
         ),
         mapperKey: 'shareLink');
   }
+
   Future<Professional> createUserProfile(
       {required Map<String, dynamic> data, required XFile? cover}) async {
     final FormData formData = FormData.fromMap(data);
@@ -136,11 +139,21 @@ class ProfessionalService extends ApiService {
         data: {'latitude': latitude, 'longitude': longitude}));
   }
 
-  Future<Catalogue> addCatalogue({
+  Future<Catalogue> addCatalogueWithImages({
     required FormData data,
   }) async {
     return compute(
-        dio.post(_catalogue, options: Options(headers: withAuth()), data: data),
+        dio.post(_realisationWithImage,
+            options: Options(headers: withAuth()), data: data),
+        mapper: Catalogue.fromJson);
+  }
+
+  Future<Catalogue> addCatalogueWithVideo({
+    required FormData data,
+  }) async {
+    return compute(
+        dio.post(_realisationWithVideo,
+            options: Options(headers: withAuth()), data: data),
         mapper: Catalogue.fromJson);
   }
 

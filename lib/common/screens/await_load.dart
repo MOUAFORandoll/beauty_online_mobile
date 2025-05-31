@@ -37,11 +37,10 @@ class _AwaitLoadScreenState extends State<AwaitLoadScreen>
                 Navigator.pop(context);
               }
             }, builder: (ctx, stateLink) {
+              print(stateNotification);
               Widget? widget;
-              if (stateNotification is RdvNotificationLoadingState) {
-                widget = PostViewLoaderBuilder();
-              }
-              if (stateLink is ActuLinkLoading) {
+              if (stateLink is ActuLinkLoading ||
+                  stateNotification is RdvNotificationLoadingState) {
                 widget = PostViewLoaderBuilder();
               } else if (stateLink is ProfessionalLinkLoading) {
                 widget = PersonAccountViewLoaderBuilder();
@@ -57,6 +56,7 @@ class _AwaitLoadScreenState extends State<AwaitLoadScreen>
                       leading: BackButton(),
                     ),
                     body: RendezVousUserView(
+                        closeButton: false,
                         rendezVous: stateNotification.rendezVous));
               } else if (stateNotification
                   is RdvProNotificationSuccessLoadState) {
@@ -65,6 +65,7 @@ class _AwaitLoadScreenState extends State<AwaitLoadScreen>
                       leading: BackButton(),
                     ),
                     body: MyRendezVousProView(
+                        closeButton: false,
                         rendezVous: stateNotification.rendezVous));
               } else {
                 widget = Scaffold(

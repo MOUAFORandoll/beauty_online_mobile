@@ -11,8 +11,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class RendezVousUserView extends StatefulWidget {
   final RendezVous rendezVous;
-
-  const RendezVousUserView({super.key, required this.rendezVous});
+  final bool closeButton;
+  const RendezVousUserView(
+      {super.key, required this.rendezVous, this.closeButton = true});
 
   @override
   State<RendezVousUserView> createState() => _RendezVousUserViewState();
@@ -39,10 +40,11 @@ class _RendezVousUserViewState extends State<RendezVousUserView> {
                 'Détails du rendez-vous',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Icon(Icons.close),
-              )
+              if (widget.closeButton)
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Icon(Icons.close),
+                )
             ],
           ),
           Expanded(
@@ -95,7 +97,7 @@ class _RendezVousUserViewState extends State<RendezVousUserView> {
                 if (widget.rendezVous.status == 'ACCEPTE')
                   SizedBox(
                     width: double.infinity,
-                    child: BeautyButton.white(
+                    child: BeautyButton.secondary(
                       icon: const Icon(Icons.navigation),
                       text: 'Suivre l’itinéraire',
                       onPressed: () => _launchMaps(rdv.professional),

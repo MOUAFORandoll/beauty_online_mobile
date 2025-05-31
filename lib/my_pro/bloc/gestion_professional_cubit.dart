@@ -23,7 +23,7 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     this.myProfessionalCubit,
   ) : super(const InitializingGestionProfessionalState());
 
-  Future<void> addCatalogue({
+  Future<void> addCatalogueWithImages({
     required String libelle,
     required String prix,
     required List<File> images,
@@ -36,14 +36,48 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
 
     formData.files.addAll(images
         .map((image) =>
-            MapEntry('images[]', MultipartFile.fromFileSync(image.path)))
+            MapEntry('files[]', MultipartFile.fromFileSync(image.path)))
         .toList());
     log(formData.toString());
     log(formData.files.toString());
 
     try {
       await professionalService
-          .addCatalogue(
+          .addCatalogueWithImages(
+        data: formData,
+      )
+          .then((onValue) {
+        myProfessionalCubit.updateCatalogueCount(1);
+        emit(AddCatalogueSuccessState());
+      }).catchError((handleError, _) {
+        emit(GestionProfessionalErrorState(handleError, null));
+        emit(stateBefore);
+      });
+    } catch (error, stackTrace) {
+      emit(GestionProfessionalErrorState(error, stackTrace));
+      emit(stateBefore);
+    }
+  }
+
+  Future<void> addCatalogueWithVideo({
+    required String libelle,
+    required String prix,
+    required File video,
+  }) async {
+    final stateBefore = state;
+
+    var data = {'title': libelle, 'price': prix};
+    emit(const AddCatalogueLoadingState());
+    final FormData formData = FormData.fromMap(data);
+
+    formData.files
+        .add(MapEntry('file', MultipartFile.fromFileSync(video.path)));
+    log(formData.toString());
+    log(formData.files.toString());
+
+    try {
+      await professionalService
+          .addCatalogueWithVideo(
         data: formData,
       )
           .then((onValue) {
@@ -205,7 +239,7 @@ class GestionProfessionalCubit extends Cubit<GestionProfessionalState> {
     emit(const AcceptRendezVousLoadingState());
 
     try {
-     await professionalService
+      await professionalService
           .acceptRendezVous(
         idRendezVous: idRendezVous,
       )

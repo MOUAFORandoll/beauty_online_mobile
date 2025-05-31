@@ -8,9 +8,9 @@ import 'package:potatoes/auto_content/bloc/auto_content_cubit.dart';
 class LoadNotificationsCubit extends AutoListCubit<NotificationModel> {
   final NotificationsService notificationsService;
 
-  LoadNotificationsCubit({
-    required this.notificationsService,
-  }) : super(
+  LoadNotificationsCubit(
+    this.notificationsService,
+  ) : super(
             provider: ({page = 1}) => notificationsService.getNotifications(
                   page: page,
                 ));

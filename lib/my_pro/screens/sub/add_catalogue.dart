@@ -4,6 +4,7 @@ import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/buttons.dart';
+import 'package:beauty/my_pro/widgets/selected_video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -72,6 +73,24 @@ class _AddProductScreenState extends State<AddProductScreen>
     }
   }
 
+  File? _video;
+  Future<void> _pickOneVideo() async {
+    try {
+      final XFile? video = await _picker.pickVideo(source: ImageSource.gallery);
+
+      if (video != null) {
+        setState(() {
+          _video = File(video.path);
+        });
+      }
+    } catch (e) {
+      // Handle exception
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur lors de la sélection des images: $e')),
+      );
+    }
+  }
+
   void _removeImage(int index) {
     setState(() {
       _selectedImages.removeAt(index);
@@ -104,18 +123,37 @@ class _AddProductScreenState extends State<AddProductScreen>
       context.read<GestionProfessionalCubit>();
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      if (_selectedImages.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Veuillez ajouter au moins une image')),
-        );
-        return;
+      if (!isVideo) {
+        if (_selectedImages.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Veuillez ajouter au moins une image')),
+          );
+          return;
+        }
+
+        _gestionProfessionalCubit.addCatalogueWithImages(
+            libelle: _titleController.text,
+            prix: _priceController.text,
+            images: _selectedImages);
       }
-      _gestionProfessionalCubit.addCatalogue(
-          libelle: _titleController.text,
-          prix: _priceController.text,
-          images: _selectedImages);
+      if (isVideo) {
+        if (_video == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Veuillez ajouter une video')),
+          );
+          return;
+        }
+
+        _gestionProfessionalCubit.addCatalogueWithVideo(
+            libelle: _titleController.text,
+            prix: _priceController.text,
+            video: _video!);
+      }
     }
   }
+
+  bool isVideo = false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +180,7 @@ class _AddProductScreenState extends State<AddProductScreen>
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(
-            'Ajouter un produit',
+            'Ajouter une réalisation',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -225,7 +263,7 @@ class _AddProductScreenState extends State<AddProductScreen>
                               height: 24,
                               width: 24,
                               child: CircularProgressIndicator(
-                                color: AppTheme.primaryRed,
+                                color: AppTheme.white,
                               ),
                             )
                           : null,
@@ -247,130 +285,189 @@ class _AddProductScreenState extends State<AddProductScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Photos du produit',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () => setState(() => isVideo = false),
+              child: Text(
+                'Photos de la réalisation',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: isVideo ? Colors.grey : Colors.black87,
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => setState(() => isVideo = true),
+              child: Text(
+                'Vidéo de la réalisation',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: isVideo ? Colors.black87 : Colors.grey,
+                ),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        Container(
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: _selectedImages.isEmpty
-              ? InkWell(
-                  onTap: _pickImages,
+        const SizedBox(height: 16),
+        isVideo
+            ? Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(12),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add_photo_alternate_outlined,
-                          size: 48,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Ajouter des photos',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(8),
-                  children: [
-                    // Add photo button
-                    InkWell(
-                      onTap: _pickImages,
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        width: 150,
-                        margin: const EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.3),
-                            width: 2,
-                            // style: BorderStyle.dashed,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add_circle_outline,
-                              size: 32,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Ajouter',
-                              style: TextStyle(
+                ),
+                child: InkWell(
+                  onTap: () => _pickOneVideo(),
+                  borderRadius: BorderRadius.circular(12),
+                  child: _video != null
+                      ? SelectedVideoPreview(
+                          key: ValueKey(_video),
+                          file: _video!,
+                          onRemove: () {
+                            setState(() => _video = null);
+                          })
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add_photo_alternate_outlined,
+                                size: 48,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 8),
+                              Text(
+                                'Ajouter une video',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    // Selected images
-                    ..._selectedImages.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final image = entry.value;
-                      return Stack(
-                        children: [
-                          Container(
-                            width: 150,
-                            margin: const EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              image: DecorationImage(
-                                image: FileImage(image),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 16,
-                            child: GestureDetector(
-                              onTap: () => _removeImage(index),
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
-                  ],
+                ))
+            : Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-        ),
+                child: _selectedImages.isEmpty
+                    ? InkWell(
+                        onTap: _pickImages,
+                        borderRadius: BorderRadius.circular(12),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add_photo_alternate_outlined,
+                                size: 48,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Ajouter des photos',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(8),
+                        children: [
+                          // Add photo button
+                          InkWell(
+                            onTap: _pickImages,
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              width: 150,
+                              margin: const EdgeInsets.only(right: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.3),
+                                  width: 2,
+                                  // style: BorderStyle.dashed,
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    size: 32,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Ajouter',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // Selected images
+                          ..._selectedImages.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final image = entry.value;
+                            return Stack(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: DecorationImage(
+                                      image: FileImage(image),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 8,
+                                  right: 16,
+                                  child: GestureDetector(
+                                    onTap: () => _removeImage(index),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.close,
+                                        size: 18,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      ),
+              ),
         if (_selectedImages.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8),

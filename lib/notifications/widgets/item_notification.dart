@@ -18,18 +18,7 @@ class ItemNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Assuming there's a detail view for notifications
-        // showAppBottomSheet(
-        //     context: context,
-        //     maxHeight: MediaQuery.of(context).size.height * .8,
-        //     isScrollControlled: true,
-        //     builder: (BuildContext context) {
-        //       return NotificationDetailView(
-        //         notification: notification,
-        //       );
-        //     });
-      },
+      onTap: () => actionForType(context: context, type: notification.type),
       child: Card(
         margin: const EdgeInsets.symmetric(
           vertical: 8,
@@ -56,26 +45,32 @@ class ItemNotification extends StatelessWidget {
     );
   }
 
-  actionForType(String type) {
+  actionForType({required BuildContext context, required String type}) {
+    print(type);
+    print(type);
     switch (type) {
       case NotificationModelType.welcome:
       case NotificationModelType.generale:
         return;
       case NotificationModelType.newRdv:
-        return Scaffold(
-            appBar: AppBar(
-              leading: BackButton(),
-            ),
-            body: MyRendezVousProView(
-                rendezVous: RendezVous.fromJson(notification.data!)));
+        return showAppBottomSheet(
+            context: context,
+            maxHeight: MediaQuery.of(context).size.height * .8,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return MyRendezVousProView(
+                  rendezVous: RendezVous.fromJson(notification.data!));
+            });
       case NotificationModelType.rdvAccepted:
       case NotificationModelType.rdvRefused:
-        return Scaffold(
-            appBar: AppBar(
-              leading: BackButton(),
-            ),
-            body: RendezVousUserView(
-                rendezVous: RendezVous.fromJson(notification.data!)));
+        return showAppBottomSheet(
+            context: context,
+            maxHeight: MediaQuery.of(context).size.height * .8,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return RendezVousUserView(
+                  rendezVous: RendezVous.fromJson(notification.data!));
+            });
       case NotificationModelType.newFeature:
       case NotificationModelType.bestConsultants:
         return;

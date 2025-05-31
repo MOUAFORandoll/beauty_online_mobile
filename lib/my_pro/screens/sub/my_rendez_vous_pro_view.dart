@@ -15,8 +15,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MyRendezVousProView extends StatefulWidget {
   final RendezVous rendezVous;
+  final bool closeButton;
 
-  const MyRendezVousProView({super.key, required this.rendezVous});
+  const MyRendezVousProView(
+      {super.key, required this.rendezVous, this.closeButton = true});
 
   @override
   State<MyRendezVousProView> createState() => _MyRendezVousProViewState();
@@ -77,10 +79,11 @@ class _MyRendezVousProViewState extends State<MyRendezVousProView>
                     'Détails du rendez-vous',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(Icons.close),
-                  )
+                  if (widget.closeButton)
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(Icons.close),
+                    )
                 ],
               ),
               Expanded(

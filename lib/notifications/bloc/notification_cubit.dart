@@ -67,6 +67,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     } catch (error, trace) {
       emit(NotificationErrorState(error, trace));
     }
-    emit(stateBefore);
+    // emit(stateBefore);
   }
 }

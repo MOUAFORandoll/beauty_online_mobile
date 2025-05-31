@@ -27,21 +27,24 @@ class Generales extends StatefulWidget {
 }
 
 class _GeneralesState extends State<Generales> {
-  late final loadNotificationsCubit = LoadNotificationsCubit(
-    notificationsService: context.read<NotificationsService>(),
-  );
+  late final loadNotificationsCubit = context.read<LoadNotificationsCubit>();
 
   @override
   Widget build(BuildContext context) {
-    return AutoListView.get<NotificationModel>(
-      autoManage: false,
-      cubit: loadNotificationsCubit,
-      shrinkWrap: true,
-      emptyBuilder: (context) => EmptyBuilder(),
-      itemBuilder: (context, notification) =>
-          ItemNotification(notification: notification),
-      errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
-    );
+    return RefreshIndicator(
+        onRefresh: () async {
+          loadNotificationsCubit.reset();
+          print('000000');
+        },
+        child: AutoListView.get<NotificationModel>(
+          autoManage: false,
+          cubit: loadNotificationsCubit,
+          shrinkWrap: true,
+          emptyBuilder: (context) => EmptyBuilder(),
+          itemBuilder: (context, notification) =>
+              ItemNotification(notification: notification),
+          errorBuilder: (context, retry) => ErrorBuilder(retry: retry),
+        ));
   }
 }
 
