@@ -66,44 +66,43 @@ class _ActuItemVideoState extends State<ActuItemVideo>
       _errorMessage = null;
     });
 
-    // try {
-    _videoCubit = context.read<VideoCubit>();
+    try {
+      _videoCubit = context.read<VideoCubit>();
 
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.actu.video!.videoLink),
-      httpHeaders: {
-        'User-Agent': 'Flutter Video Player',
-      },
-    );
+      _controller = VideoPlayerController.networkUrl(
+        Uri.parse(widget.actu.video!.videoLink),
+        httpHeaders: {
+          'User-Agent': 'Flutter Video Player',
+        },
+      );
 
-    // Configuration du controller
-    await _controller!.initialize();
+      // Configuration du controller
+      await _controller!.initialize();
 
-    // Configuration des options
+      // Configuration des options
 
-    await _controller!.setLooping(true);
+      await _controller!.setLooping(true);
 
-    await _controller!.play();
+      await _controller!.play();
 
-    // Mise à jour du cubit
-    _videoCubit?.set(_controller!);
+      // Mise à jour du cubit
+      _videoCubit?.set(_controller!);
 
-    // if (mounted) {
-    setState(() {
-      _isInitializing = false;
-    });
-    // }
-    // } catch (error) {
-    //   debugPrint('Erreur initialisation vidéo: $error');
+      // if (mounted) {
+      setState(() {
+        _isInitializing = false;
+      });
+    } catch (error) {
+      debugPrint('Erreur initialisation vidéo: $error');
 
-    //   if (mounted) {
-    //     setState(() {
-    //       _isInitializing = false;
-    //       _hasError = true;
-    //       _errorMessage = _getErrorMessage(error);
-    //     });
-    //   }
-    // }
+      if (mounted) {
+        setState(() {
+          _isInitializing = false;
+          _hasError = true;
+          _errorMessage = _getErrorMessage(error);
+        });
+      }
+    }
   }
 
   String _getErrorMessage(dynamic error) {
@@ -129,29 +128,23 @@ class _ActuItemVideoState extends State<ActuItemVideo>
 
   Widget _buildThumbnail() {
     return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.width * 0.56, // Ratio 16:9
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(8),
       ),
       child: widget.actu.video!.thumbnail.isNotEmpty
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image(
-                image: context
-                    .read<AppCacheManager>()
-                    .getImage("    widget.actu.thumbnailUrl"),
-                fit: BoxFit.cover,
-                width: double.infinity,
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildPlaceholder();
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return _buildLoadingIndicator();
-                },
-              ),
+          ? Image(
+              image: context
+                  .read<AppCacheManager>()
+                  .getImage(widget.actu.video!.thumbnail),
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return _buildPlaceholder();
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return _buildLoadingIndicator();
+              },
             )
           : _buildPlaceholder(),
     );
@@ -262,23 +255,17 @@ class _ActuItemVideoState extends State<ActuItemVideo>
       return _buildLoadingIndicator();
     }
 
-    final aspectRatio = _controller!.value.aspectRatio;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Container(
-      width: screenWidth,
-      height: screenWidth / aspectRatio,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.black,
-      ),
+    return Expanded(
+      // width: screenWidth,
+      // height: screenWidth / aspectRatio,
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(8),
+      //   color: Colors.black,
+      // ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: AspectRatio(
-          aspectRatio: aspectRatio,
-          child: AppVideoPlayer(
-            controller: _controller!,
-          ),
+        child: AppVideoPlayer(
+          controller: _controller!,
         ),
       ),
     );
