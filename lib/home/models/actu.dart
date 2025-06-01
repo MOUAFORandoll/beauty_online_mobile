@@ -1,5 +1,7 @@
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/models/professional.dart';
+import 'package:beauty/common/models/realisation_file.dart';
+import 'package:beauty/common/models/video.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'actu.freezed.dart';
 part 'actu.g.dart';
@@ -18,7 +20,7 @@ class Actu with _$Actu {
     @JsonKey(name: 'nombre_likes') required int nombreLikes,
     @JsonKey(name: 'has_liked') required bool hasLiked,
     @JsonKey(name: 'is_video') bool? isVideo,
-    @JsonKey(name: 'video_link') String? videoLink,
+    @JsonKey(name: 'video') Video? video,
     @JsonKey(name: 'nombre_partages') required int nombrePartages,
   }) = _Actu;
 

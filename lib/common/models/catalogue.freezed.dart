@@ -28,6 +28,10 @@ mixin _$Catalogue {
   @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_video')
+  bool? get isVideo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'video')
+  Video? get video => throw _privateConstructorUsedError;
 
   /// Serializes this Catalogue to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +54,11 @@ abstract class $CatalogueCopyWith<$Res> {
       String? price,
       @JsonKey(name: 'profile_professionnel_id') String profileProfessionnelId,
       @JsonKey(name: 'realisation_files')
-      List<RealisationFile> realisationFiles});
+      List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'is_video') bool? isVideo,
+      @JsonKey(name: 'video') Video? video});
+
+  $VideoCopyWith<$Res>? get video;
 }
 
 /// @nodoc
@@ -73,6 +81,8 @@ class _$CatalogueCopyWithImpl<$Res, $Val extends Catalogue>
     Object? price = freezed,
     Object? profileProfessionnelId = null,
     Object? realisationFiles = null,
+    Object? isVideo = freezed,
+    Object? video = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,7 +105,29 @@ class _$CatalogueCopyWithImpl<$Res, $Val extends Catalogue>
           ? _value.realisationFiles
           : realisationFiles // ignore: cast_nullable_to_non_nullable
               as List<RealisationFile>,
+      isVideo: freezed == isVideo
+          ? _value.isVideo
+          : isVideo // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as Video?,
     ) as $Val);
+  }
+
+  /// Create a copy of Catalogue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VideoCopyWith<$Res>? get video {
+    if (_value.video == null) {
+      return null;
+    }
+
+    return $VideoCopyWith<$Res>(_value.video!, (value) {
+      return _then(_value.copyWith(video: value) as $Val);
+    });
   }
 }
 
@@ -113,7 +145,12 @@ abstract class _$$CatalogueImplCopyWith<$Res>
       String? price,
       @JsonKey(name: 'profile_professionnel_id') String profileProfessionnelId,
       @JsonKey(name: 'realisation_files')
-      List<RealisationFile> realisationFiles});
+      List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'is_video') bool? isVideo,
+      @JsonKey(name: 'video') Video? video});
+
+  @override
+  $VideoCopyWith<$Res>? get video;
 }
 
 /// @nodoc
@@ -134,6 +171,8 @@ class __$$CatalogueImplCopyWithImpl<$Res>
     Object? price = freezed,
     Object? profileProfessionnelId = null,
     Object? realisationFiles = null,
+    Object? isVideo = freezed,
+    Object? video = freezed,
   }) {
     return _then(_$CatalogueImpl(
       id: null == id
@@ -156,6 +195,14 @@ class __$$CatalogueImplCopyWithImpl<$Res>
           ? _value._realisationFiles
           : realisationFiles // ignore: cast_nullable_to_non_nullable
               as List<RealisationFile>,
+      isVideo: freezed == isVideo
+          ? _value.isVideo
+          : isVideo // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as Video?,
     ));
   }
 }
@@ -170,7 +217,9 @@ class _$CatalogueImpl extends _Catalogue {
       @JsonKey(name: 'profile_professionnel_id')
       required this.profileProfessionnelId,
       @JsonKey(name: 'realisation_files')
-      required final List<RealisationFile> realisationFiles})
+      required final List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'is_video') this.isVideo,
+      @JsonKey(name: 'video') this.video})
       : _realisationFiles = realisationFiles,
         super._();
 
@@ -197,8 +246,15 @@ class _$CatalogueImpl extends _Catalogue {
   }
 
   @override
+  @JsonKey(name: 'is_video')
+  final bool? isVideo;
+  @override
+  @JsonKey(name: 'video')
+  final Video? video;
+
+  @override
   String toString() {
-    return 'Catalogue(id: $id, title: $title, price: $price, profileProfessionnelId: $profileProfessionnelId, realisationFiles: $realisationFiles)';
+    return 'Catalogue(id: $id, title: $title, price: $price, profileProfessionnelId: $profileProfessionnelId, realisationFiles: $realisationFiles, isVideo: $isVideo, video: $video)';
   }
 
   @override
@@ -212,7 +268,9 @@ class _$CatalogueImpl extends _Catalogue {
             (identical(other.profileProfessionnelId, profileProfessionnelId) ||
                 other.profileProfessionnelId == profileProfessionnelId) &&
             const DeepCollectionEquality()
-                .equals(other._realisationFiles, _realisationFiles));
+                .equals(other._realisationFiles, _realisationFiles) &&
+            (identical(other.isVideo, isVideo) || other.isVideo == isVideo) &&
+            (identical(other.video, video) || other.video == video));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -223,7 +281,9 @@ class _$CatalogueImpl extends _Catalogue {
       title,
       price,
       profileProfessionnelId,
-      const DeepCollectionEquality().hash(_realisationFiles));
+      const DeepCollectionEquality().hash(_realisationFiles),
+      isVideo,
+      video);
 
   /// Create a copy of Catalogue
   /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +309,9 @@ abstract class _Catalogue extends Catalogue {
       @JsonKey(name: 'profile_professionnel_id')
       required final String profileProfessionnelId,
       @JsonKey(name: 'realisation_files')
-      required final List<RealisationFile> realisationFiles}) = _$CatalogueImpl;
+      required final List<RealisationFile> realisationFiles,
+      @JsonKey(name: 'is_video') final bool? isVideo,
+      @JsonKey(name: 'video') final Video? video}) = _$CatalogueImpl;
   const _Catalogue._() : super._();
 
   factory _Catalogue.fromJson(Map<String, dynamic> json) =
@@ -267,187 +329,17 @@ abstract class _Catalogue extends Catalogue {
   @override
   @JsonKey(name: 'realisation_files')
   List<RealisationFile> get realisationFiles;
+  @override
+  @JsonKey(name: 'is_video')
+  bool? get isVideo;
+  @override
+  @JsonKey(name: 'video')
+  Video? get video;
 
   /// Create a copy of Catalogue
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CatalogueImplCopyWith<_$CatalogueImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-RealisationFile _$RealisationFileFromJson(Map<String, dynamic> json) {
-  return _RealisationFile.fromJson(json);
-}
-
-/// @nodoc
-mixin _$RealisationFile {
-  String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'file_path')
-  String get filePath => throw _privateConstructorUsedError;
-
-  /// Serializes this RealisationFile to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of RealisationFile
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $RealisationFileCopyWith<RealisationFile> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $RealisationFileCopyWith<$Res> {
-  factory $RealisationFileCopyWith(
-          RealisationFile value, $Res Function(RealisationFile) then) =
-      _$RealisationFileCopyWithImpl<$Res, RealisationFile>;
-  @useResult
-  $Res call({String id, @JsonKey(name: 'file_path') String filePath});
-}
-
-/// @nodoc
-class _$RealisationFileCopyWithImpl<$Res, $Val extends RealisationFile>
-    implements $RealisationFileCopyWith<$Res> {
-  _$RealisationFileCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of RealisationFile
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? filePath = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      filePath: null == filePath
-          ? _value.filePath
-          : filePath // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$RealisationFileImplCopyWith<$Res>
-    implements $RealisationFileCopyWith<$Res> {
-  factory _$$RealisationFileImplCopyWith(_$RealisationFileImpl value,
-          $Res Function(_$RealisationFileImpl) then) =
-      __$$RealisationFileImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String id, @JsonKey(name: 'file_path') String filePath});
-}
-
-/// @nodoc
-class __$$RealisationFileImplCopyWithImpl<$Res>
-    extends _$RealisationFileCopyWithImpl<$Res, _$RealisationFileImpl>
-    implements _$$RealisationFileImplCopyWith<$Res> {
-  __$$RealisationFileImplCopyWithImpl(
-      _$RealisationFileImpl _value, $Res Function(_$RealisationFileImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RealisationFile
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? filePath = null,
-  }) {
-    return _then(_$RealisationFileImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      filePath: null == filePath
-          ? _value.filePath
-          : filePath // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$RealisationFileImpl extends _RealisationFile {
-  const _$RealisationFileImpl(
-      {required this.id, @JsonKey(name: 'file_path') required this.filePath})
-      : super._();
-
-  factory _$RealisationFileImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RealisationFileImplFromJson(json);
-
-  @override
-  final String id;
-  @override
-  @JsonKey(name: 'file_path')
-  final String filePath;
-
-  @override
-  String toString() {
-    return 'RealisationFile(id: $id, filePath: $filePath)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RealisationFileImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.filePath, filePath) ||
-                other.filePath == filePath));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, filePath);
-
-  /// Create a copy of RealisationFile
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RealisationFileImplCopyWith<_$RealisationFileImpl> get copyWith =>
-      __$$RealisationFileImplCopyWithImpl<_$RealisationFileImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RealisationFileImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _RealisationFile extends RealisationFile {
-  const factory _RealisationFile(
-          {required final String id,
-          @JsonKey(name: 'file_path') required final String filePath}) =
-      _$RealisationFileImpl;
-  const _RealisationFile._() : super._();
-
-  factory _RealisationFile.fromJson(Map<String, dynamic> json) =
-      _$RealisationFileImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  @JsonKey(name: 'file_path')
-  String get filePath;
-
-  /// Create a copy of RealisationFile
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RealisationFileImplCopyWith<_$RealisationFileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

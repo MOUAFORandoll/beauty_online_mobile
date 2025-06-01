@@ -36,8 +36,8 @@ mixin _$Actu {
   bool get hasLiked => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_video')
   bool? get isVideo => throw _privateConstructorUsedError;
-  @JsonKey(name: 'video_link')
-  dynamic get videoLink => throw _privateConstructorUsedError;
+  @JsonKey(name: 'video')
+  Video? get video => throw _privateConstructorUsedError;
   @JsonKey(name: 'nombre_partages')
   int get nombrePartages => throw _privateConstructorUsedError;
 
@@ -66,10 +66,11 @@ abstract class $ActuCopyWith<$Res> {
       @JsonKey(name: 'nombre_likes') int nombreLikes,
       @JsonKey(name: 'has_liked') bool hasLiked,
       @JsonKey(name: 'is_video') bool? isVideo,
-      @JsonKey(name: 'video_link') dynamic videoLink,
+      @JsonKey(name: 'video') Video? video,
       @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
+  $VideoCopyWith<$Res>? get video;
 }
 
 /// @nodoc
@@ -96,7 +97,7 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
     Object? nombreLikes = null,
     Object? hasLiked = null,
     Object? isVideo = freezed,
-    Object? videoLink = freezed,
+    Object? video = freezed,
     Object? nombrePartages = null,
   }) {
     return _then(_value.copyWith(
@@ -136,10 +137,10 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool?,
-      videoLink: freezed == videoLink
-          ? _value.videoLink
-          : videoLink // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as Video?,
       nombrePartages: null == nombrePartages
           ? _value.nombrePartages
           : nombrePartages // ignore: cast_nullable_to_non_nullable
@@ -154,6 +155,20 @@ class _$ActuCopyWithImpl<$Res, $Val extends Actu>
   $ProfessionalCopyWith<$Res> get profileProfessionnel {
     return $ProfessionalCopyWith<$Res>(_value.profileProfessionnel, (value) {
       return _then(_value.copyWith(profileProfessionnel: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Actu
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VideoCopyWith<$Res>? get video {
+    if (_value.video == null) {
+      return null;
+    }
+
+    return $VideoCopyWith<$Res>(_value.video!, (value) {
+      return _then(_value.copyWith(video: value) as $Val);
     });
   }
 }
@@ -176,11 +191,13 @@ abstract class _$$ActuImplCopyWith<$Res> implements $ActuCopyWith<$Res> {
       @JsonKey(name: 'nombre_likes') int nombreLikes,
       @JsonKey(name: 'has_liked') bool hasLiked,
       @JsonKey(name: 'is_video') bool? isVideo,
-      @JsonKey(name: 'video_link') dynamic videoLink,
+      @JsonKey(name: 'video') Video? video,
       @JsonKey(name: 'nombre_partages') int nombrePartages});
 
   @override
   $ProfessionalCopyWith<$Res> get profileProfessionnel;
+  @override
+  $VideoCopyWith<$Res>? get video;
 }
 
 /// @nodoc
@@ -204,7 +221,7 @@ class __$$ActuImplCopyWithImpl<$Res>
     Object? nombreLikes = null,
     Object? hasLiked = null,
     Object? isVideo = freezed,
-    Object? videoLink = freezed,
+    Object? video = freezed,
     Object? nombrePartages = null,
   }) {
     return _then(_$ActuImpl(
@@ -244,7 +261,10 @@ class __$$ActuImplCopyWithImpl<$Res>
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool?,
-      videoLink: freezed == videoLink ? _value.videoLink! : videoLink,
+      video: freezed == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as Video?,
       nombrePartages: null == nombrePartages
           ? _value.nombrePartages
           : nombrePartages // ignore: cast_nullable_to_non_nullable
@@ -268,7 +288,7 @@ class _$ActuImpl implements _Actu {
       @JsonKey(name: 'nombre_likes') required this.nombreLikes,
       @JsonKey(name: 'has_liked') required this.hasLiked,
       @JsonKey(name: 'is_video') this.isVideo,
-      @JsonKey(name: 'video_link') this.videoLink,
+      @JsonKey(name: 'video') this.video,
       @JsonKey(name: 'nombre_partages') required this.nombrePartages})
       : _realisationFiles = realisationFiles;
 
@@ -307,15 +327,15 @@ class _$ActuImpl implements _Actu {
   @JsonKey(name: 'is_video')
   final bool? isVideo;
   @override
-  @JsonKey(name: 'video_link')
-  final dynamic videoLink;
+  @JsonKey(name: 'video')
+  final Video? video;
   @override
   @JsonKey(name: 'nombre_partages')
   final int nombrePartages;
 
   @override
   String toString() {
-    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles, nombreVues: $nombreVues, nombreLikes: $nombreLikes, hasLiked: $hasLiked, isVideo: $isVideo, videoLink: $videoLink, nombrePartages: $nombrePartages)';
+    return 'Actu(id: $id, title: $title, price: $price, profileProfessionnel: $profileProfessionnel, realisationFiles: $realisationFiles, nombreVues: $nombreVues, nombreLikes: $nombreLikes, hasLiked: $hasLiked, isVideo: $isVideo, video: $video, nombrePartages: $nombrePartages)';
   }
 
   @override
@@ -337,7 +357,7 @@ class _$ActuImpl implements _Actu {
             (identical(other.hasLiked, hasLiked) ||
                 other.hasLiked == hasLiked) &&
             (identical(other.isVideo, isVideo) || other.isVideo == isVideo) &&
-            const DeepCollectionEquality().equals(other.videoLink, videoLink) &&
+            (identical(other.video, video) || other.video == video) &&
             (identical(other.nombrePartages, nombrePartages) ||
                 other.nombrePartages == nombrePartages));
   }
@@ -355,7 +375,7 @@ class _$ActuImpl implements _Actu {
       nombreLikes,
       hasLiked,
       isVideo,
-      const DeepCollectionEquality().hash(videoLink),
+      video,
       nombrePartages);
 
   /// Create a copy of Actu
@@ -387,7 +407,7 @@ abstract class _Actu implements Actu {
       @JsonKey(name: 'nombre_likes') required final int nombreLikes,
       @JsonKey(name: 'has_liked') required final bool hasLiked,
       @JsonKey(name: 'is_video') final bool? isVideo,
-      @JsonKey(name: 'video_link') final dynamic videoLink,
+      @JsonKey(name: 'video') final Video? video,
       @JsonKey(name: 'nombre_partages')
       required final int nombrePartages}) = _$ActuImpl;
 
@@ -418,8 +438,8 @@ abstract class _Actu implements Actu {
   @JsonKey(name: 'is_video')
   bool? get isVideo;
   @override
-  @JsonKey(name: 'video_link')
-  dynamic get videoLink;
+  @JsonKey(name: 'video')
+  Video? get video;
   @override
   @JsonKey(name: 'nombre_partages')
   int get nombrePartages;

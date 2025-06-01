@@ -19,7 +19,9 @@ _$ActuImpl _$$ActuImplFromJson(Map<String, dynamic> json) => _$ActuImpl(
       nombreLikes: (json['nombre_likes'] as num).toInt(),
       hasLiked: json['has_liked'] as bool,
       isVideo: json['is_video'] as bool?,
-      videoLink: json['video_link'],
+      video: json['video'] == null
+          ? null
+          : Video.fromJson(json['video'] as Map<String, dynamic>),
       nombrePartages: (json['nombre_partages'] as num).toInt(),
     );
 
@@ -34,6 +36,6 @@ Map<String, dynamic> _$$ActuImplToJson(_$ActuImpl instance) =>
       'nombre_likes': instance.nombreLikes,
       'has_liked': instance.hasLiked,
       'is_video': instance.isVideo,
-      'video_link': instance.videoLink,
+      'video': instance.video,
       'nombre_partages': instance.nombrePartages,
     };

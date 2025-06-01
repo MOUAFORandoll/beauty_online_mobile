@@ -7,6 +7,8 @@ import 'package:beauty/home/bloc/actu_cubit.dart';
 import 'package:beauty/home/models/actu.dart';
 import 'package:beauty/home/screens/sub/actu_screen.dart';
 import 'package:beauty/home/services/actu_cubit_manager.dart';
+import 'package:beauty/home/widgets/actu_item_photo.dart';
+import 'package:beauty/home/widgets/actu_item_video.dart';
 import 'package:beauty/home/widgets/item_actu_bottom_info.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
@@ -45,7 +47,11 @@ class _ActuItemState extends State<ActuItem> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            actuItemImage(context: context, actu: actu),
+            actu.isVideo ?? false
+                ? ActuItemVideo(
+                    actu: actu,
+                  )
+                : ActuItemPhoto(actu: actu),
 
             // Gradient fondu en bas
             Positioned(
@@ -106,32 +112,6 @@ class _ActuItemState extends State<ActuItem> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget actuItemImage({required BuildContext context, required Actu actu}) {
-    return Image(
-      image: context
-          .read<AppCacheManager>()
-          .getImage(actu.realisationFiles.first.filePath),
-      fit: BoxFit.cover,
-      width: double.infinity,
-      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        if (frame != null) return child;
-        return Container(
-          color: Theme.of(context).colorScheme.tertiaryContainer,
-          child: wasSynchronouslyLoaded
-              ? child
-              : const Center(
-                  child: SizedBox(
-                    height: 16,
-                    width: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2.0),
-                  ),
-                ),
-        );
-      },
-      errorBuilder: (_, __, ___) => const Icon(Icons.error),
     );
   }
 }

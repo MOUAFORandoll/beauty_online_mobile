@@ -165,6 +165,7 @@ class _AddProductScreenState extends State<AddProductScreen>
             showSuccessToast(
                 context: context, content: 'Produit ajouté avec succès!');
             setState(() {
+              _titleController.clear();
               _priceController.clear();
               _selectedImages.clear();
             });

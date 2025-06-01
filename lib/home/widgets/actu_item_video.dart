@@ -4,28 +4,25 @@ import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:potatoes/libs.dart'; 
+import 'package:potatoes/libs.dart';
 import 'package:beauty/home/bloc/actu_cubit.dart';
 import 'package:beauty/home/models/actu.dart';
 import 'package:video_player/video_player.dart';
 
 class ActuItemVideo extends StatefulWidget {
   final Actu actu;
-   
-  
+
   const ActuItemVideo({
     super.key,
     required this.actu,
-  
   });
 
   @override
   State<ActuItemVideo> createState() => _ActuItemVideoState();
 }
 
-class _ActuItemVideoState extends State<ActuItemVideo> 
+class _ActuItemVideoState extends State<ActuItemVideo>
     with AutomaticKeepAliveClientMixin {
-  
   VideoPlayerController? _controller;
   VideoCubit? _videoCubit;
   bool _isInitializing = false;
@@ -44,64 +41,69 @@ class _ActuItemVideoState extends State<ActuItemVideo>
   @override
   void didUpdateWidget(ActuItemVideo oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Réinitialiser si l'URL de la vidéo a changé
-    if (oldWidget.actu.videoLink != widget.actu.videoLink) {
-      _disposeController();
-      _initializeVideo();
+    if (oldWidget.actu.video != null) {
+      if (oldWidget.actu.video!.videoLink != widget.actu.video!.videoLink) {
+        _disposeController();
+        _initializeVideo();
+      }
     }
   }
 
   Future<void> _initializeVideo() async {
-    if (_isInitializing || widget.actu.videoLink.isEmpty) return;
-    
+    if (widget.actu.video == null) {
+      setState(() {
+        _hasError = false;
+      });
+      return;
+    }
+    if (_isInitializing || widget.actu.video!.videoLink.isEmpty) return;
+
     setState(() {
       _isInitializing = true;
       _hasError = false;
       _errorMessage = null;
     });
 
-    try {
-      _videoCubit = context.read<VideoCubit>();
-      
-      _controller = VideoPlayerController.networkUrl(
-        Uri.parse(widget.actu.videoLink),
-        httpHeaders: {
-          'User-Agent': 'Flutter Video Player',
-        },
-      );
+    // try {
+    _videoCubit = context.read<VideoCubit>();
 
-      // Configuration du controller
-      await _controller!.initialize();
-      
-      // Configuration des options
-      
-        await _controller!.setLooping(true);
-     
-      
-   
-        await _controller!.play();
-    
+    _controller = VideoPlayerController.networkUrl(
+      Uri.parse(widget.actu.video!.videoLink),
+      httpHeaders: {
+        'User-Agent': 'Flutter Video Player',
+      },
+    );
 
-      // Mise à jour du cubit
-      _videoCubit?.set(_controller!);
+    // Configuration du controller
+    await _controller!.initialize();
 
-      if (mounted) {
-        setState(() {
-          _isInitializing = false;
-        });
-      }
-    } catch (error) {
-      debugPrint('Erreur initialisation vidéo: $error');
-      
-      if (mounted) {
-        setState(() {
-          _isInitializing = false;
-          _hasError = true;
-          _errorMessage = _getErrorMessage(error);
-        });
-      }
-    }
+    // Configuration des options
+
+    await _controller!.setLooping(true);
+
+    await _controller!.play();
+
+    // Mise à jour du cubit
+    _videoCubit?.set(_controller!);
+
+    // if (mounted) {
+    setState(() {
+      _isInitializing = false;
+    });
+    // }
+    // } catch (error) {
+    //   debugPrint('Erreur initialisation vidéo: $error');
+
+    //   if (mounted) {
+    //     setState(() {
+    //       _isInitializing = false;
+    //       _hasError = true;
+    //       _errorMessage = _getErrorMessage(error);
+    //     });
+    //   }
+    // }
   }
 
   String _getErrorMessage(dynamic error) {
@@ -133,27 +135,25 @@ class _ActuItemVideoState extends State<ActuItemVideo>
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(8),
       ),
-      child: 
-      // widget.actu.thumbnailUrl?.isNotEmpty == true
-      //     ? ClipRRect(
-      //         borderRadius: BorderRadius.circular(8),
-      //         child: Image(
-      //           image: context.read<AppCacheManager>().getImage(
-      //         "    widget.actu.thumbnailUrl"
-      //           ),
-      //           fit: BoxFit.cover,
-      //           width: double.infinity,
-      //           errorBuilder: (context, error, stackTrace) {
-      //             return _buildPlaceholder();
-      //           },
-      //           loadingBuilder: (context, child, loadingProgress) {
-      //             if (loadingProgress == null) return child;
-      //             return _buildLoadingIndicator();
-      //           },
-      //         ),
-      //       )
-      //     :
-           _buildPlaceholder(),
+      child: widget.actu.video!.thumbnail.isNotEmpty
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image(
+                image: context
+                    .read<AppCacheManager>()
+                    .getImage("    widget.actu.thumbnailUrl"),
+                fit: BoxFit.cover,
+                width: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildPlaceholder();
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return _buildLoadingIndicator();
+                },
+              ),
+            )
+          : _buildPlaceholder(),
     );
   }
 
@@ -264,7 +264,7 @@ class _ActuItemVideoState extends State<ActuItemVideo>
 
     final aspectRatio = _controller!.value.aspectRatio;
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Container(
       width: screenWidth,
       height: screenWidth / aspectRatio,
@@ -278,8 +278,6 @@ class _ActuItemVideoState extends State<ActuItemVideo>
           aspectRatio: aspectRatio,
           child: AppVideoPlayer(
             controller: _controller!,
-           
-         
           ),
         ),
       ),
@@ -289,7 +287,8 @@ class _ActuItemVideoState extends State<ActuItemVideo>
   @override
   Widget build(BuildContext context) {
     super.build(context); // Nécessaire pour AutomaticKeepAliveClientMixin
-    
+    print('Vidéo: ${widget.actu.video!.videoLink}');
+    print('thumbnail: ${widget.actu.video!.thumbnail}');
     return Semantics(
       label: 'Vidéo: ${widget.actu.title ?? "Contenu vidéo"}',
       child: Container(
@@ -297,21 +296,8 @@ class _ActuItemVideoState extends State<ActuItemVideo>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Titre de la vidéo (optionnel)
-            if (widget.actu.title?.isNotEmpty == true) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  widget.actu.title!,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-            
             // Contenu vidéo
-            if (_hasError)
+            if (_hasError || widget.actu.video == null)
               _buildErrorWidget()
             else if (_isInitializing)
               _buildLoadingIndicator()
@@ -319,15 +305,12 @@ class _ActuItemVideoState extends State<ActuItemVideo>
               _buildVideoPlayer()
             else
               _buildThumbnail(),
-            
-           
           ],
         ),
       ),
     );
   }
 }
- 
 
 // Widget wrapper pour une utilisation simplifiée
 class ActuVideoWidget extends StatelessWidget {
@@ -350,7 +333,6 @@ class ActuVideoWidget extends StatelessWidget {
       onTap: onTap,
       child: ActuItemVideo(
         actu: actu,
-        
       ),
     );
   }

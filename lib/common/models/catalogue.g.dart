@@ -15,6 +15,10 @@ _$CatalogueImpl _$$CatalogueImplFromJson(Map<String, dynamic> json) =>
       realisationFiles: (json['realisation_files'] as List<dynamic>)
           .map((e) => RealisationFile.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isVideo: json['is_video'] as bool?,
+      video: json['video'] == null
+          ? null
+          : Video.fromJson(json['video'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CatalogueImplToJson(_$CatalogueImpl instance) =>
@@ -24,18 +28,6 @@ Map<String, dynamic> _$$CatalogueImplToJson(_$CatalogueImpl instance) =>
       'price': instance.price,
       'profile_professionnel_id': instance.profileProfessionnelId,
       'realisation_files': instance.realisationFiles,
-    };
-
-_$RealisationFileImpl _$$RealisationFileImplFromJson(
-        Map<String, dynamic> json) =>
-    _$RealisationFileImpl(
-      id: json['id'] as String,
-      filePath: json['file_path'] as String,
-    );
-
-Map<String, dynamic> _$$RealisationFileImplToJson(
-        _$RealisationFileImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'file_path': instance.filePath,
+      'is_video': instance.isVideo,
+      'video': instance.video,
     };

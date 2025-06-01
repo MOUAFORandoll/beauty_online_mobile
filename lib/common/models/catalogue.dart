@@ -1,3 +1,5 @@
+import 'package:beauty/common/models/realisation_file.dart';
+import 'package:beauty/common/models/video.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:beauty/common/utils/datetime_converter.dart';
 part 'catalogue.freezed.dart';
@@ -15,21 +17,10 @@ class Catalogue with _$Catalogue {
     required String profileProfessionnelId,
     @JsonKey(name: 'realisation_files')
     required List<RealisationFile> realisationFiles,
+    @JsonKey(name: 'is_video') bool? isVideo,
+    @JsonKey(name: 'video') Video? video,
   }) = _Catalogue;
 
   factory Catalogue.fromJson(Map<String, dynamic> json) =>
       _$CatalogueFromJson(json);
-}
-
-@freezed
-class RealisationFile with _$RealisationFile {
-  const RealisationFile._();
-
-  const factory RealisationFile({
-    required String id,
-    @JsonKey(name: 'file_path') required String filePath,
-  }) = _RealisationFile;
-
-  factory RealisationFile.fromJson(Map<String, dynamic> json) =>
-      _$RealisationFileFromJson(json);
 }
