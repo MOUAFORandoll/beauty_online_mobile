@@ -1,4 +1,3 @@
-
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/account/screens/account.dart';
@@ -51,10 +50,6 @@ class _SettingsScreenState extends State<SettingsScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-
-  Future<NotificationSettings> _getNotificationSettings() {
-    return FirebaseMessaging.instance.getNotificationSettings();
   }
 
   @override
@@ -152,16 +147,15 @@ class _SettingsScreenState extends State<SettingsScreen>
                           ],
                         ),
                       if (professionalState is NoProfessionnalFondState)
-                        Container(
-                            child: Column(
+                        Column(
                           children: [
                             Text("Vous n'avez pas de profil professionel ")
                           ],
-                        )),
+                        ),
                       if (professionalState is ProfessionalErrorState)
                         GestureDetector(
                           onTap: () => professionalCubit.getInitialState(),
-                          child: Container(
+                          child: SizedBox(
                               width: MediaQuery.of(context).size.width * .4,
                               child: Column(
                                 children: [

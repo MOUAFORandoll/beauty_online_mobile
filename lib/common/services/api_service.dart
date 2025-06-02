@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
@@ -10,8 +7,8 @@ import 'api_error.dart';
 
 class ApiLinks extends potatoes.Links {
   const ApiLinks();
-  static const String url = 'http://192.168.1.129:8080/api';
-  // static const String url = 'https://api.beauty.petite-monnaie.com';
+  // static const String url = 'http://192.168.1.129:8080/api';
+  static const String url = 'https://api.beauty.petite-monnaie.com';
 
   @override
   String get devUrl => url;
@@ -59,11 +56,6 @@ class ApiService extends potatoes.ApiService {
     } on DioException catch (e) {
       if (e.response != null && e.response!.data != null) {
         if ((e.response!.data as Map<String, dynamic>)['error'] != null) {
-          print('====================');
-          print(e.response!);
-          print('====================');
-
-          print(e.response!.data['error']);
           throw ApiError.fromApi(
             e.response!.data['error'],
           );

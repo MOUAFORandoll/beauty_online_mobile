@@ -62,8 +62,9 @@ class EditProfilePictureScreen extends StatelessWidget {
                 children: [
                   Image(
                     fit: BoxFit.cover,
-                    image: context.read<AppCacheManager>().getImage(
-                        context.read<UserCubit>().user.pictureUrl ?? ''),
+                    image: context
+                        .read<AppCacheManager>()
+                        .getImage(context.read<UserCubit>().user.pictureUrl),
                     width: double.infinity,
                     errorBuilder: (context, url, error) => Container(
                       height: 368,

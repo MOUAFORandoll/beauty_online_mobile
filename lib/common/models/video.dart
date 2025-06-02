@@ -1,9 +1,7 @@
-import 'package:beauty/common/models/catalogue.dart';
-import 'package:beauty/common/models/professional.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'video.freezed.dart';
 part 'video.g.dart';
- 
+
 @freezed
 class Video with _$Video {
   const factory Video({

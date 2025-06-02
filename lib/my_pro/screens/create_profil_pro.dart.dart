@@ -230,20 +230,23 @@ class _CreateProfilProScreenState extends State<CreateProfilProScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        BeautyButton.primary(
-                          onPressed: _getLocation,
-                          icon: (isLoadingPosition == 0)
-                              ? Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: CircularProgressIndicator(
-                                    color: AppTheme.primaryRed,
-                                  ),
-                                )
-                              : (isLoadingPosition == 1)
-                                  ? const Icon(Icons.check)
-                                  : const Icon(Icons.location_on),
-                          text: "Détecter ma position",
+                        Container(
+                          width: MediaQuery.of(context).size.width * .3,
+                          child: BeautyButton.primary(
+                            onPressed: _getLocation,
+                            icon: (isLoadingPosition == 0)
+                                ? Container(
+                                    height: 24,
+                                    width: 24,
+                                    child: CircularProgressIndicator(
+                                      color: AppTheme.white,
+                                    ),
+                                  )
+                                : (isLoadingPosition == 1)
+                                    ? const Icon(Icons.check)
+                                    : const Icon(Icons.location_on),
+                            text: "Détecter ma position",
+                          ),
                         ),
                         if (isLoadingPosition == 1)
                           Container(

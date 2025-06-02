@@ -7,7 +7,6 @@ import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/common/widgets/profile_picture.dart';
 import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -237,8 +236,7 @@ class SettingsSection extends StatelessWidget {
   final String? title;
   final List<SettingsItem> items;
 
-  const SettingsSection({Key? key, this.title, required this.items})
-      : super(key: key);
+  const SettingsSection({super.key, this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -287,14 +285,14 @@ class SettingsItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const SettingsItem({
-    Key? key,
+    super.key,
     this.icon,
     this.customIcon,
     required this.title,
     this.subtitle,
     this.badge,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

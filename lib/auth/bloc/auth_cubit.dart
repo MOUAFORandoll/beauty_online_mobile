@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:potatoes/libs.dart';
 import 'package:potatoes/potatoes.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:beauty/auth/services/auth_service.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
-import 'package:beauty/common/models/user.dart';
 
 part 'auth_state.dart';
 
@@ -28,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       final account = await _googleSignIn.signIn();
       if (account == null) return;
 
-      emit(const AuthLoadingState());
+      // emit(const AuthLoadingState());
       final authentication = await account.authentication;
       await FirebaseAuth.instance.signInWithCredential(
           GoogleAuthProvider.credential(
@@ -54,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
       ]);
 
       if (authentication.identityToken == null) return;
-      emit(const AuthLoadingState());
+      // emit(const AuthLoadingState());
       await FirebaseAuth.instance.signInWithCredential(
           OAuthProvider('apple.com').credential(
               idToken: authentication.identityToken,
@@ -70,10 +68,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthLoadingState());
 
     final idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
-    print('idToken================');
-    print(idToken);
-    print('idToken================');
-
+    
     authService
         .authUser(
       token: idToken!,
@@ -101,7 +96,6 @@ class AuthCubit extends Cubit<AuthState> {
     required String codePhone,
   }) async {
     final stateBefore = state;
-    final idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
 
     emit(const AuthLoadingState());
 

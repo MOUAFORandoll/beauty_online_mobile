@@ -1,8 +1,6 @@
 import 'package:beauty/common/bloc/video_cubit.dart';
-import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/my_pro/screens/sub/catalogue_for_pro_details.dart.dart';
-import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
@@ -15,9 +13,7 @@ import 'package:video_player/video_player.dart';
 class MyCatalogueItem extends StatefulWidget {
   final Catalogue catalogue;
 
-  const MyCatalogueItem(
-    this.catalogue,
-  );
+  const MyCatalogueItem(this.catalogue, {super.key});
 
   @override
   State<MyCatalogueItem> createState() => _MyCatalogueItemState();
@@ -29,8 +25,6 @@ class _MyCatalogueItemState extends State<MyCatalogueItem>
   late final VideoCubit videoCubit = context.read<VideoCubit>();
 
   bool _isInitializing = false;
-  bool _hasError = false;
-  String? _errorMessage;
 
   @override
   bool get wantKeepAlive => true;
@@ -57,17 +51,13 @@ class _MyCatalogueItemState extends State<MyCatalogueItem>
 
   Future<void> _initializeVideo() async {
     if (widget.catalogue.video == null) {
-      setState(() {
-        _hasError = false;
-      });
+      setState(() {});
       return;
     }
     if (_isInitializing || widget.catalogue.video!.videoLink.isEmpty) return;
 
     setState(() {
       _isInitializing = true;
-      _hasError = false;
-      _errorMessage = null;
     });
 
     try {
@@ -96,20 +86,8 @@ class _MyCatalogueItemState extends State<MyCatalogueItem>
       if (mounted) {
         setState(() {
           _isInitializing = false;
-          _hasError = true;
-          _errorMessage = _getErrorMessage(error);
         });
       }
-    }
-  }
-
-  String _getErrorMessage(dynamic error) {
-    if (error.toString().contains('network')) {
-      return 'Erreur de connexion réseau';
-    } else if (error.toString().contains('format')) {
-      return 'Format vidéo non supporté';
-    } else {
-      return 'Erreur lors du chargement de la vidéo';
     }
   }
 
@@ -126,6 +104,7 @@ class _MyCatalogueItemState extends State<MyCatalogueItem>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onTap: () {
         videoCubit.set(_controller);

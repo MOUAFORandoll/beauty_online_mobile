@@ -1,17 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/models/rendez_vous.dart';
-import 'package:beauty/my_pro/models/schedule.dart';
-import 'package:beauty/common/models/agenda.dart';
-import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
-import 'package:beauty/professional/bloc/professional_cubit.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:image_picker/image_picker.dart';
 
-import 'dart:convert';
 import 'package:potatoes/libs.dart';
 import 'package:potatoes/potatoes.dart' hide PreferencesService;
 part 'action_professional_state.dart';

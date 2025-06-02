@@ -1,30 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:beauty/auth/screens/complete_info.dart';
 import 'package:beauty/auth/screens/onboarding_screen.dart';
 import 'package:beauty/common/bloc/user_cubit.dart';
 import 'package:beauty/common/services/preferences_service.dart';
 import 'package:beauty/common/utils/assets.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-import 'package:potatoes/potatoes.dart' hide PreferencesService;
-import 'package:beauty/auth/bloc/auth_cubit.dart';
-import 'package:beauty/auth/widgets/animated_logo.dart';
-import 'package:beauty/auth/widgets/auth_button.dart';
 import 'package:beauty/common/screens/home.dart';
-import 'package:beauty/common/services/api_service.dart';
-import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/themes.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // Ou flutter_bloc selon ton projet
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -96,10 +79,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _initialize() async {
     final prefs = context.read<PreferencesService>();
     final isFirst = await prefs.isFirstEnter() == null;
-    print('isFirst');
-    print(isFirst);
     final userState = context.read<UserCubit>().state;
-    print(userState);
     await Future.delayed(const Duration(seconds: 5));
 
     if (!mounted) return;

@@ -77,7 +77,7 @@ class _MyUserInfoState extends State<MyUserInfo>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    userCubit.user.userName!,
+                                    user.userName!,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -121,7 +121,7 @@ class _MyUserInfoState extends State<MyUserInfo>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${userCubit.user.codePhone!} ${userCubit.user.phone!}',
+                                    '${user.codePhone!} ${user.phone!}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -158,7 +158,7 @@ class _MyUserInfoState extends State<MyUserInfo>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  userCubit.user.email,
+                                  user.email,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,

@@ -1,8 +1,7 @@
 import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/common/utils/text_utils.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/my_pro/screens/sub/my_rendez_vous_pro_view.dart';
-import 'package:beauty/professional/screens/sub/rendez_vous_user_view.dart';
+import 'package:beauty/my_pro/screens/sub/my_rendez_vous_pro_view.dart'; 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

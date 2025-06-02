@@ -1,8 +1,4 @@
-import 'package:flutter/widgets.dart';
-// import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
-import 'package:potatoes/libs.dart';  
 
 class GeolocationService {
   // Demander les permissions de localisation
@@ -67,5 +63,4 @@ class GeolocationService {
   Future<void> openLocationSettings() async {
     await Geolocator.openLocationSettings();
   }
- 
 }

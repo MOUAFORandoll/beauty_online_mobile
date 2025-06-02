@@ -36,12 +36,11 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen>
     with SingleTickerProviderStateMixin, CompletableMixin {
-  late TabController _tabController;
+  
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
+   }
 
   late final userCubit = context.read<UserCubit>();
   late final professionalCubit = context.read<MyProfessionalCubit>();
@@ -55,8 +54,7 @@ class _AccountScreenState extends State<AccountScreen>
           professionalCubit.getInitialStateOnline();
           context.read<LoadMeCatalogueCubit>().reset();
           context.read<LoadMeAgendaCubit>().reset();
-          print('000000');
-        },
+         },
         child: BlocConsumer<MyProfessionalCubit, MyProfessionalState>(
           listener: onEventReceived,
           builder: (context, state) {

@@ -1,9 +1,5 @@
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/common/utils/assets.dart';
-import 'package:beauty/common/utils/photo_full.dart';
-import 'package:beauty/common/utils/svg_utils.dart';
-import 'package:beauty/common/utils/themes.dart'; 
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
 

@@ -177,6 +177,8 @@ abstract class AppTheme {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
       checkboxTheme: theme.checkboxTheme.copyWith(
+        checkColor: WidgetStateProperty.resolveWith(
+            (states) => states.contains(WidgetState.selected) ? white : null),
         fillColor: WidgetStateProperty.resolveWith((states) =>
             states.contains(WidgetState.selected) ? primaryYellow : null),
       ),

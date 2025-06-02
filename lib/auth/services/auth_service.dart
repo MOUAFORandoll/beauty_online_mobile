@@ -1,4 +1,3 @@
-import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
 import 'package:beauty/auth/models/auth_response.dart';
 import 'package:beauty/common/models/user.dart';

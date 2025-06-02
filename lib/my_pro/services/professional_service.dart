@@ -33,8 +33,7 @@ class ProfessionalService extends ApiService {
   static const String _rendezVous = '/rendez-vous';
 
   const ProfessionalService(super._dio);
-
-  @override
+ 
   Future<String> shareProfile({required String id}) {
     return compute(
         dio.get(

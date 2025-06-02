@@ -1,6 +1,4 @@
-import 'package:beauty/common/models/service_model.dart';
-import 'package:beauty/common/widgets/section_title.dart';
-import 'package:beauty/common/widgets/service_item.dart';
+import 'package:beauty/common/models/service_model.dart'; 
 import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
 

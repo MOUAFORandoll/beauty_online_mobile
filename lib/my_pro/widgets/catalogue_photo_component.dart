@@ -1,19 +1,10 @@
-import 'dart:developer';
-
-import 'package:beauty/common/bloc/select_realisation_cubit.dart';
-import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/common/utils/dialogs.dart';
 import 'package:beauty/common/utils/photo_full.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:video_player/video_player.dart';
 
 class CataloguePhotoComponent extends StatefulWidget {
   final Catalogue catalogue;
@@ -39,7 +30,7 @@ class _CataloguePhotoComponentState extends State<CataloguePhotoComponent>
             ? CarouselSlider(
                 carouselController: _carouselController,
                 options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
                   autoPlay: true,
@@ -58,7 +49,7 @@ class _CataloguePhotoComponentState extends State<CataloguePhotoComponent>
                         width: MediaQuery.of(context).size.width,
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(
-                            Radius.circular(32),
+                            Radius.circular(16),
                           ),
                           child: Image(
                             fit: BoxFit.cover,

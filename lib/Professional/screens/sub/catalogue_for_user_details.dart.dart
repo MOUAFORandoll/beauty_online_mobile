@@ -2,23 +2,11 @@ import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/home/bloc/actu_cubit.dart';
-import 'package:beauty/professional/bloc/load_pro_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/professional/bloc/professional_cubit.dart';
 import 'package:beauty/professional/screens/sub/agenda_pro.dart';
-import 'package:beauty/professional/widgets/item_catalogue.dart';
-import 'package:beauty/common/models/service_model.dart';
-import 'package:beauty/common/widgets/empty_builder.dart';
-import 'package:beauty/common/widgets/error_builder.dart';
-import 'package:beauty/common/widgets/loader_builder.dart';
-import 'package:beauty/common/widgets/section_title.dart';
-import 'package:beauty/common/widgets/service_item.dart';
-import 'package:beauty/common/utils/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:potatoes/auto_content/widgets/auto_content_view.dart';
-import 'package:potatoes/auto_list.dart';
-import 'package:potatoes/libs.dart';
-import 'package:flutter/material.dart';
+import 'package:potatoes/libs.dart'; 
 import 'package:carousel_slider/carousel_slider.dart';
 
 class CatalogueForUserDialog extends StatelessWidget {

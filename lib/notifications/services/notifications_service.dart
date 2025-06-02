@@ -1,14 +1,10 @@
-import 'dart:io';
 
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/home/models/actu.dart';
-import 'package:beauty/notifications/models/notification.dart';
 import 'package:beauty/notifications/models/notification_model.dart';
-import 'package:path/path.dart';
 import 'package:potatoes/auto_list/models/paginated_list.dart';
 import 'package:potatoes/libs.dart';
-import 'package:beauty/common/models/user.dart';
 import 'package:beauty/common/services/api_service.dart';
 
 class NotificationsService extends ApiService {

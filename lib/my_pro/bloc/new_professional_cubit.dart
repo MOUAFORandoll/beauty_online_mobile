@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
- 
+
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/my_pro/bloc/my_professional_cubit.dart';
 import 'package:beauty/my_pro/services/professional_service.dart';
@@ -38,7 +38,9 @@ class NewProfessionalCubit extends Cubit<NewProfessionalState> {
     };
     professionalService.createUserProfile(data: data, cover: image).then(
         (profil) {
+      professionalCubit.preferencesService.saveProfessional(profil);
       professionalCubit.getInitialState();
+
       emit(NewProfessionalUploadedState(profil));
       Timer(const Duration(seconds: 5), () {
         emit(const NewProfessionalIdleState());

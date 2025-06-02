@@ -99,7 +99,7 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
                             SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                userCubit.user.email!,
+                                userCubit.user.email,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey,

@@ -3,8 +3,6 @@ import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/screens/await_load.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
-import 'package:beauty/account/screens/settings/settings_screen.dart';
-
 import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/screens/notifications.dart';
 import 'package:beauty/notifications/services/notification_service.dart';

@@ -1,31 +1,11 @@
-import 'dart:developer';
-
-import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/common/utils/assets.dart';
-import 'package:beauty/common/utils/dialogs.dart';
-import 'package:beauty/common/utils/photo_full.dart';
-import 'package:beauty/common/utils/svg_utils.dart';
-import 'package:beauty/common/utils/themes.dart';
 import 'package:beauty/common/widgets/app_video_player.dart';
-import 'package:beauty/common/widgets/bottom_sheet.dart';
-import 'package:beauty/common/widgets/buttons.dart';
-import 'package:beauty/common/widgets/item_pro.dart';
-import 'package:beauty/home/bloc/actu_cubit.dart';
-import 'package:beauty/home/services/actu_cubit_manager.dart';
 import 'package:beauty/home/widgets/video_progress_bar.dart';
-import 'package:beauty/professional/screens/sub/agenda_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:video_player/video_player.dart';
 
 class CatalogueVideoComponent extends StatefulWidget {
   final Catalogue catalogue;
@@ -51,7 +31,7 @@ class _CatalogueVideoComponentState extends State<CatalogueVideoComponent>
   Widget build(BuildContext context) {
     return widget.catalogue.video != null &&
             widget.catalogue.video!.videoLink != null &&
-            widget.catalogue.video!.videoLink!.isNotEmpty
+            widget.catalogue.video!.videoLink.isNotEmpty
         ? GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
