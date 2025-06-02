@@ -10,7 +10,7 @@ import 'api_error.dart';
 
 class ApiLinks extends potatoes.Links {
   const ApiLinks();
-  static const String url = 'http://192.168.103.155:8080/api';
+  static const String url = 'http://192.168.1.129:8080/api';
   // static const String url = 'https://api.beauty.petite-monnaie.com';
 
   @override

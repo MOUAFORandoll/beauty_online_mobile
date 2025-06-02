@@ -1,3 +1,4 @@
+import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/my_pro/screens/sub/catalogue_for_pro_details.dart.dart';
@@ -5,10 +6,13 @@ import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/common/utils/svg_utils.dart';
 import 'package:beauty/common/utils/themes.dart';
+import 'package:beauty/my_pro/widgets/my_item_catalogue_photo.dart';
+import 'package:beauty/my_pro/widgets/my_item_catalogue_video.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/libs.dart';
+import 'package:video_player/video_player.dart';
 
-class MyCatalogueItem extends StatelessWidget {
+class MyCatalogueItem extends StatefulWidget {
   final Catalogue catalogue;
 
   const MyCatalogueItem(
@@ -16,79 +20,159 @@ class MyCatalogueItem extends StatelessWidget {
   );
 
   @override
+  State<MyCatalogueItem> createState() => _MyCatalogueItemState();
+}
+
+class _MyCatalogueItemState extends State<MyCatalogueItem>
+    with AutomaticKeepAliveClientMixin {
+  VideoPlayerController? _controller;
+  late final VideoCubit videoCubit = context.read<VideoCubit>();
+
+  bool _isInitializing = false;
+  bool _hasError = false;
+  String? _errorMessage;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeVideo();
+  }
+
+  @override
+  void didUpdateWidget(MyCatalogueItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Réinitialiser si l'URL de la vidéo a changé
+    if (oldWidget.catalogue.video != null) {
+      if (oldWidget.catalogue.video!.videoLink !=
+          widget.catalogue.video!.videoLink) {
+        _disposeController();
+        _initializeVideo();
+      }
+    }
+  }
+
+  Future<void> _initializeVideo() async {
+    if (widget.catalogue.video == null) {
+      setState(() {
+        _hasError = false;
+      });
+      return;
+    }
+    if (_isInitializing || widget.catalogue.video!.videoLink.isEmpty) return;
+
+    setState(() {
+      _isInitializing = true;
+      _hasError = false;
+      _errorMessage = null;
+    });
+
+    try {
+      _controller = VideoPlayerController.networkUrl(
+        Uri.parse(widget.catalogue.video!.videoLink),
+        httpHeaders: {
+          'User-Agent': 'Flutter Video Player',
+        },
+      );
+
+      // Configuration du controller
+      await _controller!.initialize();
+
+      // Configuration des options
+
+      await _controller!.setLooping(true);
+
+      // Mise à jour du cubit
+      // if (mounted) {
+      setState(() {
+        _isInitializing = false;
+      });
+    } catch (error) {
+      debugPrint('Erreur initialisation vidéo: $error');
+
+      if (mounted) {
+        setState(() {
+          _isInitializing = false;
+          _hasError = true;
+          _errorMessage = _getErrorMessage(error);
+        });
+      }
+    }
+  }
+
+  String _getErrorMessage(dynamic error) {
+    if (error.toString().contains('network')) {
+      return 'Erreur de connexion réseau';
+    } else if (error.toString().contains('format')) {
+      return 'Format vidéo non supporté';
+    } else {
+      return 'Erreur lors du chargement de la vidéo';
+    }
+  }
+
+  void _disposeController() {
+    _controller?.dispose();
+    _controller = null;
+  }
+
+  @override
+  void dispose() {
+    _disposeController();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CatalogueForProDialog(
-            catalogue: catalogue,
-          );
-        },
-      ),
+      onTap: () {
+        videoCubit.set(_controller);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CatalogueForProDialog(
+              catalogue: widget.catalogue,
+            );
+          },
+        );
+      },
       child: Stack(
         fit: StackFit.expand,
         children: [
-          catalogueItemImage(catalogue: catalogue, context: context),
-          Positioned.fill(
-            child: Container(
-              color: Colors.black.withOpacity(0.2),
-              child: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  toSvgIcon(
-                      icon: Assets.iconsBookmark,
-                      size: 32.0,
-                      color: AppTheme.white),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    '${catalogue.price} €',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(color: AppTheme.white),
-                  )
-                ],
-              )),
+          widget.catalogue.isVideo ?? false
+              ? MyItemCatalogueVideo(widget.catalogue)
+              : MyItemCataloguePhoto(widget.catalogue),
+          if (widget.catalogue.isVideo ?? false)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.2),
+                child: Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    toSvgIcon(
+                        icon: Assets.iconPlay,
+                        size: 32.0,
+                        color: AppTheme.white),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      '${widget.catalogue.price} €',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .copyWith(color: AppTheme.white),
+                    )
+                  ],
+                )),
+              ),
             ),
-          ),
         ],
       ),
     );
   }
-
-  catalogueItemImage(
-          {required BuildContext context, required Catalogue catalogue}) =>
-      Image(
-        image: context
-            .read<AppCacheManager>()
-            .getImage(catalogue.realisationFiles.first.filePath),
-        fit: BoxFit.cover,
-        width: double.infinity,
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-          if (frame != null) return child;
-          return Container(
-            color: Theme.of(context).colorScheme.tertiaryContainer,
-            width: double.infinity,
-            child: wasSynchronouslyLoaded
-                ? child
-                : Center(
-                    child: SizedBox(
-                      height: 16.0,
-                      width: 16.0,
-                      child: CircularProgressIndicator(
-                        color:
-                            Theme.of(context).colorScheme.onTertiaryContainer,
-                        strokeWidth: 2.0,
-                      ),
-                    ),
-                  ),
-          );
-        },
-        errorBuilder: (_, __, ___) => const Icon(Icons.error),
-      );
 }

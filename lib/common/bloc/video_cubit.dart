@@ -9,6 +9,7 @@ class VideoCubit extends ValueCubit<VideoPlayerController?> {
     if (controller != null && controller.value.isPlaying) {
       controller.seekTo(Duration.zero);
       controller.pause();
+      set(controller);
     }
   }
 
