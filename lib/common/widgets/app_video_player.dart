@@ -5,13 +5,16 @@ import 'package:video_player/video_player.dart';
 
 class AppVideoPlayer extends StatefulWidget {
   final VideoPlayerController controller;
+
   final bool autoManage;
   final bool autoPlay;
+  final Widget? thumbnail;
   final bool looping;
 
   const AppVideoPlayer({
     super.key,
     required this.controller,
+    this.thumbnail,
     this.autoManage = false,
     this.autoPlay = false,
     this.looping = false,
@@ -43,6 +46,11 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    print('=========== init  ${controller.value.isInitialized}');
+    if (controller == null || controller.value.isInitialized) {
+      return widget.thumbnail ?? VideoPlayer(controller);
+    }
+
     return VideoPlayer(controller);
   }
 

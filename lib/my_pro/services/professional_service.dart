@@ -33,7 +33,7 @@ class ProfessionalService extends ApiService {
   static const String _rendezVous = '/rendez-vous';
 
   const ProfessionalService(super._dio);
- 
+
   Future<String> shareProfile({required String id}) {
     return compute(
         dio.get(
@@ -160,7 +160,7 @@ class ProfessionalService extends ApiService {
     int page = 1,
   }) async {
     return compute(
-        dio.get(_catalogue,
+        dio.get(_catalogue + '/me',
             options: Options(headers: withAuth()),
             queryParameters: {
               'page': page,

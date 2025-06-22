@@ -6,10 +6,10 @@ import 'package:beauty/common/services/api_error.dart';
 
 class SearchCubit<T> extends AutoListCubit<T> {
   final Duration sleepDuration;
-  final Future<PaginatedList<T>> Function(
-      {required String search,
-      int page,
-      CancelToken? cancelToken}) proceedSearch;
+  final Future<PaginatedList<T>> Function({
+    required String search,
+    int page,
+  }) proceedSearch;
   final int minimumQueryLength;
 
   CancelToken? _cancelToken;
@@ -60,8 +60,10 @@ class SearchCubit<T> extends AutoListCubit<T> {
   dynamic get provider {
     if (_query.isEmpty) return baseProvider;
 
-    return ({int page = 1}) =>
-        proceedSearch(search: _query, page: page, cancelToken: _cancelToken);
+    return ({int page = 1}) => proceedSearch(
+          search: _query,
+          page: page,
+        );
   }
 
   void cancel() {

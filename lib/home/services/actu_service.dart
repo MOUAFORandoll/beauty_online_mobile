@@ -18,6 +18,7 @@ class ActuService extends ApiService {
 
   const ActuService(super._dio);
 
+
   Future<PaginatedList<SearchResult>> search({
     required String search,
     int page = 1,

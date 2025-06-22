@@ -35,18 +35,10 @@ class ActuItem extends StatefulWidget {
   State<ActuItem> createState() => _ActuItemState();
 }
 
-class _ActuItemState extends State<ActuItem>
-    with AutomaticKeepAliveClientMixin {
+class _ActuItemState extends State<ActuItem> {
   late final actuCubit = context.read<ActuCubit>();
   VideoPlayerController? _controller;
   late final VideoCubit videoCubit = context.read<VideoCubit>();
-
-  bool _isInitializing = false;
-  bool _hasError = false;
-  String? _errorMessage;
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -69,24 +61,15 @@ class _ActuItemState extends State<ActuItem>
 
   Future<void> _initializeVideo() async {
     if (actuCubit.actu.video == null) {
-      setState(() {
-        _hasError = false;
-      });
       return;
     }
-    if (_isInitializing || actuCubit.actu.video!.videoLink.isEmpty) return;
-
-    setState(() {
-      _isInitializing = true;
-      _hasError = false;
-      _errorMessage = null;
-    });
+    if (actuCubit.actu.video!.videoLink.isEmpty) return;
 
     try {
       _controller = VideoPlayerController.networkUrl(
         Uri.parse(actuCubit.actu.video!.videoLink),
         httpHeaders: {
-          'User-Agent': 'Flutter Video Player',
+          'User-Agent': 'Beauty Video Player',
         },
       );
 
@@ -96,34 +79,11 @@ class _ActuItemState extends State<ActuItem>
       // Configuration des options
 
       await _controller!.setLooping(true);
+      await _controller!.setVolume(0.0);
 
       await _controller!.play();
-
-      // Mise à jour du cubit
-      // if (mounted) {
-      setState(() {
-        _isInitializing = false;
-      });
     } catch (error) {
       debugPrint('Erreur initialisation vidéo: $error');
-
-      if (mounted) {
-        setState(() {
-          _isInitializing = false;
-          _hasError = true;
-          _errorMessage = _getErrorMessage(error);
-        });
-      }
-    }
-  }
-
-  String _getErrorMessage(dynamic error) {
-    if (error.toString().contains('network')) {
-      return 'Erreur de connexion réseau';
-    } else if (error.toString().contains('format')) {
-      return 'Format vidéo non supporté';
-    } else {
-      return 'Erreur lors du chargement de la vidéo';
     }
   }
 

@@ -31,19 +31,54 @@ class _ActuItemVideoState extends State<ActuItemVideo> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: widget.actu.video!.thumbnail.isNotEmpty
-          ? Image(
-              image: context
-                  .read<AppCacheManager>()
-                  .getImage(widget.actu.video!.thumbnail),
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return _buildPlaceholder();
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return _buildLoadingIndicator();
-              },
-            )
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Stack(fit: StackFit.expand, children: [
+                Image(
+                  image: context
+                      .read<AppCacheManager>()
+                      .getImage(widget.actu.video!.thumbnail),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                    if (frame != null) return child;
+                    return Container(
+                      color: Theme.of(context).colorScheme.tertiaryContainer,
+                      child: wasSynchronouslyLoaded
+                          ? child
+                          : const Center(
+                              child: SizedBox(
+                                height: 16,
+                                width: 16,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2.0),
+                              ),
+                            ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return _buildPlaceholder();
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return _buildLoadingIndicator();
+                  },
+                ),
+              ]))
+          // Image(
+          //           image: context
+          //               .read<AppCacheManager>()
+          //               .getImage(widget.actu.video!.thumbnail),
+          //           fit: BoxFit.cover,
+          //           errorBuilder: (context, error, stackTrace) {
+          //             return _buildPlaceholder();
+          //           },
+          //           loadingBuilder: (context, child, loadingProgress) {
+          //             if (loadingProgress == null) return child;
+          //             return _buildLoadingIndicator();
+          //           },
+          //         )
           : _buildPlaceholder(),
     );
   }

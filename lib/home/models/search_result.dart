@@ -50,4 +50,17 @@ extension SearchResultX on SearchResult {
         return null;
     }
   }
+
+  dynamic toData() {
+    switch (type) {
+      case 'actu':
+        Actu.fromJson(data as Map<String, dynamic>);
+
+      case 'pro':
+     Professional.fromJson(data as Map<String, dynamic>);
+        return;
+      default:
+        return null;
+    }
+  }
 }

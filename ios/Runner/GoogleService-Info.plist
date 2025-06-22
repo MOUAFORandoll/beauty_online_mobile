@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to.apps.googleusercontent.com</string>
+	<string>69380599834-gmqjmke6kqv1lr1qvnnoj6c35tqasgja.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to</string>
+	<string>com.googleusercontent.apps.69380599834-gmqjmke6kqv1lr1qvnnoj6c35tqasgja</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>69380599834-30dms2lkucthg1kbla8009gvlnpdss0n.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA8bcbju81cfhervS33FUqYx-7DozpbuAY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>app.beauty.online</string>
+	<string>my.beauty.online</string>
 	<key>PROJECT_ID</key>
 	<string>beauty-online-f51ac</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:69380599834:ios:9ca182c9dfeae34492a1a3</string>
+	<string>1:69380599834:ios:c9a2aa66ace76ebf92a1a3</string>
 </dict>
 </plist>

@@ -33,7 +33,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    namespace "app.beauty.online"
+    namespace "my.beauty.online"
     compileSdk flutter.compileSdkVersion
     ndkVersion "28.0.13004108"
 
@@ -53,7 +53,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "app.beauty.online"
+        applicationId "my.beauty.online"
         minSdkVersion 24
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion

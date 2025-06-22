@@ -29,7 +29,7 @@ class FullScreenMedia extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        leading: null,
+        leading: Container(),
         actions: [
           IconButton(
             icon: Icon(Icons.close, color: Colors.white),

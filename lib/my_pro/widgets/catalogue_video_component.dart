@@ -42,74 +42,68 @@ class _CatalogueVideoComponentState extends State<CatalogueVideoComponent>
               });
             },
             child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                child: ValueListenableBuilder(
-                  valueListenable: videoCubit.state!,
-                  builder: (context, value, _) => Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Stack(alignment: Alignment.bottomCenter, children: [
-                        ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
-                          child: (!value.isInitialized)
-                              ? Image(
-                                  image: context
-                                      .read<AppCacheManager>()
-                                      .getImage(
-                                          widget.catalogue.video!.thumbnail),
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                )
-                              : Center(
-                                  child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.4,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: AppVideoPlayer(
-                                    controller: videoCubit.state!,
-                                    autoPlay: true,
-                                    looping: true,
-                                  ),
-                                )),
-                        ),
-                        VideoProgressBar(
-                            controller: videoCubit.state!,
-                            isActu: false,
-                            catalogue: widget.catalogue),
-                      ]),
-                      if (actionButton)
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
-                            color: Colors.black.withOpacity(0.3),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Stack(alignment: Alignment.bottomCenter, children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      child: Center(
+                          child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppVideoPlayer(
+                          controller: videoCubit.state!,
+                          thumbnail: Image(
+                            image: context
+                                .read<AppCacheManager>()
+                                .getImage(widget.catalogue.video!.thumbnail),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
                           ),
-                          child: Center(
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                if (videoCubit.state!.value.isPlaying) {
-                                  videoCubit.state!.pause();
-                                } else {
-                                  videoCubit.state!.play();
-                                }
-                              },
-                              child: Icon(
-                                value.isPlaying
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                                size: 48,
-                                color: Colors.white,
-                              ),
-                            ),
+                          autoPlay: true,
+                          looping: true,
+                        ),
+                      )),
+                    ),
+                    VideoProgressBar(
+                        controller: videoCubit.state!,
+                        isActu: false,
+                        catalogue: widget.catalogue),
+                  ]),
+                  if (actionButton)
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                      child: Center(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            if (videoCubit.state!.value.isPlaying!) {
+                              videoCubit.state!.pause();
+                            } else {
+                              videoCubit.state!.play();
+                            }
+                          },
+                          child: Icon(
+                            videoCubit.state!.value.isPlaying!
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            size: 48,
+                            color: Colors.white,
                           ),
                         ),
-                    ],
-                  ),
-                )))
+                      ),
+                    ),
+                ],
+              ),
+            ))
         : Container(
             height: MediaQuery.of(context).size.height * 0.5,
             decoration: const BoxDecoration(

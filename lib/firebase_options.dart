@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC-_MO4NzZ9Xqjmt-G2EwNx8RI8ei7VVws',
-    appId: '1:69380599834:android:9bb408ee5a5d093592a1a3',
+    appId: '1:69380599834:android:6b4fba561808934592a1a3',
     messagingSenderId: '69380599834',
     projectId: 'beauty-online-f51ac',
     storageBucket: 'beauty-online-f51ac.firebasestorage.app',
@@ -60,12 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA8bcbju81cfhervS33FUqYx-7DozpbuAY',
-    appId: '1:69380599834:ios:9ca182c9dfeae34492a1a3',
+    appId: '1:69380599834:ios:c9a2aa66ace76ebf92a1a3',
     messagingSenderId: '69380599834',
     projectId: 'beauty-online-f51ac',
     storageBucket: 'beauty-online-f51ac.firebasestorage.app',
-    iosClientId: '69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to.apps.googleusercontent.com',
-    iosBundleId: 'app.beauty.online',
+    androidClientId: '69380599834-30dms2lkucthg1kbla8009gvlnpdss0n.apps.googleusercontent.com',
+    iosClientId: '69380599834-gmqjmke6kqv1lr1qvnnoj6c35tqasgja.apps.googleusercontent.com',
+    iosBundleId: 'my.beauty.online',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -74,8 +75,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '167934514170',
     projectId: 'signyale',
     storageBucket: 'signyale.firebasestorage.app',
-    androidClientId: '167934514170-4p16bc0b74v3j24b8irvd9vi1d09mgps.apps.googleusercontent.com',
-    iosClientId: '167934514170-1genpnurqh6n6ignssi71nhh4490pt7o.apps.googleusercontent.com',
+    androidClientId:
+        '167934514170-4p16bc0b74v3j24b8irvd9vi1d09mgps.apps.googleusercontent.com',
+    iosClientId:
+        '167934514170-1genpnurqh6n6ignssi71nhh4490pt7o.apps.googleusercontent.com',
     iosBundleId: 'com.example.signyale',
   );
 
@@ -88,5 +91,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'signyale.firebasestorage.app',
     measurementId: 'G-Z9KX85BR2R',
   );
-
 }

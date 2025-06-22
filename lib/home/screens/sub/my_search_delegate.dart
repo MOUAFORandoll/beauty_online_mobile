@@ -1,3 +1,4 @@
+import 'package:beauty/common/bloc/user_search_cubit.dart';
 import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/widgets/empty_builder.dart';
 import 'package:beauty/home/models/search_result.dart';
@@ -9,15 +10,15 @@ import 'package:potatoes/auto_list/bloc/auto_list_cubit.dart';
 import 'package:potatoes/auto_list/widgets/auto_list_view.dart';
 
 class MySearchDelegate extends SearchDelegate<String> {
-  late final AutoListCubit<SearchResult> _cubit;
+  late final MySearchCubit _cubit;
 
   MySearchDelegate(BuildContext context) : super() {
-    _cubit = AutoListCubit(
-      provider: ({page = 1}) => context.read<ActuService>().search(
-            search: query,
-            page: page,
-          ),
+    _cubit = _cubit = MySearchCubit(
+      actuService: context.read(),
+      proCubitManager: context.read(),
+      actuCubitManager: context.read(),
     );
+    ;
   }
 
   @override
@@ -169,7 +170,7 @@ class MySearchDelegate extends SearchDelegate<String> {
             ],
           ),
         ),
-      ), 
+      ),
       emptyBuilder: (ctx) => const EmptyBuilder(),
       errorBuilder: (context, retry) => Center(
         child: Column(

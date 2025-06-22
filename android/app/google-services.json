@@ -7,34 +7,42 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:69380599834:android:9bb408ee5a5d093592a1a3",
+        "mobilesdk_app_id": "1:69380599834:android:6b4fba561808934592a1a3",
         "android_client_info": {
-          "package_name": "app.beauty.online"
+          "package_name": "my.beauty.online"
         }
       },
       "oauth_client": [
         {
-          "client_id": "69380599834-30dms2lkucthg1kbla8009gvlnpdss0n.apps.googleusercontent.com",
+          "client_id": "69380599834-f7jppvvhplcid4nbjvc3u3el7cagactf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "app.beauty.online",
+            "package_name": "my.beauty.online",
+            "certificate_hash": "27241f5ece5d79ad5798f71c1806a7e55bdf767a"
+          }
+        },
+        {
+          "client_id": "69380599834-fo3ccqkdj7crieq84sm1jgsdec9r3lel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.beauty.online",
+            "certificate_hash": "5ca18d2f6c7a34821cb2f801475f3dd6821cd802"
+          }
+        },
+        {
+          "client_id": "69380599834-jpc29f174bvo1ke9ui161j6id34fdije.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.beauty.online",
             "certificate_hash": "207bfe8da7cab67c27556ccb37c7d515624d4f74"
           }
         },
         {
-          "client_id": "69380599834-a4o22tblqnoq3ded3c46tt2avq0rnau4.apps.googleusercontent.com",
+          "client_id": "69380599834-vk6fndvr0i7pj1idq2ls1v6p5sepgo59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "app.beauty.online",
-            "certificate_hash": "3d9ab69ba01c3f9f8aac11516e5b0702e4fb32dd"
-          }
-        },
-        {
-          "client_id": "69380599834-uve5mcbo6nd7i67d321jbjm5k6f6qu4t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.beauty.online",
-            "certificate_hash": "51321253e995bbfa74c06636a3e06e5e43a6d874"
+            "package_name": "my.beauty.online",
+            "certificate_hash": "37ffac75132bbbbc80e34b02ad3f5326b6a4d239"
           }
         },
         {
@@ -55,10 +63,10 @@
               "client_type": 3
             },
             {
-              "client_id": "69380599834-rhvcgbg0kr6shpum7pm6ierquf9o44to.apps.googleusercontent.com",
+              "client_id": "69380599834-gmqjmke6kqv1lr1qvnnoj6c35tqasgja.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.beauty.online"
+                "bundle_id": "my.beauty.online"
               }
             }
           ]
