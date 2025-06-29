@@ -1,6 +1,7 @@
 import 'package:beauty/auth/screens/splash_page.dart';
 import 'package:beauty/common/bloc/link_cubit.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
+import 'package:beauty/common/bloc/user_search_cubit.dart';
 import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:beauty/home/services/actu_cubit_manager.dart';
@@ -27,6 +28,7 @@ import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/services/notification_service.dart';
 import 'package:beauty/notifications/services/notifications_service.dart';
 import 'package:beauty/professional/bloc/action_professional_cubit.dart';
+import 'package:beauty/professional/bloc/catalogue_cubit_manager.dart';
 import 'package:beauty/professional/bloc/load_me_rendez_vous_cubit.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -129,6 +131,8 @@ class MyApp extends StatelessWidget {
                 ProfessionalCubitManager(context.read(), preferencesService)),
         RepositoryProvider(
             create: (context) => ActuCubitManager(context.read())),
+
+        RepositoryProvider(create: (context) => CatalogueCubitManager()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -160,7 +164,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => AuthCubit(context.read(), context.read())),
           BlocProvider(
-              create: (context) => LoadMeCatalogueCubit(context.read())),
+              create: (context) =>
+                  LoadMeCatalogueCubit(context.read(), context.read())),
           BlocProvider(create: (context) => LoadMeAgendaCubit(context.read())),
           BlocProvider(create: (context) => AddScheduleCubit()),
           BlocProvider(
@@ -191,6 +196,14 @@ class MyApp extends StatelessWidget {
               context.read(),
             ),
           ),
+          // BlocProvider(
+          //   create: (context) => MySearchCubit(
+          //     actuService: context.read(),
+          //     proCubitManager: context.read(),
+          //     actuCubitManager: context.read(),
+          //   ),
+          // ),
+
           BlocProvider(create: (_) => VideoVolumeCubit()),
 
           BlocProvider(create: (_) => VideoCubit())

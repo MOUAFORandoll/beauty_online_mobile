@@ -1,5 +1,7 @@
+import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/common/utils/photo_full.dart';
 import 'package:beauty/common/widgets/buttons.dart';
+import 'package:beauty/home/widgets/actu_item_video.dart';
 import 'package:beauty/my_pro/bloc/gestion_professional_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_catalogue_cubit.dart';
 import 'package:beauty/common/models/catalogue.dart';
@@ -135,7 +137,11 @@ class CatalogueForProDialog extends StatelessWidget {
             // ),
 
             catalogue.isVideo ?? false
-                ? CatalogueVideoComponent(catalogue)
+                ? 
+                
+                catalogue.toVideoPlayer(
+                    controller: context.read<VideoCubit>().state!,
+                  )
                 : CataloguePhotoComponent(catalogue),
             // Content
             Padding(

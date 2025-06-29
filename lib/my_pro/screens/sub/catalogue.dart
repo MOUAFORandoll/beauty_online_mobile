@@ -49,9 +49,10 @@ class _CatalogueViewState extends State<CatalogueView> {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewPadding.bottom),
             autoManage: false,
-             cubit: cubit,
+            cubit: cubit,
             viewType: ViewType.grid,
-            itemBuilder: (context, catalogue) => MyCatalogueItem(catalogue),
+            itemBuilder: (context, catalogue) =>
+                MyCatalogueItem.get(context: context, catalogue: catalogue),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 2.0,

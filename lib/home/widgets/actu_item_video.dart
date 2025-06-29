@@ -1,201 +1,132 @@
-import 'package:beauty/common/bloc/video_cubit.dart';
+import 'package:beauty/common/models/catalogue.dart';
 import 'package:beauty/common/services/cache_manager.dart';
-import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:potatoes/libs.dart';
+import 'package:video_player/video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:beauty/home/bloc/actu_cubit.dart';
 import 'package:beauty/home/models/actu.dart';
-import 'package:video_player/video_player.dart';
+class ActuVideoPlayer extends StatelessWidget {
+  final Actu? actu;
+  final Catalogue? catalogue;
+  final VideoPlayerController? controller;
 
-class ActuItemVideo extends StatefulWidget {
-  final Actu actu;
-  final VideoPlayerController controller;
-
-  const ActuItemVideo({
+  const ActuVideoPlayer({
     super.key,
-    required this.actu,
-    required this.controller,
+    this.actu,
+    this.catalogue,
+    this.controller,
   });
 
+  const ActuVideoPlayer.fromActu({
+    super.key,
+    required Actu this.actu,
+    required VideoPlayerController this.controller,
+  }) : catalogue = null;
+
+  const ActuVideoPlayer.fromCatalogue({
+    super.key,
+    required Catalogue this.catalogue,
+    required VideoPlayerController this.controller,
+  }) : actu = null;
+
   @override
-  State<ActuItemVideo> createState() => _ActuItemVideoState();
-}
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
 
-class _ActuItemVideoState extends State<ActuItemVideo> {
-  Widget _buildThumbnail() {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
         borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: theme.shadowColor.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: widget.actu.video!.thumbnail.isNotEmpty
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(fit: StackFit.expand, children: [
-                Image(
-                  image: context
-                      .read<AppCacheManager>()
-                      .getImage(widget.actu.video!.thumbnail),
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  frameBuilder:
-                      (context, child, frame, wasSynchronouslyLoaded) {
-                    if (frame != null) return child;
-                    return Container(
-                      color: Theme.of(context).colorScheme.tertiaryContainer,
-                      child: wasSynchronouslyLoaded
-                          ? child
-                          : const Center(
-                              child: SizedBox(
-                                height: 16,
-                                width: 16,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2.0),
-                              ),
-                            ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return _buildPlaceholder();
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return _buildLoadingIndicator();
-                  },
-                ),
-              ]))
-          // Image(
-          //           image: context
-          //               .read<AppCacheManager>()
-          //               .getImage(widget.actu.video!.thumbnail),
-          //           fit: BoxFit.cover,
-          //           errorBuilder: (context, error, stackTrace) {
-          //             return _buildPlaceholder();
-          //           },
-          //           loadingBuilder: (context, child, loadingProgress) {
-          //             if (loadingProgress == null) return child;
-          //             return _buildLoadingIndicator();
-          //           },
-          //         )
-          : _buildPlaceholder(),
-    );
-  }
-
-  Widget _buildPlaceholder() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.video_library_outlined,
-              size: 48,
-              color: Colors.grey,
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Aperçu vidéo non disponible',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingIndicator() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text(
-              'Chargement de la vidéo...',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildVideoPlayer() {
-    if (widget.controller == null || !widget.controller!.value.isInitialized) {
-      return _buildLoadingIndicator();
-    }
-
-    return Expanded(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: AppVideoPlayer(
-          controller: widget.controller,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: _buildContent(context),
         ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print('Vidéo: ${widget.actu.video!.videoLink}');
-    print('thumbnail: ${widget.actu.video!.thumbnail}');
-    return Semantics(
-      label: 'Vidéo: ${widget.actu.title ?? "Contenu vidéo"}',
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.controller?.value.isInitialized == true)
-              _buildVideoPlayer()
-            else
-              _buildThumbnail(),
-          ],
+  Widget _buildContent(BuildContext context) {
+    if (controller == null || !controller!.value.isInitialized) {
+      return _buildThumbnailState(context);
+    }
+
+    return _buildVideoPlayer(context);
+  }
+
+  Widget _buildThumbnailState(BuildContext context) {
+    final String? thumbnailUrl =
+        actu?.video?.thumbnail ?? catalogue?.video?.thumbnail ?? '';
+    final imageProvider =
+        context.read<AppCacheManager>().getImage(thumbnailUrl!);
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image(
+          fit: BoxFit.fill,
+          image: imageProvider,
+          errorBuilder: (context, error, stackTrace) => Icon(
+            Icons.error,
+            color: Theme.of(context).colorScheme.onTertiaryContainer,
+            size: 32,
+          ),
         ),
-      ),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.black.withOpacity(0.3),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVideoPlayer(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        VideoPlayer(controller!),
+      ],
+    );
+  }
+}
+extension ActuVideoPlayerExtension on Actu {
+  Widget toVideoPlayer({
+    required VideoPlayerController controller,
+  }) {
+    return ActuVideoPlayer.fromActu(
+      actu: this,
+      controller: controller,
     );
   }
 }
 
-// Widget wrapper pour une utilisation simplifiée
-class ActuVideoWidget extends StatelessWidget {
-  final Actu actu;
-  final VoidCallback? onTap;
-  final bool autoPlay;
-  final bool showControls;
-
-  final VideoPlayerController controller;
-  const ActuVideoWidget({
-    super.key,
-    required this.actu,
-    this.onTap,
-    this.autoPlay = false, // Par défaut false pour économiser la bande passante
-    this.showControls = true,
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ActuItemVideo(actu: actu, controller: controller),
+extension CatalogueVideoPlayerExtension on Catalogue {
+  Widget toVideoPlayer({
+    required VideoPlayerController controller,
+  }) {
+    return ActuVideoPlayer.fromCatalogue(
+      catalogue: this,
+      controller: controller,
     );
   }
 }

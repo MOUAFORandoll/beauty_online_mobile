@@ -18,9 +18,9 @@ part 'actu_state.dart';
 class ActuCubit extends ObjectCubit<Actu, ActuState> {
   final ActuService actuService;
 
-  ActuCubit(this.actuService, Actu professional)
+  ActuCubit(this.actuService, Actu actu)
       : super(const InitializingActuState()) {
-    emit(ActuLoadedState(professional));
+    emit(ActuLoadedState(actu));
   }
 
   @override

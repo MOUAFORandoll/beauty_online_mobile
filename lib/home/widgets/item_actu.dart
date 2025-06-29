@@ -116,7 +116,12 @@ class _ActuItemState extends State<ActuItem> {
           fit: StackFit.expand,
           children: [
             actu.isVideo ?? false
-                ? ActuItemVideo(actu: actu, controller: _controller!)
+                ? actu.toVideoPlayer(
+                    controller: _controller!,
+                   
+                  )
+
+                //  ActuItemVideo(actu: actu, controller: _controller!)
                 : ActuItemPhoto(actu: actu),
 
             // Gradient fondu en bas

@@ -41,7 +41,7 @@ class ProfessionalItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyLarge),
             subtitle: Text(
-                '${professionalCubit.professional.position!.country}',
+                '${professionalCubit.professional.position!.country} ${professionalCubit.professional.position!.titleEmplacement??''}',
                 // '${professionalCubit.professional.nombreActes} ${professionalCubit.professional.nombreActes > 1 ? 'realisations' : 'realisation'}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

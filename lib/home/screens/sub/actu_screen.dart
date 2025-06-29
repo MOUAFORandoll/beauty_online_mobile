@@ -1,12 +1,7 @@
 import 'dart:developer';
 
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
-import 'package:beauty/common/bloc/video_cubit.dart';
-import 'package:beauty/common/services/cache_manager.dart';
 import 'package:beauty/common/utils/dialogs.dart';
-import 'package:beauty/common/utils/photo_full.dart';
-import 'package:beauty/common/utils/themes.dart';
-import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:beauty/common/widgets/bottom_sheet.dart';
 import 'package:beauty/common/widgets/buttons.dart';
 import 'package:beauty/common/widgets/item_pro.dart';
@@ -19,10 +14,8 @@ import 'package:beauty/professional/screens/sub/agenda_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:potatoes/common/widgets/loaders.dart';
 import 'package:potatoes/libs.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:share_plus/share_plus.dart'; 
+import 'package:share_plus/share_plus.dart';
+
 class ActuScreen extends StatefulWidget {
   const ActuScreen._();
   static Widget get({required BuildContext context, required Actu actu}) {
@@ -50,13 +43,13 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
     final actu = actuCubit.actu;
 
     return Scaffold(
-      extendBodyBehindAppBar:
-          true, // Important pour que l'image commence en haut
+      // extendBodyBehindAppBar:
+      //     true, // Important pour que l'image commence en haut
 
       body: SafeArea(
         minimum: EdgeInsets.only(
           bottom: 24,
-          top: 8,
+          top: 24,
         ),
         child:
             // Image principale qui commence en haut
@@ -67,7 +60,11 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
                     child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 8, right: 8),
+                  margin: EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    top: 16,
+                  ),
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
@@ -85,28 +82,28 @@ class _ActuScreenState extends State<ActuScreen> with CompletableMixin {
                 SizedBox(height: 16),
               ],
             ))),
-            // Container(
-            //   margin: EdgeInsets.only(left: 16, right: 16),
-            //   child: BeautyButton.primary(
-            //     onPressed: () {
-            //       log(actuCubit.actu.profileProfessionnel.toJson().toString());
-            //       context
-            //           .read<SelectRealisationCubit>()
-            //           .change(actuCubit.actu.id);
+            Container(
+              margin: EdgeInsets.only(left: 16, right: 16),
+              child: BeautyButton.primary(
+                onPressed: () {
+                  log(actuCubit.actu.profileProfessionnel.toJson().toString());
+                  context
+                      .read<SelectRealisationCubit>()
+                      .change(actuCubit.actu.id);
 
-            //       showAppBottomSheet(
-            //           context: context,
-            //           maxHeight: MediaQuery.of(context).size.height * .8,
-            //           isScrollControlled: true,
-            //           builder: (BuildContext context) {
-            //             return AgendaProView.get(
-            //                 context: context,
-            //                 professional: actuCubit.actu.profileProfessionnel);
-            //           });
-            //     },
-            //     text: "Prendre Rendez-vous",
-            //   ),
-            // ),
+                  showAppBottomSheet(
+                      context: context,
+                      maxHeight: MediaQuery.of(context).size.height * .8,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) {
+                        return AgendaProView.get(
+                            context: context,
+                            professional: actuCubit.actu.profileProfessionnel);
+                      });
+                },
+                text: "Prendre Rendez-vous",
+              ),
+            ),
           ],
         ),
       ),
