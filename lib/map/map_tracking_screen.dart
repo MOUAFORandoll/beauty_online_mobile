@@ -115,37 +115,37 @@ class _MapTrackingScreenState extends State<MapTrackingScreen> {
                     SizedBox(
                       width: spaceWidth,
                     ),
-                    BlocBuilder<MapTrackingCubit, MapTrackingState>(
-                      builder: (context, state) {
-                        return IconButton(
-                          icon: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppTheme.primaryBlack),
-                              padding: EdgeInsets.all(8),
-                              child: Icon(
-                                  state.isTracking
-                                      ? Icons.stop
-                                      : Icons.play_arrow,
-                                  color: Colors.white)),
-                          onPressed: () {
-                            if (state.isTracking) {
-                              mapTracking.stopTracking();
+                    // BlocBuilder<MapTrackingCubit, MapTrackingState>(
+                    //   builder: (context, state) {
+                    //     return IconButton(
+                    //       icon: Container(
+                    //           decoration: BoxDecoration(
+                    //               shape: BoxShape.circle,
+                    //               color: AppTheme.primaryBlack),
+                    //           padding: EdgeInsets.all(8),
+                    //           child: Icon(
+                    //               state.isTracking
+                    //                   ? Icons.stop
+                    //                   : Icons.play_arrow,
+                    //               color: Colors.white)),
+                    //       onPressed: () {
+                    //         if (state.isTracking) {
+                    //           mapTracking.stopTracking();
 
-                              // context.read<MapTrackingCubit>().add(
-                              //       const MapTrackingEvent.trackingStopped(),
-                              //     );
-                            } else {
-                              mapTracking.startTracking();
+                    //           // context.read<MapTrackingCubit>().add(
+                    //           //       const MapTrackingEvent.trackingStopped(),
+                    //           //     );
+                    //         } else {
+                    //           mapTracking.startTracking();
 
-                              // context.read<MapTrackingCubit>().add(
-                              //       const MapTrackingEvent.trackingStarted(),
-                              //     );
-                            }
-                          },
-                        );
-                      },
-                    ),
+                    //           // context.read<MapTrackingCubit>().add(
+                    //           //       const MapTrackingEvent.trackingStarted(),
+                    //           //     );
+                    //         }
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               )
