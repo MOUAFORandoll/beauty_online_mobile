@@ -47,8 +47,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>L'application utilise la caméra pour prendre des photos à publier</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>L'application utilise ta position lors de la prise photo</string>
-	<key>NSMicrophoneUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Cette app a besoin d'accéder à votre localisation pour afficher votre parcours.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Cette app a besoin d'accéder à votre localisation pour le suivi en temps réel.</string>
+  <key>NSMicrophoneUsageDescription</key>
 	<string>L'application utilise le microphone lors de la prise photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>L'application accède à tes médias pour sélectionner des photos à publier</string>

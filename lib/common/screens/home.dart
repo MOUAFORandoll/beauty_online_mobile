@@ -1,8 +1,10 @@
 import 'package:beauty/common/bloc/link_cubit.dart';
 import 'package:beauty/common/bloc/select_realisation_cubit.dart';
 import 'package:beauty/common/screens/await_load.dart';
+import 'package:beauty/common/services/geolocation_service.dart';
 import 'package:beauty/home/screens/fil_actu_screen.dart';
 import 'package:beauty/account/screens/account.dart';
+import 'package:beauty/map/bloc/map_tracking_cubit.dart';
 import 'package:beauty/notifications/bloc/notification_cubit.dart';
 import 'package:beauty/notifications/screens/notifications.dart';
 import 'package:beauty/notifications/services/notification_service.dart';
@@ -41,6 +43,8 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
     context.read<SelectRealisationCubit>().change('');
 
     context.read<NotificationService>().context = context;
+    context.read<GeolocationService>().getCurrentPosition();
+    context.read<MapTrackingCubit>().start();
     context.read<NotificationCubit>().requestNotificationPermission();
   }
 

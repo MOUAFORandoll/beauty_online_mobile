@@ -2,6 +2,7 @@ import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/common/models/rendez_vous.dart';
 import 'package:beauty/common/services/geolocation_service.dart';
 import 'package:beauty/common/widgets/buttons.dart';
+import 'package:beauty/map/map_tracking_screen.dart';
 import 'package:beauty/professional/widgets/item_rendez_vous.dart';
 import 'package:flutter/material.dart' hide SearchBar, Notification;
 import 'package:flutter/material.dart';
@@ -98,10 +99,18 @@ class _RendezVousUserViewState extends State<RendezVousUserView> {
                   SizedBox(
                     width: double.infinity,
                     child: BeautyButton.secondary(
-                      icon: const Icon(Icons.navigation),
-                      text: 'Suivre l’itinéraire',
-                      onPressed: () => _launchMaps(rdv.professional),
-                    ),
+                        icon: const Icon(Icons.navigation),
+                        text: 'Suivre l’itinéraire',
+                        onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MapTrackingScreen(
+                                  professional: professional,
+                                ),
+                              ),
+                            )
+                        //  _launchMaps(rdv.professional),
+                        ),
                   )
               ],
             ),

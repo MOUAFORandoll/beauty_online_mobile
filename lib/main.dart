@@ -5,6 +5,8 @@ import 'package:beauty/common/bloc/user_search_cubit.dart';
 import 'package:beauty/common/bloc/video_cubit.dart';
 import 'package:beauty/common/widgets/app_video_player.dart';
 import 'package:beauty/home/services/actu_cubit_manager.dart';
+import 'package:beauty/map/bloc/map_tracking_cubit.dart';
+import 'package:beauty/map/directions_service.dart';
 import 'package:beauty/my_pro/bloc/add_schedule_cubit.dart';
 import 'package:beauty/my_pro/bloc/load_me_pro_rendez_vous_cubit.dart';
 import 'package:beauty/my_pro/bloc/schedule_cubit.dart' show ScheduleCubit;
@@ -125,6 +127,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => NotificationsService(dio)),
         RepositoryProvider(create: (_) => GeolocationService()),
         RepositoryProvider(create: (_) => ActuService(dio)),
+     
+        RepositoryProvider(create: (_) => DirectionsService( )),
         RepositoryProvider(create: (_) => NotificationService()),
         RepositoryProvider(
             create: (context) =>
@@ -196,6 +200,10 @@ class MyApp extends StatelessWidget {
               context.read(),
             ),
           ),
+              BlocProvider(
+              create: (context) =>
+                  MapTrackingCubit(context.read(), context.read())),
+        
           // BlocProvider(
           //   create: (context) => MySearchCubit(
           //     actuService: context.read(),

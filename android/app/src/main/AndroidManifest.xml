@@ -27,7 +27,8 @@ xmlns:tools="http://schemas.android.com/tools"
         android:fullBackupContent="false"        
         android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true">
-        
+        <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyA3XYSJru7Q3Y5OKQtOLi1TJWTXRWHDLaI"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
