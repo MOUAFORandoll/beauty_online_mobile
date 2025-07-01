@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:beauty/common/models/professional.dart';
 import 'package:beauty/common/services/geolocation_service.dart';
+import 'package:beauty/common/utils/assets.dart';
 import 'package:beauty/map/bloc/map_tracking_cubit.dart';
 import 'package:beauty/map/directions_service.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,14 @@ class MapTrackingCubit extends Cubit<MapTrackingState> {
     }
   }
 
+  Future<BitmapDescriptor> _loadCustomMarker(
+      {required String assetPath, double taille = 32}) async {
+    return await BitmapDescriptor.asset(
+      ImageConfiguration(size: Size(taille, taille)), // Taille de l'image
+      assetPath,
+    );
+  }
+
   Future<void> selectProfessional(Professional professional) async {
     if (professional.position?.latitude == null ||
         professional.position?.longitude == null) {
@@ -70,7 +79,8 @@ class MapTrackingCubit extends Cubit<MapTrackingState> {
             title: professional.namePro,
             snippet: professional.description,
           ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          icon: await _loadCustomMarker(assetPath: Assets.pinPro, taille: 56),
+          // BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         ),
       );
 

@@ -49,6 +49,7 @@ abstract class Assets {
   static const String iconPictureAdd = '${_imagesDir}Icon_picture_add.svg';
   static const String onBoardingImage = '${_imagesDir}onboarding.svg';
   static const String onBoardingImage2 = '${_imagesDir}onboarding.png';
+  static const String pinPro = '${_imagesDir}pin_pro.png';
 
   static const String _logoDir = 'assets/logo/';
   static const String _logobeauty = '${_logoDir}logo.png';
