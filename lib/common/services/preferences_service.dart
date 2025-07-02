@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:beauty/common/models/professional.dart';
 import 'package:crypto/crypto.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:potatoes_secured_preferences/potatoes_secured_preferences.dart';
@@ -82,17 +84,54 @@ class PreferencesService extends SecuredPreferencesService {
     return preferences.setString(_keyThemeMode, mode.name);
   }
 
+  Future<String> findAppareil() async {
+    try {
+      var _deviceInfoPlugin = DeviceInfoPlugin();
+
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        AndroidDeviceInfo androidInfo = await _deviceInfoPlugin.androidInfo;
+           return 'android';
+      } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+        IosDeviceInfo iosInfo = await _deviceInfoPlugin.iosInfo;
+        return 'ios';
+      } else if (defaultTargetPlatform == TargetPlatform.linux) {
+        LinuxDeviceInfo linuxInfo = await _deviceInfoPlugin.linuxInfo;
+        return '${linuxInfo.name} : ${linuxInfo.version} : ${linuxInfo.machineId}';
+      } else if (defaultTargetPlatform == TargetPlatform.windows) {
+        WindowsDeviceInfo windowsInfo = await _deviceInfoPlugin.windowsInfo;
+        return '${windowsInfo.computerName} : ${windowsInfo.userName} : ${windowsInfo.productName}';
+      } else if (defaultTargetPlatform == TargetPlatform.macOS) {
+        MacOsDeviceInfo macosInfo = await _deviceInfoPlugin.macOsInfo;
+        return '${macosInfo.computerName} : ${macosInfo.hostName} : ${macosInfo.model}';
+      } else {
+        return 'Platform isn\'t supported';
+        // Handle Fuchsia platform
+      }
+    } catch (e) {
+      return 'Platform isn\'t supported';
+    }
+  }
+
   @override
   FutureOr<Map<String, String>> getAuthHeaders() async {
     final String userId = user!.id;
     final String? authToken = await secureStorage.read(key: _keyAuthToken);
+    var userAppType = await findAppareil();
     print({'uid': userId});
-    print({'uid': user!.id});
+    print({
+      'uid': user!.id,
+      "appVersion": packageInfo.buildNumber,
+      "userAppType": userAppType,
+    });
     // if (authToken == null) {
     //   throw InvalidAuthenticationHeadersException();
     // }
 
-    return {'uid': user!.id};
+    return {
+      'uid': user!.id,
+      "appVersion": packageInfo.buildNumber,
+      "userAppType": userAppType,
+    };
     // return {"authorization": 'Bearer ' + authToken};
   }
 }

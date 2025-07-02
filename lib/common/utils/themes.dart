@@ -377,6 +377,13 @@ abstract class AppTheme {
             color: primaryBlack,
           ),
         ),
+        cardTheme: baseTheme.cardTheme.copyWith(
+          color: baseTheme.colorScheme.onInverseSurface,
+          margin: EdgeInsets.zero,
+          elevation: 1,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: baseTheme.elevatedButtonTheme.style?.copyWith(
           backgroundColor: WidgetStatePropertyAll(primaryYellow),

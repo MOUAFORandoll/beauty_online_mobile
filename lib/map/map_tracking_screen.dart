@@ -33,7 +33,7 @@ class _MapTrackingScreenState extends State<MapTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double spaceWidth = MediaQuery.of(context).size.width / 4.5;
+    double spaceWidth = MediaQuery.of(context).size.width / 4;
     return Scaffold(
       body: BlocConsumer<MapTrackingCubit, MapTrackingState>(
         listener: (context, state) {
@@ -52,7 +52,7 @@ class _MapTrackingScreenState extends State<MapTrackingScreen> {
           }
 
           return Stack(
-            alignment: Alignment.center,
+            // alignment: Alignment.center,
             fit: StackFit.expand,
             children: [
               // SizedBox(
@@ -112,9 +112,10 @@ class _MapTrackingScreenState extends State<MapTrackingScreen> {
                           '${widget.professional.namePro}',
                           style: TextStyle(color: Colors.white),
                         )),
-                    SizedBox(
-                      width: spaceWidth,
-                    ),
+                    Container()
+                    // SizedBox(
+                    //   width: spaceWidth,
+                    // ),
                     // BlocBuilder<MapTrackingCubit, MapTrackingState>(
                     //   builder: (context, state) {
                     //     return IconButton(

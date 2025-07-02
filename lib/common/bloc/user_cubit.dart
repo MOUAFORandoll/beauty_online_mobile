@@ -66,10 +66,16 @@ class UserCubit extends ObjectCubit<User, UserState> {
   Future<void> _refreshData() {
     return userService.getMe().then((user) => preferencesService.saveUser(user),
         onError: (error, trace) {
+      print(error.toString());
+      print(error.error?.code);
       if (error is ApiError) {
         if (error.dio?.error is InvalidAuthenticationHeadersException) {
           // si pour une raison obscure on arrive pas à générer les headers d'authentification
           signOut();
+        } else if (error.error?.code == 'UPDATE_REQUIRED') {
+          final stateBefore = state;
+          emit(const UserShouldUpgradeAppState());
+          emit(stateBefore);
         }
       }
     });

@@ -51,7 +51,7 @@ class MapTrackingCubit extends Cubit<MapTrackingState> {
   }
 
   Future<BitmapDescriptor> _loadCustomMarker(
-      {required String assetPath, double taille = 32}) async {
+      {required String assetPath, double taille = 12}) async {
     return await BitmapDescriptor.asset(
       ImageConfiguration(size: Size(taille, taille)), // Taille de l'image
       assetPath,

@@ -197,8 +197,8 @@ class _HomeScreenState extends State<HomeScreen> with CompletableMixin {
 
   void onUserEventReceived(BuildContext context, UserState state) {
     if (state is UserShouldUpgradeAppState) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => const AppUpgradeScreen()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const AppUpgradeScreen()));
     }
   }
 

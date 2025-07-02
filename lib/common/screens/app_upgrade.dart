@@ -10,7 +10,7 @@ class AppUpgradeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: AppTheme.primaryColorTheme(context),
+      data: AppTheme.darkTheme(context),
       child: PopScope(
         canPop: false,
         child: Scaffold(

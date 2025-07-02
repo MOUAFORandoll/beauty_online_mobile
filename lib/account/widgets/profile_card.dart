@@ -27,7 +27,7 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
       },
       builder: (ctx, state) => Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -40,8 +40,7 @@ class _ProfileCardScreenState extends State<ProfileCardScreen> {
         child: Column(
           children: [
             Padding(
-              padding:
-               const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
                   Stack(
